@@ -1,0 +1,249 @@
+/* Footer Enhanced Styles */
+#footer {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  border-top: 3px solid #3498db;
+}
+
+.widget h4 {
+  color: #ecf0f1;
+  font-weight: 600;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  position: relative;
+}
+
+.widget h4::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, #3498db, #2980b9);
+}
+
+.widget p {
+  color: #bdc3c7;
+  line-height: 1.7;
+}
+
+.widget strong {
+  color: #ecf0f1;
+}
+
+address {
+  color: #bdc3c7;
+  font-style: normal;
+}
+
+address strong {
+  color: #3498db;
+}
+
+abbr {
+  color: #3498db;
+  text-decoration: none;
+  border: none;
+}
+
+.widget_links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.widget_links li {
+  margin-bottom: 8px;
+  position: relative;
+  padding-left: 20px;
+}
+
+.widget_links li::before {
+  content: '▶';
+  position: absolute;
+  left: 0;
+  color: #3498db;
+  font-size: 0.8rem;
+  top: 2px;
+}
+
+.widget_links a {
+  color: #bdc3c7;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.widget_links a:hover {
+  color: #3498db;
+}
+
+.posts-sm .entry-title h4 a {
+  color: #ecf0f1;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.posts-sm .entry-title h4 a:hover {
+  color: #3498db;
+}
+
+.posts-sm .entry-meta li {
+  color: #95a5a6;
+  font-size: 0.85rem;
+}
+
+.subscribe-widget {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.subscribe-widget h5 {
+  color: #ecf0f1;
+  margin-bottom: 20px;
+}
+
+.subscribe-widget .btn-success {
+  background: linear-gradient(135deg, #27ae60, #2ecc71);
+  border: none;
+  font-weight: 600;
+}
+
+.social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  transition: transform 0.3s;
+}
+
+.social-icon:hover {
+  transform: translateY(-3px);
+}
+
+.si-facebook {
+  background: linear-gradient(135deg, #3b5998, #4267B2);
+}
+
+.si-rss {
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+}
+
+#copyrights {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 25px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#copyrights .col-md-6 {
+  color: #95a5a6;
+  font-size: 0.9rem;
+}
+
+.copyright-links a {
+  color: #bdc3c7;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.copyright-links a:hover {
+  color: #3498db;
+}
+
+.si-small.si-borderless {
+  background: rgba(255, 255, 255, 0.1);
+  color: #bdc3c7;
+  transition: all 0.3s;
+}
+
+.si-small.si-borderless:hover {
+  background: #3498db;
+  color: white;
+}
+
+#copyrights i {
+  color: #3498db;
+  margin-right: 5px;
+}
+
+/* Counter Animation Styles */
+.counter {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.counter-number {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #3498db;
+  display: block;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  animation: counterGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes counterGlow {
+  0% {
+    text-shadow: 0 2px 4px rgba(52, 152, 219, 0.3);
+  }
+  100% {
+    text-shadow: 0 2px 8px rgba(52, 152, 219, 0.6);
+  }
+}
+
+.counter h5 {
+  color: #ecf0f1;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 5px;
+}
+
+.counter-small {
+  position: relative;
+  overflow: hidden;
+}
+
+.counter-small::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: counterShine 3s infinite;
+}
+
+@keyframes counterShine {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Enhanced animations for mobile */
+@media (max-width: 768px) {
+  .subscribe-widget {
+    padding: 20px;
+  }
+  
+  #copyrights {
+    text-align: center;
+  }
+  
+  .counter-number {
+    font-size: 1.8rem;
+  }
+  
+  .counter h5 {
+    font-size: 0.8rem;
+  }
+}

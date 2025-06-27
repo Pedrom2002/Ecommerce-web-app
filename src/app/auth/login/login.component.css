@@ -1,0 +1,401 @@
+/* login.component.css */
+
+/* Estilos gerais */
+#content {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px 0;
+}
+
+/* Card principal */
+.card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  backdrop-filter: blur(10px);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Título e header */
+h3 {
+  color: #495057;
+  font-weight: 600;
+}
+
+.text-primary {
+  color: #667eea !important;
+}
+
+/* Labels */
+.form-label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 8px;
+}
+
+.form-label i {
+  color: #6c757d;
+}
+
+/* Inputs */
+.form-control {
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 12px 15px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+  outline: none;
+}
+
+.form-control:disabled {
+  background-color: #f8f9fa;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Estados de validação */
+.form-control.is-invalid {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.form-control.is-valid {
+  border-color: #28a745;
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+/* Feedback de validação */
+.invalid-feedback {
+  display: block !important;
+  font-size: 0.875rem;
+  margin-top: 5px;
+  color: #dc3545;
+}
+
+.valid-feedback {
+  display: block !important;
+  font-size: 0.875rem;
+  margin-top: 5px;
+  color: #28a745;
+}
+
+/* Input group (para o toggle da password) */
+.input-group .btn {
+  border: 2px solid #e9ecef;
+  border-left: none;
+  padding: 12px 15px;
+}
+
+.input-group .form-control:focus + .btn,
+.input-group .form-control.is-valid + .btn {
+  border-color: #28a745;
+}
+
+.input-group .form-control.is-invalid + .btn {
+  border-color: #dc3545;
+}
+
+.input-group .btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Checkbox Remember Me */
+.form-check-input {
+  margin-top: 4px;
+}
+
+.form-check-input:checked {
+  background-color: #667eea;
+  border-color: #667eea;
+}
+
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.form-check-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Botões */
+.btn-primary {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  border: none;
+  border-radius: 8px;
+  padding: 15px 30px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  background: linear-gradient(45deg, #5a6fd8, #6a41a0);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  background: #6c757d;
+}
+
+.btn-outline-secondary {
+  border: 2px solid #6c757d;
+  color: #6c757d;
+  border-radius: 8px;
+  padding: 12px 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-secondary:hover:not(:disabled) {
+  background-color: #6c757d;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.btn-outline-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Link buttons */
+.btn-link {
+  color: #667eea;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-link:hover:not(:disabled) {
+  color: #5a6fd8;
+  text-decoration: underline !important;
+}
+
+.btn-link:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Loading state */
+.btn-primary.loading {
+  pointer-events: none;
+}
+
+.loading-spinner {
+  display: inline-block;
+}
+
+/* Alertas */
+.alert {
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 10px;
+  padding: 15px 20px;
+  font-weight: 500;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border-left: 4px solid #28a745;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-left: 4px solid #dc3545;
+}
+
+.alert-warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border-left: 4px solid #ffc107;
+}
+
+.alert i {
+  margin-right: 8px;
+}
+
+/* Background de informação de segurança */
+.bg-light {
+  background-color: #f8f9fa !important;
+  border: 1px solid #e9ecef;
+}
+
+/* Separador */
+.border-bottom {
+  border-bottom: 1px solid #e9ecef !important;
+}
+
+/* Links */
+a {
+  color: #667eea;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #5a6fd8;
+  text-decoration: underline;
+}
+
+/* Texto de ajuda */
+.text-muted {
+  color: #6c757d !important;
+}
+
+/* Ícones */
+.text-success {
+  color: #28a745 !important;
+}
+
+/* Espaçamento */
+.mb-4 {
+  margin-bottom: 1.5rem !important;
+}
+
+.mt-4 {
+  margin-top: 1.5rem !important;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .card-body {
+    padding: 30px 25px !important;
+  }
+  
+  .btn-primary,
+  .btn-outline-secondary {
+    padding: 12px 25px;
+    font-size: 14px;
+  }
+  
+  .card {
+    max-width: 95%;
+    margin: 0 auto;
+  }
+  
+  .col-sm-6 {
+    margin-bottom: 10px;
+  }
+  
+  .text-end {
+    text-align: left !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .card-body {
+    padding: 25px 20px !important;
+  }
+  
+  .fa-3x {
+    font-size: 2rem !important;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Container responsivo */
+.container {
+  max-width: 100%;
+  padding: 0 15px;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 600px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 900px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 1100px;
+  }
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Efeitos de foco melhorados */
+.form-control:focus,
+.form-check-input:focus {
+  transform: scale(1.02);
+}
+
+/* Estados hover para inputs */
+.form-control:hover:not(:focus):not(:disabled) {
+  border-color: #ced4da;
+}
+
+/* Efeitos especiais para bloqueio */
+.alert-danger.d-flex {
+  background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.8; }
+  100% { opacity: 1; }
+}
+
+/* Melhorias visuais */
+.rounded {
+  border-radius: 8px !important;
+}
+
+/* Estados disabled melhorados */
+.btn:disabled,
+.form-control:disabled,
+.form-check-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Foco acessível */
+*:focus {
+  outline: none;
+}
+
+/* Transições suaves */
+* {
+  transition: all 0.3s ease;
+}

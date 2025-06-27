@@ -1,0 +1,507 @@
+<!-- checkout.component.html -->
+<section id="content">
+  <div class="content-wrap">
+    <div class="container clearfix">
+      
+      <!-- Page Title -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="d-flex justify-content-between align-items-center">
+            <h2 class="mb-0">
+              <i class="icon-line-bag me-2"></i>
+              Checkout
+            </h2>
+            <button class="btn btn-outline-secondary" (click)="goBack()">
+              <i class="icon-line-arrow-left me-1"></i>
+              Voltar às Compras
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alert Messages -->
+      <div *ngIf="alertMessage" class="alert alert-{{alertType}} alert-dismissible fade show" role="alert">
+        <i class="fas" [ngClass]="{
+          'fa-check-circle': alertType === 'success',
+          'fa-exclamation-triangle': alertType === 'danger',
+          'fa-exclamation-circle': alertType === 'warning',
+          'fa-info-circle': alertType === 'info'
+        }"></i>
+        {{ alertMessage }}
+        <button type="button" class="btn-close" (click)="alertMessage = ''" aria-label="Close"></button>
+      </div>
+
+      <!-- Progress Steps -->
+      <div class="checkout-progress mb-5">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="step" [class.active]="currentStep >= 1" [class.completed]="currentStep > 1">
+              <div class="step-icon">
+                <i class="icon-line-truck" *ngIf="currentStep === 1"></i>
+                <i class="icon-line-check" *ngIf="currentStep > 1"></i>
+              </div>
+              <h6>Informações de Envio</h6>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="step" [class.active]="currentStep >= 2" [class.completed]="currentStep > 2">
+              <div class="step-icon">
+                <i class="icon-line-credit-card" *ngIf="currentStep === 2"></i>
+                <i class="icon-line-check" *ngIf="currentStep > 2"></i>
+              </div>
+              <h6>Pagamento</h6>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="step" [class.active]="currentStep >= 3">
+              <div class="step-icon">
+                <i class="icon-line-eye"></i>
+              </div>
+              <h6>Revisão do Pedido</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Checkout Form -->
+        <div class="col-lg-8">
+          <form [formGroup]="checkoutForm" novalidate>
+            
+            <!-- Step 1: Shipping Information -->
+            <div class="checkout-step" *ngIf="currentStep === 1">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="mb-0">
+                    <i class="icon-line-truck me-2"></i>
+                    Informações de Envio
+                  </h4>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="firstName" class="form-label">Nome *</label>
+                        <input 
+                          type="text" 
+                          class="form-control"
+                          [class.is-invalid]="hasError('firstName', 'required') || hasError('firstName', 'minlength')"
+                          [class.is-valid]="checkoutForm.get('firstName')?.valid && (checkoutForm.get('firstName')?.dirty || checkoutForm.get('firstName')?.touched)"
+                          formControlName="firstName"
+                          id="firstName"
+                          placeholder="Introduza o seu nome"
+                        />
+                        <div class="invalid-feedback" *ngIf="hasError('firstName', 'required') || hasError('firstName', 'minlength')">
+                          {{ getErrorMessage('firstName') }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="lastName" class="form-label">Apelido *</label>
+                        <input 
+                          type="text" 
+                          class="form-control"
+                          [class.is-invalid]="hasError('lastName', 'required') || hasError('lastName', 'minlength')"
+                          [class.is-valid]="checkoutForm.get('lastName')?.valid && (checkoutForm.get('lastName')?.dirty || checkoutForm.get('lastName')?.touched)"
+                          formControlName="lastName"
+                          id="lastName"
+                          placeholder="Introduza o seu apelido"
+                        />
+                        <div class="invalid-feedback" *ngIf="hasError('lastName', 'required') || hasError('lastName', 'minlength')">
+                          {{ getErrorMessage('lastName') }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="email" class="form-label">Email *</label>
+                        <input 
+                          type="email" 
+                          class="form-control"
+                          [class.is-invalid]="hasError('email', 'required') || hasError('email', 'email')"
+                          [class.is-valid]="checkoutForm.get('email')?.valid && (checkoutForm.get('email')?.dirty || checkoutForm.get('email')?.touched)"
+                          formControlName="email"
+                          id="email"
+                          placeholder="email@exemplo.com"
+                        />
+                        <div class="invalid-feedback" *ngIf="hasError('email', 'required') || hasError('email', 'email')">
+                          {{ getErrorMessage('email') }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="phone" class="form-label">Telefone *</label>
+                        <input 
+                          type="tel" 
+                          class="form-control"
+                          [class.is-invalid]="hasError('phone', 'required') || hasError('phone', 'pattern')"
+                          [class.is-valid]="checkoutForm.get('phone')?.valid && (checkoutForm.get('phone')?.dirty || checkoutForm.get('phone')?.touched)"
+                          formControlName="phone"
+                          id="phone"
+                          placeholder="+351 912 345 678"
+                        />
+                        <div class="invalid-feedback" *ngIf="hasError('phone', 'required') || hasError('phone', 'pattern')">
+                          {{ getErrorMessage('phone') }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="address" class="form-label">Morada *</label>
+                    <input 
+                      type="text" 
+                      class="form-control"
+                      [class.is-invalid]="hasError('address', 'required') || hasError('address', 'minlength')"
+                      [class.is-valid]="checkoutForm.get('address')?.valid && (checkoutForm.get('address')?.dirty || checkoutForm.get('address')?.touched)"
+                      formControlName="address"
+                      id="address"
+                      placeholder="Rua, número, andar"
+                    />
+                    <div class="invalid-feedback" *ngIf="hasError('address', 'required') || hasError('address', 'minlength')">
+                      {{ getErrorMessage('address') }}
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="city" class="form-label">Cidade *</label>
+                        <input 
+                          type="text" 
+                          class="form-control"
+                          [class.is-invalid]="hasError('city', 'required') || hasError('city', 'minlength')"
+                          [class.is-valid]="checkoutForm.get('city')?.valid && (checkoutForm.get('city')?.dirty || checkoutForm.get('city')?.touched)"
+                          formControlName="city"
+                          id="city"
+                          placeholder="Lisboa"
+                        />
+                        <div class="invalid-feedback" *ngIf="hasError('city', 'required') || hasError('city', 'minlength')">
+                          {{ getErrorMessage('city') }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="postalCode" class="form-label">Código Postal *</label>
+                        <input 
+                          type="text" 
+                          class="form-control"
+                          [class.is-invalid]="hasError('postalCode', 'required') || hasError('postalCode', 'pattern')"
+                          [class.is-valid]="checkoutForm.get('postalCode')?.valid && (checkoutForm.get('postalCode')?.dirty || checkoutForm.get('postalCode')?.touched)"
+                          formControlName="postalCode"
+                          (input)="formatPostalCode($event)"
+                          id="postalCode"
+                          placeholder="1000-001"
+                          maxlength="8"
+                        />
+                        <div class="invalid-feedback" *ngIf="hasError('postalCode', 'required') || hasError('postalCode', 'pattern')">
+                          {{ getErrorMessage('postalCode') }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="country" class="form-label">País *</label>
+                    <select 
+                      class="form-select"
+                      formControlName="country"
+                      id="country"
+                    >
+                      <option value="Portugal">Portugal</option>
+                      <option value="Espanha">Espanha</option>
+                      <option value="França">França</option>
+                      <option value="Outros">Outros</option>
+                    </select>
+                  </div>
+
+                  <div class="d-flex justify-content-end">
+                    <button 
+                      type="button" 
+                      class="btn btn-primary"
+                      [disabled]="!isStepValid(1)"
+                      (click)="nextStep()"
+                    >
+                      Continuar para Pagamento
+                      <i class="icon-line-arrow-right ms-1"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2: Payment Information -->
+            <div class="checkout-step" *ngIf="currentStep === 2">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="mb-0">
+                    <i class="icon-line-credit-card me-2"></i>
+                    Informações de Pagamento
+                  </h4>
+                </div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label for="cardNumber" class="form-label">Número do Cartão *</label>
+                    <input 
+                      type="text" 
+                      class="form-control"
+                      [class.is-invalid]="hasError('cardNumber', 'required') || hasError('cardNumber', 'pattern')"
+                      [class.is-valid]="checkoutForm.get('cardNumber')?.valid && (checkoutForm.get('cardNumber')?.dirty || checkoutForm.get('cardNumber')?.touched)"
+                      formControlName="cardNumber"
+                      (input)="formatCardNumber($event)"
+                      id="cardNumber"
+                      placeholder="1234 5678 9012 3456"
+                      maxlength="16"
+                    />
+                    <div class="invalid-feedback" *ngIf="hasError('cardNumber', 'required') || hasError('cardNumber', 'pattern')">
+                      {{ getErrorMessage('cardNumber') }}
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="expiryDate" class="form-label">Data de Validade *</label>
+                        <input 
+                          type="text" 
+                          class="form-control"
+                          [class.is-invalid]="hasError('expiryDate', 'required') || hasError('expiryDate', 'pattern')"
+                          [class.is-valid]="checkoutForm.get('expiryDate')?.valid && (checkoutForm.get('expiryDate')?.dirty || checkoutForm.get('expiryDate')?.touched)"
+                          formControlName="expiryDate"
+                          (input)="formatExpiryDate($event)"
+                          id="expiryDate"
+                          placeholder="MM/AA"
+                          maxlength="5"
+                        />
+                        <div class="invalid-feedback" *ngIf="hasError('expiryDate', 'required') || hasError('expiryDate', 'pattern')">
+                          {{ getErrorMessage('expiryDate') }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="cvv" class="form-label">CVV *</label>
+                        <input 
+                          type="text" 
+                          class="form-control"
+                          [class.is-invalid]="hasError('cvv', 'required') || hasError('cvv', 'pattern')"
+                          [class.is-valid]="checkoutForm.get('cvv')?.valid && (checkoutForm.get('cvv')?.dirty || checkoutForm.get('cvv')?.touched)"
+                          formControlName="cvv"
+                          id="cvv"
+                          placeholder="123"
+                          maxlength="4"
+                        />
+                        <div class="invalid-feedback" *ngIf="hasError('cvv', 'required') || hasError('cvv', 'pattern')">
+                          {{ getErrorMessage('cvv') }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="cardholderName" class="form-label">Nome no Cartão *</label>
+                    <input 
+                      type="text" 
+                      class="form-control"
+                      [class.is-invalid]="hasError('cardholderName', 'required') || hasError('cardholderName', 'minlength')"
+                      [class.is-valid]="checkoutForm.get('cardholderName')?.valid && (checkoutForm.get('cardholderName')?.dirty || checkoutForm.get('cardholderName')?.touched)"
+                      formControlName="cardholderName"
+                      id="cardholderName"
+                      placeholder="Nome como aparece no cartão"
+                    />
+                    <div class="invalid-feedback" *ngIf="hasError('cardholderName', 'required') || hasError('cardholderName', 'minlength')">
+                      {{ getErrorMessage('cardholderName') }}
+                    </div>
+                  </div>
+
+                  <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" formControlName="saveInfo" id="saveInfo">
+                    <label class="form-check-label" for="saveInfo">
+                      Guardar informações para futuros pedidos
+                    </label>
+                  </div>
+
+                  <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary" (click)="previousStep()">
+                      <i class="icon-line-arrow-left me-1"></i>
+                      Voltar
+                    </button>
+                    <button 
+                      type="button" 
+                      class="btn btn-primary"
+                      [disabled]="!isStepValid(2)"
+                      (click)="nextStep()"
+                    >
+                      Continuar para Revisão
+                      <i class="icon-line-arrow-right ms-1"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3: Order Review -->
+            <div class="checkout-step" *ngIf="currentStep === 3">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="mb-0">
+                    <i class="icon-line-eye me-2"></i>
+                    Revisão do Pedido
+                  </h4>
+                </div>
+                <div class="card-body">
+                  <!-- Order Items -->
+                  <h5 class="mb-3">Artigos do Pedido</h5>
+                  <div class="order-items mb-4">
+                    <div class="order-item" *ngFor="let item of cartItems">
+                      <div class="row align-items-center">
+                        <div class="col-md-2">
+                          <img [src]="item.image" [alt]="item.name" class="img-fluid rounded">
+                        </div>
+                        <div class="col-md-6">
+                          <h6 class="mb-1">{{ item.name }}</h6>
+                          <small class="text-muted">Quantidade: {{ item.quantity }}</small>
+                        </div>
+                        <div class="col-md-2 text-end">
+                          <span class="fw-bold">${{ formatPrice(item.price) }}</span>
+                        </div>
+                        <div class="col-md-2 text-end">
+                          <span class="fw-bold">${{ formatPrice(item.price * item.quantity) }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Shipping Information Summary -->
+                  <h5 class="mb-3">Informações de Envio</h5>
+                  <div class="row mb-4">
+                    <div class="col-md-6">
+                      <p><strong>Nome:</strong> {{ checkoutForm.get('firstName')?.value }} {{ checkoutForm.get('lastName')?.value }}</p>
+                      <p><strong>Email:</strong> {{ checkoutForm.get('email')?.value }}</p>
+                      <p><strong>Telefone:</strong> {{ checkoutForm.get('phone')?.value }}</p>
+                    </div>
+                    <div class="col-md-6">
+                      <p><strong>Morada:</strong> {{ checkoutForm.get('address')?.value }}</p>
+                      <p><strong>Cidade:</strong> {{ checkoutForm.get('city')?.value }}</p>
+                      <p><strong>Código Postal:</strong> {{ checkoutForm.get('postalCode')?.value }}</p>
+                      <p><strong>País:</strong> {{ checkoutForm.get('country')?.value }}</p>
+                    </div>
+                  </div>
+
+                  <!-- Terms and Conditions -->
+                  <div class="form-check mb-3">
+                    <input 
+                      class="form-check-input" 
+                      type="checkbox" 
+                      formControlName="termsAccepted" 
+                      id="termsAccepted"
+                      [class.is-invalid]="hasError('termsAccepted', 'required')"
+                    >
+                    <label class="form-check-label" for="termsAccepted">
+                      Aceito os <a href="#" class="text-decoration-none">Termos e Condições</a> *
+                    </label>
+                    <div class="invalid-feedback" *ngIf="hasError('termsAccepted', 'required')">
+                      Deve aceitar os termos e condições
+                    </div>
+                  </div>
+
+                  <div class="form-check mb-4">
+                    <input class="form-check-input" type="checkbox" formControlName="newsletterOptIn" id="newsletterOptIn">
+                    <label class="form-check-label" for="newsletterOptIn">
+                      Quero receber ofertas especiais por email
+                    </label>
+                  </div>
+
+                  <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary" (click)="previousStep()">
+                      <i class="icon-line-arrow-left me-1"></i>
+                      Voltar
+                    </button>
+                    <button 
+                      type="button" 
+                      class="btn btn-success btn-lg"
+                      [disabled]="!isStepValid(3) || isProcessing"
+                      (click)="processOrder()"
+                    >
+                      <span *ngIf="isProcessing">
+                        <i class="fas fa-spinner fa-spin me-2"></i>
+                        A processar...
+                      </span>
+                      <span *ngIf="!isProcessing">
+                        <i class="icon-line-check me-2"></i>
+                        Finalizar Pedido
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="col-lg-4">
+          <div class="card position-sticky" style="top: 100px;">
+            <div class="card-header">
+              <h5 class="mb-0">Resumo do Pedido</h5>
+            </div>
+            <div class="card-body">
+              <!-- Items Summary -->
+              <div class="order-summary-item" *ngFor="let item of cartItems">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="mb-0">{{ item.name }}</h6>
+                    <small class="text-muted">Qty: {{ item.quantity }}</small>
+                  </div>
+                  <span class="fw-bold">${{ formatPrice(item.price * item.quantity) }}</span>
+                </div>
+              </div>
+              
+              <hr>
+              
+              <!-- Price Breakdown -->
+              <div class="d-flex justify-content-between mb-2">
+                <span>Subtotal:</span>
+                <span>${{ formatPrice(calculateSubtotal()) }}</span>
+              </div>
+              
+              <div class="d-flex justify-content-between mb-2">
+                <span>Envio:</span>
+                <span>
+                  <span *ngIf="calculateShipping() === 0" class="text-success">Grátis</span>
+                  <span *ngIf="calculateShipping() > 0">${{ formatPrice(calculateShipping()) }}</span>
+                </span>
+              </div>
+              
+              <div class="d-flex justify-content-between mb-2">
+                <span>IVA (23%):</span>
+                <span>${{ formatPrice(calculateTax()) }}</span>
+              </div>
+              
+              <hr>
+              
+              <div class="d-flex justify-content-between">
+                <h5 class="mb-0">Total:</h5>
+                <h5 class="mb-0 text-primary">${{ formatPrice(calculateTotal()) }}</h5>
+              </div>
+              
+              <!-- Free Shipping Message -->
+              <div *ngIf="calculateShipping() > 0" class="alert alert-info mt-3" role="alert">
+                <small>
+                  <i class="icon-line-info me-1"></i>
+                  Adicione mais ${{ formatPrice(50 - calculateSubtotal()) }} para envio grátis!
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

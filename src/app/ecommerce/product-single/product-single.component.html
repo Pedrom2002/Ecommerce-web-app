@@ -1,0 +1,511 @@
+<!-- product-single.component.html -->
+<section id="content">
+    <div class="content-wrap">
+        <div class="container clearfix">
+
+            <!-- Alertas -->
+            <div *ngIf="alertMessage" class="alert alert-{{alertType}} alert-dismissible fade show" role="alert">
+                <i class="fas" [ngClass]="{
+                    'fa-check-circle': alertType === 'success',
+                    'fa-exclamation-triangle': alertType === 'danger',
+                    'fa-exclamation-circle': alertType === 'warning',
+                    'fa-info-circle': alertType === 'info'
+                }"></i>
+                {{ alertMessage }}
+                <button type="button" class="btn-close" (click)="alertMessage = ''" aria-label="Close"></button>
+            </div>
+
+            <!-- Loading -->
+            <div *ngIf="isLoading" class="text-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">A carregar produto...</span>
+                </div>
+                <p class="mt-2 text-muted">A carregar produto...</p>
+            </div>
+
+            <!-- Produto -->
+            <div *ngIf="!isLoading && product" class="single-product">
+                
+                <!-- Breadcrumb/Navegação -->
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a (click)="goBack()" style="cursor: pointer;">
+                                        <i class="icon-angle-left me-1"></i>Voltar aos Produtos
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item active">{{ product.name }}</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="row gutter-40">
+
+                        <!-- Galeria de Imagens - Versão Simplificada -->
+                        <div class="col-md-5">
+                            <div class="product-image">
+                                <!-- Imagem Principal -->
+                                <a href="#" style="cursor: pointer;">
+                                    <img [src]="product.image" [alt]="product.name">
+                                </a>
+                                
+                                <!-- Imagem Hover (se existir) -->
+                                <a *ngIf="product.hoverImage" href="#" style="cursor: pointer;">
+                                    <img [src]="product.hoverImage" [alt]="product.name">
+                                </a>
+                                
+                                <!-- Badges -->
+                                <div *ngIf="!product.inStock" class="sale-flash badge bg-secondary p-2">Fora de Stock</div>
+                                <div *ngIf="product.onSale && product.inStock" class="sale-flash badge bg-danger p-2">
+                                    Promoção {{ getDiscountPercentage() }}%!
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Detalhes do Produto -->
+                        <div class="col-md-5 product-desc">
+
+                            <!-- Nome do Produto -->
+                            <h1 class="product-title mb-3">{{ product.name }}</h1>
+
+                            <!-- Preço e Rating -->
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div class="product-price">
+                                    <del *ngIf="hasDiscount()">${{ formatPrice(product.originalPrice!) }}</del>
+                                    <ins>${{ formatPrice(product.price) }}</ins>
+                                </div>
+                                <div class="product-rating">
+                                    <i *ngFor="let star of getStarArray(product.rating)" 
+                                       [class]="'icon-star' + (star === 'full' ? '3' : star === 'half' ? '-half-full' : '-empty')">
+                                    </i>
+                                    <span class="ms-2 small text-muted">({{ reviews.length }} avaliações)</span>
+                                </div>
+                            </div>
+
+                            <div class="line"></div>
+
+                            <!-- Controles de Quantidade e Carrinho -->
+                            <form class="cart mb-4 d-flex justify-content-between align-items-center" (ngSubmit)="addToCart()" #cartForm="ngForm">
+                                <div class="quantity clearfix">
+                                    <input type="button" value="-" class="minus" (click)="updateQuantity(-1)" [disabled]="!product.inStock">
+                                    <input type="number" 
+                                           step="1" 
+                                           min="1" 
+                                           max="99"
+                                           name="quantity" 
+                                           [value]="quantity" 
+                                           (input)="setQuantity(+$any($event.target).value)"
+                                           title="Quantidade" 
+                                           class="qty"
+                                           [disabled]="!product.inStock" />
+                                    <input type="button" value="+" class="plus" (click)="updateQuantity(1)" [disabled]="!product.inStock">
+                                </div>
+                                <button type="submit" 
+                                        [class]="getCartButtonClass()"
+                                        [disabled]="!product.inStock">
+                                    <i class="icon-shopping-basket me-2"></i>
+                                    {{ getCartButtonText() }}
+                                </button>
+                            </form>
+
+                            <!-- Status no Carrinho -->
+                            <div *ngIf="isInCart()" class="mb-3">
+                                <div class="alert alert-success d-flex align-items-center">
+                                    <i class="icon-check-circle me-2"></i>
+                                    <span>{{ getCartQuantity() }} unidade(s) no carrinho</span>
+                                </div>
+                            </div>
+
+                            <div class="line"></div>
+
+                            <!-- Descrição Curta -->
+                            <div class="product-short-desc mb-4">
+                                <p>{{ product.description || 'Produto de alta qualidade com excelente acabamento e design moderno. Perfeito para o seu estilo de vida.' }}</p>
+                                <ul class="iconlist">
+                                    <li><i class="icon-caret-right"></i> Opções de Cores Dinâmicas</li>
+                                    <li><i class="icon-caret-right"></i> Vários Tamanhos Disponíveis</li>
+                                    <li><i class="icon-caret-right"></i> Política de Devolução de 30 Dias</li>
+                                    <li *ngIf="product.inStock"><i class="icon-caret-right"></i> Em Stock - Entrega Rápida</li>
+                                    <li *ngIf="!product.inStock"><i class="icon-caret-right"></i> Fora de Stock - Brevemente Disponível</li>
+                                </ul>
+                            </div>
+
+                            <!-- Meta Informação -->
+                            <div class="card product-meta mb-4">
+                                <div class="card-body">
+                                    <span class="sku_wrapper d-block">SKU: <span class="sku">{{ product.id }}{{ (product.id * 1000) + 415 }}</span></span>
+                                    <span class="posted_in d-block">Categoria: 
+                                        <a href="#" class="text-capitalize">{{ product.category }}</a>
+                                    </span>
+                                    <span class="stock_status d-block">Stock: 
+                                        <span [class]="product.inStock ? 'text-success' : 'text-danger'">
+                                            {{ product.inStock ? 'Disponível' : 'Fora de Stock' }}
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Partilhar -->
+                            <div class="si-share border-0 d-flex justify-content-between align-items-center">
+                                <span>Partilhar:</span>
+                                <div>
+                                    <a (click)="shareProduct('facebook')" class="social-icon si-borderless si-facebook" style="cursor: pointer;">
+                                        <i class="icon-facebook"></i>
+                                    </a>
+                                    <a (click)="shareProduct('twitter')" class="social-icon si-borderless si-twitter" style="cursor: pointer;">
+                                        <i class="icon-twitter"></i>
+                                    </a>
+                                    <a (click)="shareProduct('pinterest')" class="social-icon si-borderless si-pinterest" style="cursor: pointer;">
+                                        <i class="icon-pinterest"></i>
+                                    </a>
+                                    <a (click)="shareProduct('email')" class="social-icon si-borderless si-email3" style="cursor: pointer;">
+                                        <i class="icon-email3"></i>
+                                    </a>
+                                    <a (click)="copyLink()" class="social-icon si-borderless si-rss" style="cursor: pointer;" title="Copiar Link">
+                                        <i class="icon-link"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Sidebar de Características -->
+                        <div class="col-md-2">
+                            <a href="#" title="Brand Logo" class="d-none d-md-block">
+                                <img src="assets/images/shop/brand.jpg" alt="Brand Logo">
+                            </a>
+
+                            <div class="divider divider-center"><i class="icon-circle-blank"></i></div>
+
+                            <div class="feature-box fbox-plain fbox-dark fbox-sm">
+                                <div class="fbox-icon">
+                                    <i class="icon-thumbs-up2"></i>
+                                </div>
+                                <div class="fbox-content fbox-content-sm">
+                                    <h3>100% Original</h3>
+                                    <p class="mt-0">Garantimos a venda de marcas originais.</p>
+                                </div>
+                            </div>
+
+                            <div class="feature-box fbox-plain fbox-dark fbox-sm mt-4">
+                                <div class="fbox-icon">
+                                    <i class="icon-credit-cards"></i>
+                                </div>
+                                <div class="fbox-content fbox-content-sm">
+                                    <h3>Opções de Pagamento</h3>
+                                    <p class="mt-0">Aceitamos Visa, MasterCard e American Express.</p>
+                                </div>
+                            </div>
+
+                            <div class="feature-box fbox-plain fbox-dark fbox-sm mt-4">
+                                <div class="fbox-icon">
+                                    <i class="icon-truck2"></i>
+                                </div>
+                                <div class="fbox-content fbox-content-sm">
+                                    <h3>Envio Grátis</h3>
+                                    <p class="mt-0">Entrega gratuita para encomendas acima de $40.</p>
+                                </div>
+                            </div>
+
+                            <div class="feature-box fbox-plain fbox-dark fbox-sm mt-4">
+                                <div class="fbox-icon">
+                                    <i class="icon-undo"></i>
+                                </div>
+                                <div class="fbox-content fbox-content-sm">
+                                    <h3>Devoluções 30 Dias</h3>
+                                    <p class="mt-0">Devolva ou troque artigos comprados em 30 dias.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tabs de Informação -->
+                        <div class="w-100"></div>
+                        <div class="col-12 mt-5">
+                            <div class="tabs clearfix mb-0" id="tab-1">
+
+                                <ul class="tab-nav clearfix">
+                                    <li [class.current]="activeTab === 'description'">
+                                        <a (click)="setActiveTab('description')" style="cursor: pointer;">
+                                            <i class="icon-align-justify2"></i>
+                                            <span class="d-none d-md-inline-block"> Descrição</span>
+                                        </a>
+                                    </li>
+                                    <li [class.current]="activeTab === 'info'">
+                                        <a (click)="setActiveTab('info')" style="cursor: pointer;">
+                                            <i class="icon-info-sign"></i>
+                                            <span class="d-none d-md-inline-block"> Informações</span>
+                                        </a>
+                                    </li>
+                                    <li [class.current]="activeTab === 'reviews'">
+                                        <a (click)="setActiveTab('reviews')" style="cursor: pointer;">
+                                            <i class="icon-star3"></i>
+                                            <span class="d-none d-md-inline-block"> Avaliações ({{ reviews.length }})</span>
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-container">
+
+                                    <!-- Descrição -->
+                                    <div *ngIf="activeTab === 'description'" class="tab-content clearfix">
+                                        <h4>Sobre {{ product.name }}</h4>
+                                        <p>{{ product.description || 'Este produto combina qualidade superior com design elegante. Fabricado com materiais de primeira linha e atenção aos detalhes, oferece durabilidade e estilo para o seu dia a dia.' }}</p>
+                                        <p>Caracteriza-se pela sua versatilidade e conforto, sendo uma excelente adição à sua coleção. O design cuidadoso e a funcionalidade prática fazem deste produto uma escolha inteligente.</p>
+                                        
+                                        <h5>Características Principais:</h5>
+                                        <ul>
+                                            <li>Design moderno e elegante</li>
+                                            <li>Materiais de alta qualidade</li>
+                                            <li>Conforto e durabilidade</li>
+                                            <li>Fácil manutenção</li>
+                                            <li>Disponível em várias opções</li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Informações Adicionais -->
+                                    <div *ngIf="activeTab === 'info'" class="tab-content clearfix">
+                                        <table class="table table-striped table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td><strong>Categoria</strong></td>
+                                                    <td class="text-capitalize">{{ product.category }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>SKU</strong></td>
+                                                    <td>{{ product.id }}{{ (product.id * 1000) + 415 }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Avaliação</strong></td>
+                                                    <td>{{ product.rating }}/5 estrelas</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Disponibilidade</strong></td>
+                                                    <td [class]="product.inStock ? 'text-success' : 'text-danger'">
+                                                        {{ product.inStock ? 'Em Stock' : 'Fora de Stock' }}
+                                                    </td>
+                                                </tr>
+                                                <tr *ngIf="hasDiscount()">
+                                                    <td><strong>Desconto</strong></td>
+                                                    <td class="text-success">{{ getDiscountPercentage() }}% OFF</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Garantia</strong></td>
+                                                    <td>12 Meses</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Devolução</strong></td>
+                                                    <td>30 Dias</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <!-- Avaliações -->
+                                    <div *ngIf="activeTab === 'reviews'" class="tab-content clearfix">
+                                        <div id="reviews" class="clearfix">
+
+                                            <!-- Resumo de Avaliações -->
+                                            <div class="row mb-4">
+                                                <div class="col-md-6">
+                                                    <h5>Avaliações dos Clientes</h5>
+                                                    <div class="d-flex align-items-center mb-2">
+                                                        <div class="product-rating me-3">
+                                                            <i *ngFor="let star of getStarArray(getAverageRating())" 
+                                                               [class]="'icon-star' + (star === 'full' ? '3' : star === 'half' ? '-half-full' : '-empty')">
+                                                            </i>
+                                                        </div>
+                                                        <span class="h6 mb-0">{{ getAverageRating().toFixed(1) }}/5</span>
+                                                        <span class="text-muted ms-2">({{ reviews.length }} avaliações)</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 text-end">
+                                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewFormModal">
+                                                        <i class="icon-plus me-2"></i>Adicionar Avaliação
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Lista de Avaliações -->
+                                            <ol class="commentlist clearfix">
+                                                <li *ngFor="let review of reviews" class="comment even thread-even depth-1">
+                                                    <div class="comment-wrap clearfix">
+                                                        <div class="comment-meta">
+                                                            <div class="comment-author vcard">
+                                                                <span class="comment-avatar clearfix">
+                                                                    <img [alt]="review.author" [src]="review.avatar" height="60" width="60" />
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="comment-content clearfix">
+                                                            <div class="comment-author">
+                                                                {{ review.author }}
+                                                                <span><a href="#" style="cursor: default;">{{ review.date }}</a></span>
+                                                            </div>
+                                                            <p>{{ review.comment }}</p>
+                                                            <div class="review-comment-ratings">
+                                                                <i *ngFor="let star of getStarArray(review.rating)" 
+                                                                   [class]="'icon-star' + (star === 'full' ? '3' : star === 'half' ? '-half-full' : '-empty')">
+                                                                </i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ol>
+
+                                            <!-- Mensagem se não há avaliações -->
+                                            <div *ngIf="reviews.length === 0" class="text-center py-4">
+                                                <i class="icon-star-empty fa-3x text-muted mb-3"></i>
+                                                <h5 class="text-muted">Ainda não há avaliações</h5>
+                                                <p class="text-muted">Seja o primeiro a avaliar este produto!</p>
+                                            </div>
+
+                                            <!-- Modal de Review -->
+                                            <div class="modal fade" id="reviewFormModal" tabindex="-1">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Submeter uma Avaliação</h4>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form class="row mb-0" (ngSubmit)="submitReview()" #reviewFormRef="ngForm">
+                                                                <div class="col-6 mb-3">
+                                                                    <label for="reviewName">Nome <small>*</small></label>
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-text"><i class="icon-user"></i></div>
+                                                                        <input type="text" 
+                                                                               id="reviewName"
+                                                                               [(ngModel)]="reviewForm.name"
+                                                                               name="reviewName"
+                                                                               class="form-control" 
+                                                                               required />
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-6 mb-3">
+                                                                    <label for="reviewEmail">Email <small>*</small></label>
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-text">&#64;</div>
+                                                                        <input type="email" 
+                                                                               id="reviewEmail"
+                                                                               [(ngModel)]="reviewForm.email"
+                                                                               name="reviewEmail"
+                                                                               class="form-control" 
+                                                                               required />
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-12 mb-3">
+                                                                    <label for="reviewRating">Avaliação <small>*</small></label>
+                                                                    <select id="reviewRating" 
+                                                                            [(ngModel)]="reviewForm.rating"
+                                                                            name="reviewRating"
+                                                                            class="form-select" 
+                                                                            required>
+                                                                        <option value="">-- Selecione --</option>
+                                                                        <option value="1">1 Estrela</option>
+                                                                        <option value="2">2 Estrelas</option>
+                                                                        <option value="3">3 Estrelas</option>
+                                                                        <option value="4">4 Estrelas</option>
+                                                                        <option value="5">5 Estrelas</option>
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="col-12 mb-3">
+                                                                    <label for="reviewComment">Comentário <small>*</small></label>
+                                                                    <textarea class="form-control" 
+                                                                              id="reviewComment"
+                                                                              [(ngModel)]="reviewForm.comment"
+                                                                              name="reviewComment"
+                                                                              rows="6" 
+                                                                              required></textarea>
+                                                                </div>
+
+                                                                <div class="col-12">
+                                                                    <button class="btn btn-primary" type="submit">
+                                                                        <i class="icon-paper-plane me-2"></i>Submeter Avaliação
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                                Fechar
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Produtos Relacionados -->
+            <div *ngIf="relatedProducts.length > 0" class="related-products mt-5">
+                <div class="line"></div>
+                <div class="w-100">
+                    <h4 class="mb-4">Produtos Relacionados</h4>
+
+                    <div class="row">
+                        <div *ngFor="let relatedProduct of relatedProducts" class="col-lg-3 col-md-6 mb-4">
+                            <div class="product">
+                                <div class="product-image">
+                                    <a (click)="viewRelatedProduct(relatedProduct.id)" style="cursor: pointer;">
+                                        <img [src]="relatedProduct.image" [alt]="relatedProduct.name">
+                                    </a>
+                                    <a *ngIf="relatedProduct.hoverImage" (click)="viewRelatedProduct(relatedProduct.id)" style="cursor: pointer;">
+                                        <img [src]="relatedProduct.hoverImage" [alt]="relatedProduct.name">
+                                    </a>
+                                    <div *ngIf="relatedProduct.onSale" class="badge bg-success p-2">Promoção!</div>
+                                    <div class="bg-overlay">
+                                        <div class="bg-overlay-content align-items-end justify-content-between">
+                                            <button (click)="addRelatedToCart(relatedProduct, $event)" 
+                                                    class="btn btn-dark me-2"
+                                                    [disabled]="!relatedProduct.inStock">
+                                                <i class="icon-shopping-cart"></i>
+                                            </button>
+                                            <button (click)="viewRelatedProduct(relatedProduct.id)" class="btn btn-dark">
+                                                <i class="icon-line-expand"></i>
+                                            </button>
+                                        </div>
+                                        <div class="bg-overlay-bg bg-transparent"></div>
+                                    </div>
+                                </div>
+                                <div class="product-desc center">
+                                    <div class="product-title">
+                                        <h3>
+                                            <a (click)="viewRelatedProduct(relatedProduct.id)" style="cursor: pointer;">
+                                                {{ relatedProduct.name }}
+                                            </a>
+                                        </h3>
+                                    </div>
+                                    <div class="product-price">
+                                        <del *ngIf="relatedProduct.originalPrice">${{ formatPrice(relatedProduct.originalPrice) }}</del>
+                                        <ins>${{ formatPrice(relatedProduct.price) }}</ins>
+                                    </div>
+                                    <div class="product-rating">
+                                        <i *ngFor="let star of getStarArray(relatedProduct.rating)" 
+                                           [class]="'icon-star' + (star === 'full' ? '3' : star === 'half' ? '-half-full' : '-empty')">
+                                        </i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

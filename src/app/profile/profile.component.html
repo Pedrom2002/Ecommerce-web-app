@@ -1,0 +1,379 @@
+<!-- profile.component.html -->
+<div class="container mt-5 mb-5">
+  <div class="row">
+    <!-- Sidebar de Navegação -->
+    <div class="col-md-3 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">
+            <i class="icon-line-user me-2"></i>
+            Meu Perfil
+          </h5>
+        </div>
+        <div class="list-group list-group-flush">
+          <a href="#" 
+             class="list-group-item list-group-item-action"
+             [class.active]="activeSection === 'personal'"
+             (click)="setActiveSection('personal'); $event.preventDefault()">
+            <i class="icon-line-user-circle me-2"></i>
+            Dados Pessoais
+          </a>
+          <a href="#" 
+             class="list-group-item list-group-item-action"
+             [class.active]="activeSection === 'password'"
+             (click)="setActiveSection('password'); $event.preventDefault()">
+            <i class="icon-line-key me-2"></i>
+            Alterar Password
+          </a>
+          <a href="#" 
+             class="list-group-item list-group-item-action"
+             [class.active]="activeSection === 'orders'"
+             (click)="setActiveSection('orders'); $event.preventDefault()">
+            <i class="icon-line-bag me-2"></i>
+            Minhas Encomendas
+          </a>
+          <a href="#" 
+             class="list-group-item list-group-item-action text-danger"
+             (click)="logout(); $event.preventDefault()">
+            <i class="icon-line-sign-out me-2"></i>
+            Sair da Conta
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="col-md-9">
+      <!-- Alertas -->
+      <div *ngIf="alertMessage" class="alert alert-{{alertType}} alert-dismissible fade show" role="alert">
+        {{ alertMessage }}
+        <button type="button" class="btn-close" (click)="alertMessage = ''" aria-label="Close"></button>
+      </div>
+
+      <!-- Seção: Dados Pessoais -->
+      <div *ngIf="activeSection === 'personal'" class="card">
+        <div class="card-header">
+          <h5 class="mb-0">
+            <i class="icon-line-user-circle me-2"></i>
+            Dados Pessoais
+          </h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="personalForm" (ngSubmit)="savePersonalData()">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="name" class="form-label">Nome Completo</label>
+                <input type="text" 
+                       class="form-control" 
+                       [class]="getFieldClass(personalForm, 'name')"
+                       id="name" 
+                       formControlName="name"
+                       placeholder="Digite seu nome completo">
+                <div *ngIf="hasError(personalForm, 'name', 'required')" class="invalid-feedback">
+                  {{ getErrorMessage(personalForm, 'name') }}
+                </div>
+                <div *ngIf="hasError(personalForm, 'name', 'minlength')" class="invalid-feedback">
+                  {{ getErrorMessage(personalForm, 'name') }}
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" 
+                       class="form-control" 
+                       [class]="getFieldClass(personalForm, 'username')"
+                       id="username" 
+                       formControlName="username"
+                       placeholder="Digite seu username">
+                <div *ngIf="hasError(personalForm, 'username', 'required')" class="invalid-feedback">
+                  {{ getErrorMessage(personalForm, 'username') }}
+                </div>
+                <div *ngIf="hasError(personalForm, 'username', 'minlength')" class="invalid-feedback">
+                  {{ getErrorMessage(personalForm, 'username') }}
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" 
+                       class="form-control" 
+                       [class]="getFieldClass(personalForm, 'email')"
+                       id="email" 
+                       formControlName="email"
+                       placeholder="Digite seu email">
+                <div *ngIf="hasError(personalForm, 'email', 'required')" class="invalid-feedback">
+                  {{ getErrorMessage(personalForm, 'email') }}
+                </div>
+                <div *ngIf="hasError(personalForm, 'email', 'email')" class="invalid-feedback">
+                  {{ getErrorMessage(personalForm, 'email') }}
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="phone" class="form-label">Telefone</label>
+                <input type="tel" 
+                       class="form-control" 
+                       [class]="getFieldClass(personalForm, 'phone')"
+                       id="phone" 
+                       formControlName="phone"
+                       placeholder="Digite seu telefone">
+                <div *ngIf="hasError(personalForm, 'phone', 'required')" class="invalid-feedback">
+                  {{ getErrorMessage(personalForm, 'phone') }}
+                </div>
+                <div *ngIf="hasError(personalForm, 'phone', 'minlength')" class="invalid-feedback">
+                  {{ getErrorMessage(personalForm, 'phone') }}
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-end">
+              <button type="submit" 
+                      class="btn btn-primary">
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status"></span>
+                <i *ngIf="!isLoading" class="icon-line-check me-2"></i>
+                {{ isLoading ? 'Guardando...' : 'Guardar Alterações' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Seção: Alterar Password -->
+      <div *ngIf="activeSection === 'password'" class="card">
+        <div class="card-header">
+          <h5 class="mb-0">
+            <i class="icon-line-key me-2"></i>
+            Alterar Password
+          </h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+            <div class="mb-3">
+              <label for="currentPassword" class="form-label">Password Atual</label>
+              <input type="password" 
+                     class="form-control" 
+                     [class]="getFieldClass(passwordForm, 'currentPassword')"
+                     id="currentPassword" 
+                     formControlName="currentPassword"
+                     placeholder="Digite sua password atual">
+              <div *ngIf="hasError(passwordForm, 'currentPassword', 'required')" class="invalid-feedback">
+                {{ getErrorMessage(passwordForm, 'currentPassword') }}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="newPassword" class="form-label">Nova Password</label>
+                <input type="password" 
+                       class="form-control" 
+                       [class]="getFieldClass(passwordForm, 'newPassword')"
+                       id="newPassword" 
+                       formControlName="newPassword"
+                       placeholder="Digite sua nova password">
+                <div *ngIf="hasError(passwordForm, 'newPassword', 'required')" class="invalid-feedback">
+                  {{ getErrorMessage(passwordForm, 'newPassword') }}
+                </div>
+                <div *ngIf="hasError(passwordForm, 'newPassword', 'minlength')" class="invalid-feedback">
+                  {{ getErrorMessage(passwordForm, 'newPassword') }}
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="confirmPassword" class="form-label">Confirmar Nova Password</label>
+                <input type="password" 
+                       class="form-control" 
+                       [class]="getFieldClass(passwordForm, 'confirmPassword')"
+                       id="confirmPassword" 
+                       formControlName="confirmPassword"
+                       placeholder="Confirme sua nova password">
+                <div *ngIf="hasError(passwordForm, 'confirmPassword', 'required')" class="invalid-feedback">
+                  {{ getErrorMessage(passwordForm, 'confirmPassword') }}
+                </div>
+                <div *ngIf="passwordForm.hasError('passwordMismatch')" class="invalid-feedback d-block">
+                  {{ getErrorMessage(passwordForm, 'confirmPassword') }}
+                </div>
+              </div>
+            </div>
+
+            <div class="alert alert-info">
+              <i class="icon-line-info me-2"></i>
+              A nova password deve ter pelo menos 8 caracteres.
+            </div>
+
+            <div class="d-flex justify-content-end">
+              <button type="submit" 
+                      class="btn btn-warning">
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status"></span>
+                <i *ngIf="!isLoading" class="icon-line-key me-2"></i>
+                {{ isLoading ? 'Alterando...' : 'Alterar Password' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Seção: Minhas Encomendas -->
+      <div *ngIf="activeSection === 'orders'" class="card">
+        <div class="card-header">
+          <h5 class="mb-0">
+            <i class="icon-line-bag me-2"></i>
+            Minhas Encomendas
+          </h5>
+        </div>
+        <div class="card-body">
+          <div *ngIf="orders.length === 0" class="text-center py-5">
+            <i class="icon-line-bag" style="font-size: 48px; color: #ddd;"></i>
+            <p class="mt-3 text-muted">Ainda não fez nenhuma encomenda.</p>
+            <a routerLink="/" class="btn btn-primary">Explorar Produtos</a>
+          </div>
+
+          <div *ngFor="let order of orders" class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <div>
+                <strong>Encomenda #{{ order.id }}</strong>
+                <small class="text-muted ms-2">{{ formatDate(order.date) }}</small>
+              </div>
+              <span [class]="getStatusClass(order.status)">{{ order.status }}</span>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-8">
+                  <h6>Itens:</h6>
+                  <ul class="list-unstyled">
+                    <li *ngFor="let item of order.items" class="d-flex justify-content-between">
+                      <span>{{ item.quantity }}x {{ item.name }}</span>
+                      <span class="text-muted">€{{ (item.quantity * item.price).toFixed(2) }}</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-4 text-end">
+                  <h5 class="text-primary">Total: €{{ order.total.toFixed(2) }}</h5>
+                  <button class="btn btn-outline-primary btn-sm mt-2" (click)="viewOrderDetails(order)">
+                    <i class="icon-line-eye me-1"></i>
+                    Ver Detalhes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Detalhes da Encomenda -->
+<div class="modal fade" [class.show]="showOrderModal" [style.display]="showOrderModal ? 'block' : 'none'" 
+     id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orderDetailsModalLabel">
+          <i class="icon-line-bag me-2"></i>
+          Detalhes da Encomenda #{{ selectedOrder?.id }}
+        </h5>
+        <button type="button" class="btn-close" (click)="closeOrderModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="selectedOrder">
+        <div class="row">
+          <!-- Informações da Encomenda -->
+          <div class="col-md-6 mb-4">
+            <div class="card">
+              <div class="card-header">
+                <h6 class="mb-0">
+                  <i class="icon-line-info me-2"></i>
+                  Informações da Encomenda
+                </h6>
+              </div>
+              <div class="card-body">
+                <p><strong>Data:</strong> {{ formatDate(selectedOrder.date) }}</p>
+                <p><strong>Status:</strong> 
+                  <span [class]="getStatusClass(selectedOrder.status)">
+                    {{ getTranslatedStatus(selectedOrder.status) }}
+                  </span>
+                </p>
+                <p><strong>Total de Items:</strong> {{ getTotalItemsInOrder(selectedOrder) }}</p>
+                <p><strong>Valor Total:</strong> <span class="text-primary fw-bold">€{{ selectedOrder.total.toFixed(2) }}</span></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Informações de Envio -->
+          <div class="col-md-6 mb-4">
+            <div class="card">
+              <div class="card-header">
+                <h6 class="mb-0">
+                  <i class="icon-line-location me-2"></i>
+                  Endereço de Envio
+                </h6>
+              </div>
+              <div class="card-body">
+                <p><strong>Nome:</strong> {{ getFullName(selectedOrder) }}</p>
+                <p><strong>Endereço:</strong><br>{{ getFullAddress(selectedOrder) }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Items da Encomenda -->
+        <div class="card">
+          <div class="card-header">
+            <h6 class="mb-0">
+              <i class="icon-line-basket me-2"></i>
+              Items da Encomenda
+            </h6>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Produto</th>
+                    <th class="text-center">Quantidade</th>
+                    <th class="text-end">Preço Unitário</th>
+                    <th class="text-end">Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of selectedOrder.items">
+                    <td>
+                      <strong>{{ item.name }}</strong>
+                    </td>
+                    <td class="text-center">{{ item.quantity }}</td>
+                    <td class="text-end">€{{ item.price.toFixed(2) }}</td>
+                    <td class="text-end">
+                      <strong>€{{ (item.quantity * item.price).toFixed(2) }}</strong>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr class="table-active">
+                    <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                    <td class="text-end">
+                      <strong class="text-primary fs-5">€{{ selectedOrder.total.toFixed(2) }}</strong>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeOrderModal()">
+          <i class="icon-line-cross me-1"></i>
+          Fechar
+        </button>
+        <button type="button" class="btn btn-primary" (click)="closeOrderModal()">
+          <i class="icon-line-printer me-1"></i>
+          Imprimir Recibo
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Backdrop do Modal -->
+<div class="modal-backdrop fade" [class.show]="showOrderModal" *ngIf="showOrderModal" (click)="closeOrderModal()"></div>

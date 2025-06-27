@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Checked Short Dress",
+    "content": "Descrição do Checked Short Dress.",
+    "image_url": "assets/images/shop/dress/1.jpg"
+  },
+  {
+    "name": "Slim Fit Chinos",
+    "content": "Descrição do Slim Fit Chinos.",
+    "image_url": "assets/images/shop/pants/1.jpg"
+  },
+  {
+    "name": "Dark Brown Boots",
+    "content": "Descrição do Dark Brown Boots.",
+    "image_url": "assets/images/shop/shoes/1.jpg"
+  },
+  {
+    "name": "Light Blue Denim Dress",
+    "content": "Descrição do Light Blue Denim Dress.",
+    "image_url": "assets/images/shop/dress/2.jpg"
+  },
+  {
+    "name": "Unisex Sunglasses",
+    "content": "Descrição do Unisex Sunglasses.",
+    "image_url": "assets/images/shop/sunglasses/1.jpg"
+  },
+  {
+    "name": "Blue Round-Neck Tshirt",
+    "content": "Descrição do Blue Round-Neck Tshirt.",
+    "image_url": "assets/images/shop/tshirts/1.jpg"
+  },
+  {
+    "name": "Silver Chrome Watch",
+    "content": "Descrição do Silver Chrome Watch.",
+    "image_url": "assets/images/shop/watches/1.jpg"
+  },
+  {
+    "name": "Men Grey Casual Shoes",
+    "content": "Descrição do Men Grey Casual Shoes.",
+    "image_url": "assets/images/shop/shoes/2.jpg"
+  },
+  {
+    "name": "Pink Printed Dress",
+    "content": "Descrição do Pink Printed Dress.",
+    "image_url": "assets/images/shop/dress/3.jpg"
+  },
+  {
+    "name": "Green Trousers",
+    "content": "Descrição do Green Trousers.",
+    "image_url": "assets/images/shop/pants/5.jpg"
+  },
+  {
+    "name": "Men Aviator Sunglasses",
+    "content": "Descrição do Men Aviator Sunglasses.",
+    "image_url": "assets/images/shop/sunglasses/2.jpg"
+  },
+  {
+    "name": "Black Polo Tshirt",
+    "content": "Descrição do Black Polo Tshirt.",
+    "image_url": "assets/images/shop/tshirts/4.jpg"
+  }
+]

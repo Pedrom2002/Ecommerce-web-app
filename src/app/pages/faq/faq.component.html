@@ -1,0 +1,428 @@
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-header">
+          <h1 class="h2 mb-0">
+            <i class="icon-line-question me-2"></i>
+            Perguntas Frequentes
+          </h1>
+        </div>
+        <div class="card-body">
+          <div class="content">
+            <p class="lead">
+              Encontre respostas para as questões mais comuns sobre os nossos produtos e serviços.
+            </p>
+
+            <div class="mb-4">
+              <input type="text" class="form-control" id="faqSearch" placeholder="Pesquisar pergunta..." 
+                     onkeyup="filterFAQ(this.value)">
+            </div>
+
+            <h3><i class="icon-line-shopping-cart me-2"></i>Encomendas</h3>
+            
+            <div class="accordion mb-4" id="ordersAccordion">
+              <div class="accordion-item faq-item" data-keywords="encomenda pedido comprar como fazer">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#order1">
+                    Como faço uma encomenda?
+                  </button>
+                </h2>
+                <div id="order1" class="accordion-collapse collapse" data-bs-parent="#ordersAccordion">
+                  <div class="accordion-body">
+                    <p>Para fazer uma encomenda:</p>
+                    <ol>
+                      <li>Navegue pelos nossos produtos</li>
+                      <li>Adicione os produtos desejados ao carrinho</li>
+                      <li>Vá ao carrinho e clique em "Finalizar Compra"</li>
+                      <li>Preencha os dados de envio e pagamento</li>
+                      <li>Confirme a encomenda</li>
+                    </ol>
+                    <p>Receberá um email de confirmação com todos os detalhes.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item faq-item" data-keywords="cancelar encomenda anular pedido">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#order2">
+                    Posso cancelar a minha encomenda?
+                  </button>
+                </h2>
+                <div id="order2" class="accordion-collapse collapse" data-bs-parent="#ordersAccordion">
+                  <div class="accordion-body">
+                    <p>Sim, pode cancelar a sua encomenda até 2 horas após a confirmação, desde que ainda não tenha sido processada.</p>
+                    <p>Para cancelar:</p>
+                    <ul>
+                      <li>Contacte-nos através do email: encomendas&#64;ecommerce.pt</li>
+                      <li>Telefone: +351 21 123 4567</li>
+                      <li>Inclua o número da encomenda na comunicação</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item faq-item" data-keywords="alterar modificar encomenda endereço morada">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#order3">
+                    Posso alterar o endereço de entrega após fazer a encomenda?
+                  </button>
+                </h2>
+                <div id="order3" class="accordion-collapse collapse" data-bs-parent="#ordersAccordion">
+                  <div class="accordion-body">
+                    <p>Alterações de endereço são possíveis até 24 horas antes do envio, dependendo do estado da encomenda.</p>
+                    <p>Contacte-nos o mais rápido possível através de:</p>
+                    <ul>
+                      <li>Email: envios&#64;ecommerce.pt</li>
+                      <li>Telefone: +351 21 123 4567 (Extensão 2)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h3><i class="icon-line-truck me-2"></i>Envios e Entregas</h3>
+            
+            <div class="accordion mb-4" id="shippingAccordion">
+              <div class="accordion-item faq-item" data-keywords="prazo entrega tempo envio demora">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ship1">
+                    Qual é o prazo de entrega?
+                  </button>
+                </h2>
+                <div id="ship1" class="accordion-collapse collapse" data-bs-parent="#shippingAccordion">
+                  <div class="accordion-body">
+                    <div class="table-responsive">
+                      <table class="table table-sm">
+                        <thead>
+                          <tr>
+                            <th>Destino</th>
+                            <th>Envio Standard</th>
+                            <th>Envio Expresso</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Portugal Continental</td>
+                            <td>3-5 dias úteis</td>
+                            <td>1-2 dias úteis</td>
+                          </tr>
+                          <tr>
+                            <td>Ilhas (Açores/Madeira)</td>
+                            <td>5-7 dias úteis</td>
+                            <td>3-4 dias úteis</td>
+                          </tr>
+                          <tr>
+                            <td>Espanha</td>
+                            <td>5-7 dias úteis</td>
+                            <td>3-5 dias úteis</td>
+                          </tr>
+                          <tr>
+                            <td>União Europeia</td>
+                            <td>7-10 dias úteis</td>
+                            <td>5-7 dias úteis</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item faq-item" data-keywords="rastrear encomenda tracking seguimento">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ship2">
+                    Como posso rastrear a minha encomenda?
+                  </button>
+                </h2>
+                <div id="ship2" class="accordion-collapse collapse" data-bs-parent="#shippingAccordion">
+                  <div class="accordion-body">
+                    <p>Após o envio, receberá um email com:</p>
+                    <ul>
+                      <li>Código de rastreamento</li>
+                      <li>Link direto para acompanhar o estado</li>
+                      <li>Informações da transportadora</li>
+                    </ul>
+                    <p>Também pode verificar o estado na sua conta, na secção "Minhas Encomendas".</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item faq-item" data-keywords="custo envio grátis portes taxa">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ship3">
+                    Quanto custa o envio?
+                  </button>
+                </h2>
+                <div id="ship3" class="accordion-collapse collapse" data-bs-parent="#shippingAccordion">
+                  <div class="accordion-body">
+                    <div class="alert alert-success">
+                      <strong>Envio GRÁTIS</strong> para encomendas superiores a €50!
+                    </div>
+                    <p><strong>Envio Standard:</strong> €4.99</p>
+                    <p><strong>Envio Expresso:</strong> €9.99</p>
+                    <p>Os custos podem variar para destinos internacionais.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h3><i class="icon-line-refresh me-2"></i>Devoluções e Trocas</h3>
+            
+            <div class="accordion mb-4" id="returnsAccordion">
+              <div class="accordion-item faq-item" data-keywords="devolver produto devolução prazo">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#return1">
+                    Qual é o prazo para devoluções?
+                  </button>
+                </h2>
+                <div id="return1" class="accordion-collapse collapse" data-bs-parent="#returnsAccordion">
+                  <div class="accordion-body">
+                    <p>Tem <strong>14 dias</strong> a partir da data de entrega para devolver produtos.</p>
+                    <p><strong>Condições:</strong></p>
+                    <ul>
+                      <li>Produto em condições originais</li>
+                      <li>Embalagem original intacta</li>
+                      <li>Etiquetas não removidas</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item faq-item" data-keywords="trocar produto tamanho cor diferente">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#return2">
+                    Posso trocar por um tamanho ou cor diferente?
+                  </button>
+                </h2>
+                <div id="return2" class="accordion-collapse collapse" data-bs-parent="#returnsAccordion">
+                  <div class="accordion-body">
+                    <p>Sim! Oferecemos trocas por tamanho ou cor diferente.</p>
+                    <p><strong>Processo:</strong></p>
+                    <ol>
+                      <li>Contacte-nos em devolver&#64;ecommerce.pt</li>
+                      <li>Envie o produto original de volta</li>
+                      <li>Enviaremos o novo produto</li>
+                    </ol>
+                    <p>Se o novo produto tiver valor superior, cobramos a diferença.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item faq-item" data-keywords="reembolso dinheiro volta quanto tempo">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#return3">
+                    Quanto tempo demora o reembolso?
+                  </button>
+                </h2>
+                <div id="return3" class="accordion-collapse collapse" data-bs-parent="#returnsAccordion">
+                  <div class="accordion-body">
+                    <p>Reembolsos são processados em <strong>5-10 dias úteis</strong> após recebermos o produto devolvido.</p>
+                    <p>O valor é reembolsado para o método de pagamento original.</p>
+                    <p>Receberá confirmação por email quando o reembolso for processado.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h3><i class="icon-line-credit-card me-2"></i>Pagamentos</h3>
+            
+            <div class="accordion mb-4" id="paymentAccordion">
+              <div class="accordion-item faq-item" data-keywords="métodos pagamento cartão visa mastercard multibanco">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pay1">
+                    Que métodos de pagamento aceitam?
+                  </button>
+                </h2>
+                <div id="pay1" class="accordion-collapse collapse" data-bs-parent="#paymentAccordion">
+                  <div class="accordion-body">
+                    <p>Aceitamos os seguintes métodos de pagamento:</p>
+                    <ul>
+                      <li><strong>Cartões de Crédito/Débito:</strong> Visa, Mastercard, American Express</li>
+                      <li><strong>Multibanco:</strong> Transferência bancária</li>
+                      <li><strong>MB Way</strong></li>
+                      <li><strong>PayPal</strong></li>
+                    </ul>
+                    <p>Todas as transações são processadas de forma segura com encriptação SSL.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item faq-item" data-keywords="segurança dados cartão protecção ssl">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pay2">
+                    Os meus dados de pagamento estão seguros?
+                  </button>
+                </h2>
+                <div id="pay2" class="accordion-collapse collapse" data-bs-parent="#paymentAccordion">
+                  <div class="accordion-body">
+                    <p>Sim! A segurança dos seus dados é a nossa prioridade:</p>
+                    <ul>
+                      <li>Encriptação SSL de 256 bits</li>
+                      <li>Não armazenamos dados do cartão</li>
+                      <li>Processamento através de gateways seguros</li>
+                      <li>Certificação PCI DSS</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item faq-item" data-keywords="fatura recibo documento fiscal">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pay3">
+                    Recebo fatura da compra?
+                  </button>
+                </h2>
+                <div id="pay3" class="accordion-collapse collapse" data-bs-parent="#paymentAccordion">
+                  <div class="accordion-body">
+                    <p>Sim! Receberá automaticamente:</p>
+                    <ul>
+                      <li>Fatura digital por email</li>
+                      <li>Documento fiscal válido para efeitos contabilísticos</li>
+                      <li>Pode solicitar fatura em papel (gratuito)</li>
+                    </ul>
+                    <p>Para empresas, podemos emitir fatura com dados fiscais específicos.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h3><i class="icon-line-user me-2"></i>Conta e Perfil</h3>
+            
+            <div class="accordion mb-4" id="accountAccordion">
+              <div class="accordion-item faq-item" data-keywords="criar conta registo benefícios vantagens">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc1">
+                    Preciso de criar uma conta para comprar?
+                  </button>
+                </h2>
+                <div id="acc1" class="accordion-collapse collapse" data-bs-parent="#accountAccordion">
+                  <div class="accordion-body">
+                    <p>Não é obrigatório, mas criar uma conta tem vantagens:</p>
+                    <ul>
+                      <li>Histórico de encomendas</li>
+                      <li>Rastreamento de envios</li>
+                      <li>Checkout mais rápido</li>
+                      <li>Ofertas exclusivas</li>
+                      <li>Lista de desejos</li>
+                    </ul>
+                    <p>O registo é gratuito e leva apenas 2 minutos!</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item faq-item" data-keywords="password senha esqueci recuperar login">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc2">
+                    Esqueci-me da minha password. O que faço?
+                  </button>
+                </h2>
+                <div id="acc2" class="accordion-collapse collapse" data-bs-parent="#accountAccordion">
+                  <div class="accordion-body">
+                    <p>Para recuperar a sua password:</p>
+                    <ol>
+                      <li>Vá à página de login</li>
+                      <li>Clique em "Esqueci a password"</li>
+                      <li>Introduza o seu email</li>
+                      <li>Receberá um link para criar nova password</li>
+                    </ol>
+                    <p>Se não receber o email, verifique a pasta de spam.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item faq-item" data-keywords="alterar dados pessoais email telefone morada">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc3">
+                    Como altero os meus dados pessoais?
+                  </button>
+                </h2>
+                <div id="acc3" class="accordion-collapse collapse" data-bs-parent="#accountAccordion">
+                  <div class="accordion-body">
+                    <p>Para alterar os seus dados:</p>
+                    <ol>
+                      <li>Faça login na sua conta</li>
+                      <li>Vá ao "Meu Perfil"</li>
+                      <li>Clique em "Editar dados pessoais"</li>
+                      <li>Altere as informações necessárias</li>
+                      <li>Guarde as alterações</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h3><i class="icon-line-support me-2"></i>Produtos e Stock</h3>
+            
+            <div class="accordion mb-4" id="productAccordion">
+              <div class="accordion-item faq-item" data-keywords="stock disponibilidade produto esgotado">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#prod1">
+                    O que acontece se um produto ficar sem stock após a encomenda?
+                  </button>
+                </h2>
+                <div id="prod1" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
+                  <div class="accordion-body">
+                    <p>Se um produto ficar sem stock após a sua encomenda:</p>
+                    <ul>
+                      <li>Contactamos imediatamente por email/telefone</li>
+                      <li>Oferecemos produto similar ou upgrade gratuito</li>
+                      <li>Pode escolher esperar pela reposição</li>
+                      <li>Ou cancelar e receber reembolso total</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item faq-item" data-keywords="garantia produto defeito assistência">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#prod2">
+                    Que garantias têm os produtos?
+                  </button>
+                </h2>
+                <div id="prod2" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
+                  <div class="accordion-body">
+                    <p>Todos os produtos têm:</p>
+                    <ul>
+                      <li><strong>Garantia legal:</strong> 2 anos (produtos com defeito)</li>
+                      <li><strong>Garantia do fabricante:</strong> Varia por produto</li>
+                      <li><strong>Garantia de satisfação:</strong> 14 dias para devolução</li>
+                    </ul>
+                    <p>Para acionar garantia, contacte tecnico&#64;ecommerce.pt</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="alert alert-info">
+              <h5><i class="icon-line-question-circle me-2"></i>Não encontrou a resposta?</h5>
+              <p class="mb-0">
+                Entre em contacto connosco através da nossa página de 
+                <a href="/customer-support" class="alert-link">Suporte ao Cliente</a> 
+                ou envie email para <strong>suporte&#64;ecommerce.pt</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function filterFAQ(searchTerm) {
+  const items = document.querySelectorAll('.faq-item');
+  const term = searchTerm.toLowerCase();
+  
+  items.forEach(item => {
+    const keywords = item.getAttribute('data-keywords').toLowerCase();
+    const title = item.querySelector('.accordion-button').textContent.toLowerCase();
+    
+    if (keywords.includes(term) || title.includes(term) || term === '') {
+      item.style.display = 'block';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+</script>

@@ -1,0 +1,301 @@
+<!-- product-list.component.html -->
+<section id="content">
+  <div class="content-wrap">
+    <div class="container clearfix">
+
+      <!-- Alertas -->
+      <div *ngIf="alertMessage" class="alert alert-{{alertType}} alert-dismissible fade show" role="alert">
+        <i class="fas" [ngClass]="{
+          'fa-check-circle': alertType === 'success',
+          'fa-exclamation-triangle': alertType === 'danger',
+          'fa-exclamation-circle': alertType === 'warning',
+          'fa-info-circle': alertType === 'info'
+        }"></i>
+        {{ alertMessage }}
+        <button type="button" class="btn-close" (click)="hideAlert()" aria-label="Close"></button>
+      </div>
+
+      <!-- Filtros e Pesquisa -->
+      <div class="row mb-4">
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <!-- Pesquisa -->
+                <div class="col-md-4">
+                  <div class="input-group">
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      [(ngModel)]="searchTerm"
+                      (keyup.enter)="onSearch()"
+                      placeholder="Pesquisar produtos..."
+                    />
+                    <button class="btn btn-outline-secondary" type="button" (click)="onSearch()">
+                      <i class="icon-line-search"></i>
+                    </button>
+                  </div>
+                </div>
+                
+                <!-- Categoria -->
+                <div class="col-md-4">
+                  <select class="form-select" [(ngModel)]="selectedCategory" (change)="applyFilters()">
+                    <option *ngFor="let category of categories" [value]="category.value">
+                      {{ category.label }}
+                    </option>
+                  </select>
+                </div>
+                
+                <!-- Ordenação -->
+                <div class="col-md-4">
+                  <select class="form-select" [(ngModel)]="sortBy" (change)="applyFilters()">
+                    <option *ngFor="let option of sortOptions" [value]="option.value">
+                      {{ option.label }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              
+              <!-- Botão Limpar -->
+              <div class="row mt-2" *ngIf="searchTerm || selectedCategory !== 'all'">
+                <div class="col-12">
+                  <button class="btn btn-outline-danger btn-sm" (click)="clearSearch()">
+                    <i class="icon-line-cross"></i> Limpar Filtros
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Resumo -->
+        <div class="col-lg-4">
+          <div class="card bg-light">
+            <div class="card-body text-center">
+              <h5 class="mb-2">{{ filteredProducts.length }}</h5>
+              <small class="text-muted">Produto{{ filteredProducts.length !== 1 ? 's' : '' }} encontrado{{ filteredProducts.length !== 1 ? 's' : '' }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading Skeletons -->
+      <div id="shop" class="shop row grid-container gutter-30" data-layout="fitRows" *ngIf="isLoading">
+        <div class="product col-lg-3 col-md-4 col-sm-6 col-12" *ngFor="let i of [1,2,3,4,5,6,7,8]">
+          <app-loading-skeleton type="product"></app-loading-skeleton>
+        </div>
+      </div>
+
+      <!-- Shop Grid -->
+      <div id="shop" class="shop row grid-container gutter-30" data-layout="fitRows" *ngIf="!isLoading">
+
+        <!-- Produto -->
+        <div 
+          *ngFor="let product of filteredProducts" 
+          class="product col-lg-3 col-md-4 col-sm-6 col-12"
+        >
+          <div class="grid-inner">
+            <div class="product-image">
+              <!-- Imagens do Produto -->
+              <a (click)="viewProduct(product.id)" style="cursor: pointer;">
+                <img [src]="product.image" [alt]="product.name">
+              </a>
+              <a *ngIf="product.hoverImage" (click)="viewProduct(product.id)" style="cursor: pointer;">
+                <img [src]="product.hoverImage" [alt]="product.name">
+              </a>
+              
+              <!-- Badges -->
+              <div *ngIf="!product.inStock" class="sale-flash badge bg-secondary p-2">Fora de Stock</div>
+              <div *ngIf="product.onSale && product.inStock" class="sale-flash badge bg-success p-2 text-uppercase">Promoção!</div>
+              
+              <!-- Overlay com Botões -->
+              <div class="bg-overlay">
+                <div class="bg-overlay-content align-items-end justify-content-between" 
+                     data-hover-animate="fadeIn" data-hover-speed="400">
+                  
+                  <!-- Botão Adicionar ao Carrinho -->
+                  <button 
+                    [class]="getCartButtonClass(product)"
+                    (click)="addToCart(product, $event)"
+                    [disabled]="!product.inStock"
+                    [title]="getCartButtonText(product)"
+                  >
+                    <i [class]="getCartButtonIcon(product)"></i>
+                  </button>
+                  
+                  <!-- Botão Ver Detalhes -->
+                  <button 
+                    class="btn btn-dark" 
+                    (click)="viewProduct(product.id)"
+                    title="Ver detalhes"
+                  >
+                    <i class="icon-line-expand"></i>
+                  </button>
+                </div>
+                <div class="bg-overlay-bg bg-transparent"></div>
+              </div>
+            </div>
+            
+            <!-- Descrição do Produto -->
+            <div class="product-desc">
+              <!-- Nome -->
+              <div class="product-title">
+                <h3>
+                  <a (click)="viewProduct(product.id)" style="cursor: pointer;">
+                    {{ product.name }}
+                  </a>
+                </h3>
+              </div>
+              
+              <!-- Preço -->
+              <div class="product-price">
+                <del *ngIf="product.originalPrice">${{ formatPrice(product.originalPrice) }}</del>
+                <ins>${{ formatPrice(product.price) }}</ins>
+              </div>
+              
+              <!-- Rating -->
+              <div class="product-rating">
+                <i 
+                  *ngFor="let star of getStarArray(product.rating)" 
+                  [class]="'icon-star' + (star === 'full' ? '3' : star === 'half' ? '-half-full' : '-empty')"
+                ></i>
+              </div>
+              
+              <!-- Status no Carrinho -->
+              <div *ngIf="isInCart(product.id)" class="mt-2">
+                <small class="badge bg-success">
+                  <i class="icon-line-check me-1"></i>
+                  {{ getProductQuantity(product.id) }} no carrinho
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- #shop end -->
+
+      <!-- Nenhum Produto Encontrado -->
+      <div *ngIf="!isLoading && filteredProducts.length === 0" class="text-center py-5">
+        <div class="card bg-light">
+          <div class="card-body">
+            <i class="icon-line-bag" style="font-size: 4rem; color: #ddd; margin-bottom: 20px;"></i>
+            <h4 class="text-muted">Nenhum produto encontrado</h4>
+            <p class="text-muted mb-3">
+              Não foram encontrados produtos que correspondam aos seus critérios de pesquisa.
+            </p>
+            <button class="btn btn-primary" (click)="clearSearch()">
+              <i class="icon-line-refresh me-2"></i>Ver Todos os Produtos
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CSS adicional para melhorar o visual -->
+<style>
+.alert {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+}
+
+.product {
+  margin-bottom: 30px;
+}
+
+.product-image {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.product-image img {
+  transition: transform 0.3s ease;
+}
+
+.product:hover .product-image img {
+  transform: scale(1.05);
+}
+
+.btn {
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.sale-flash {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  font-size: 0.75rem;
+  border-radius: 4px;
+}
+
+.product-rating i {
+  color: #ffc107;
+  margin-right: 2px;
+}
+
+.product-price ins {
+  color: #28a745;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.product-price del {
+  color: #6c757d;
+  margin-right: 8px;
+}
+
+.form-select, .form-control {
+  border-radius: 6px;
+  border: 1px solid #dee2e6;
+}
+
+.form-select:focus, .form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+.input-group .btn {
+  border-radius: 0 6px 6px 0;
+}
+
+.bg-overlay-content .btn {
+  margin: 0 2px;
+  padding: 8px 12px;
+}
+
+.badge {
+  font-size: 0.7rem;
+}
+
+@media (max-width: 768px) {
+  .product-desc h3 {
+    font-size: 1rem;
+  }
+  
+  .bg-overlay-content {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .bg-overlay-content .btn {
+    width: 100%;
+    margin: 2px 0;
+  }
+}
+</style>

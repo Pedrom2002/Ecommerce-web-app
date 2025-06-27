@@ -1,0 +1,135 @@
+/* Terms of Service Page Styles */
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 15px;
+  position: relative;
+  z-index: 1;
+  clear: both;
+}
+
+.card {
+  border: 1px solid #dee2e6;
+  border-radius: 0.375rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  background-color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 1rem 1.25rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  margin: 0;
+}
+
+.card-body {
+  padding: 1.25rem;
+  line-height: 1.6;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+.content h3 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #212529;
+  font-weight: 600;
+}
+
+.content h3:first-of-type {
+  margin-top: 1rem;
+}
+
+.content h4 {
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #495057;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.content p {
+  margin-bottom: 1rem;
+  color: #495057;
+  text-align: justify;
+}
+
+.content ul, .content ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.content li {
+  margin-bottom: 0.5rem;
+  color: #495057;
+}
+
+.alert {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+}
+
+.alert-info {
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+.small {
+  font-size: 0.875em;
+}
+
+/* Reset any conflicting styles */
+* {
+  box-sizing: border-box;
+}
+
+.me-2 {
+  margin-right: 0.5rem !important;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem !important;
+}
+
+.mt-5 {
+  margin-top: 3rem !important;
+}
+
+.mb-5 {
+  margin-bottom: 3rem !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 10px;
+  }
+  
+  .card-body {
+    padding: 1rem;
+  }
+  
+  .content h3 {
+    font-size: 1.25rem;
+  }
+  
+  .content h4 {
+    font-size: 1.1rem;
+  }
+}

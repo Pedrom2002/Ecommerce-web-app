@@ -1,0 +1,44 @@
+<!-- Product Skeleton -->
+<div *ngIf="type === 'product'" class="product-skeleton">
+  <div class="skeleton skeleton-animated" style="height: 200px; width: 100%; border-radius: 8px; margin-bottom: 12px;"></div>
+  <div class="skeleton skeleton-animated" style="height: 16px; width: 80%; margin-bottom: 8px;"></div>
+  <div class="skeleton skeleton-animated" style="height: 14px; width: 60%; margin-bottom: 8px;"></div>
+  <div class="skeleton skeleton-animated" style="height: 18px; width: 40%;"></div>
+</div>
+
+<!-- Card Skeleton -->
+<div *ngIf="type === 'card'" class="card-skeleton">
+  <div class="skeleton skeleton-animated" style="height: 150px; width: 100%; border-radius: 8px; margin-bottom: 12px;"></div>
+  <div class="skeleton skeleton-animated" style="height: 20px; width: 100%; margin-bottom: 8px;"></div>
+  <div class="skeleton skeleton-animated" style="height: 16px; width: 70%; margin-bottom: 8px;"></div>
+  <div class="skeleton skeleton-animated" style="height: 16px; width: 90%;"></div>
+</div>
+
+<!-- List Skeleton -->
+<div *ngIf="type === 'list'" class="list-skeleton">
+  <div *ngFor="let row of getRowArray()" class="list-item-skeleton" style="margin-bottom: 12px;">
+    <div class="skeleton skeleton-animated" style="height: 40px; width: 40px; border-radius: 50%; float: left; margin-right: 12px;"></div>
+    <div class="skeleton skeleton-animated" style="height: 16px; width: 60%; margin-bottom: 6px;"></div>
+    <div class="skeleton skeleton-animated" style="height: 14px; width: 40%;"></div>
+    <div style="clear: both;"></div>
+  </div>
+</div>
+
+<!-- Text Skeleton -->
+<div *ngIf="type === 'text'" class="text-skeleton">
+  <div *ngFor="let row of getRowArray()" 
+       [ngClass]="getSkeletonClass()" 
+       [style.height]="height" 
+       [style.width]="row === getRowArray().length - 1 ? '70%' : width"
+       style="margin-bottom: 8px;">
+  </div>
+</div>
+
+<!-- Avatar Skeleton -->
+<div *ngIf="type === 'avatar'" class="avatar-skeleton">
+  <div [ngClass]="getSkeletonClass()" 
+       [style.height]="height" 
+       [style.width]="height" 
+       style="border-radius: 50%;">
+  </div>
+</div>

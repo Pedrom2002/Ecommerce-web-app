@@ -1,0 +1,151 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Global header fix - add padding to body to compensate for fixed header */
+body {
+  padding-top: 80px !important;
+}
+
+/* Ensure header stays fixed */
+#header {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Global styles for footer pages - prevent layout issues */
+app-privacy-policy,
+app-terms-of-service,
+app-shipping-returns,
+app-customer-support,
+app-faq {
+  display: block;
+  width: 100%;
+  min-height: calc(100vh - 160px);
+  position: relative;
+  z-index: 1;
+  clear: both;
+  overflow-x: hidden;
+}
+
+/* Ensure containers don't overlap */
+.container {
+  position: relative;
+  z-index: 2;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Prevent Bootstrap grid issues */
+.row {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.col-12,
+.col-md-4,
+.col-md-6,
+.col-lg-8 {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Fix Bootstrap card styles */
+.card {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.375rem;
+  background-color: #fff;
+  position: relative;
+}
+
+.card-header {
+  padding: 1rem 1.25rem;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-body {
+  flex: 1 1 auto;
+  padding: 1.25rem;
+}
+
+/* Fix text alignment and spacing */
+.text-center {
+  text-align: center !important;
+}
+
+.text-justify {
+  text-align: justify !important;
+}
+
+/* Ensure proper spacing */
+.mt-5 {
+  margin-top: 3rem !important;
+}
+
+.mb-5 {
+  margin-bottom: 3rem !important;
+}
+
+/* Fix accordion styles */
+.accordion-button {
+  background-color: #fff;
+  border: none !important;
+  border-radius: 0 !important;
+  text-align: left;
+  font-weight: 400;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  outline: none !important;
+}
+
+.accordion-button:focus {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.accordion-item {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.125) !important;
+  border-radius: 0.375rem !important;
+  overflow: hidden !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.accordion-body {
+  border-top: 1px solid rgba(0, 0, 0, 0.125) !important;
+  box-sizing: border-box !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  body {
+    padding-top: 70px !important;
+  }
+  
+  .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  .row {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+  
+  .col-12,
+  .col-md-4,
+  .col-md-6,
+  .col-lg-8 {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

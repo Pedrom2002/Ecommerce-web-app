@@ -1,0 +1,199 @@
+<!-- login.component.html -->
+<section id="content">
+  <div class="content-wrap">
+    <div class="container clearfix">
+      <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7 col-xl-6">
+          
+          <!-- Mensagens de Alerta -->
+          <div *ngIf="alertMessage" class="alert alert-{{alertType}} alert-dismissible fade show" role="alert">
+            <i class="fas" [ngClass]="{
+              'fa-check-circle': alertType === 'success', 
+              'fa-exclamation-triangle': alertType === 'danger',
+              'fa-exclamation-circle': alertType === 'warning'
+            }"></i>
+            {{ alertMessage }}
+            <button type="button" class="btn-close" (click)="alertMessage = ''" aria-label="Close"></button>
+          </div>
+
+          <!-- Aviso de Bloqueio -->
+          <div *ngIf="isBlocked" class="alert alert-danger d-flex align-items-center" role="alert">
+            <i class="fas fa-lock me-3 fa-2x"></i>
+            <div>
+              <h6 class="mb-1">Conta Temporariamente Bloqueada</h6>
+              <small>Muitas tentativas falhadas. Tente novamente em: <strong>{{ getFormattedTimeRemaining() }}</strong></small>
+            </div>
+          </div>
+          
+          <div class="card mb-0">
+            <div class="card-body" style="padding: 50px 60px;">
+              <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+                
+                <div class="text-center mb-4">
+                  <i class="fas fa-sign-in-alt fa-3x text-primary mb-3"></i>
+                  <h3 class="mb-2">Entrar na Conta</h3>
+                  <p class="text-muted">Introduza as suas credenciais para continuar</p>
+                </div>
+                
+                <!-- Username/Email -->
+                <div class="mb-3">
+                  <label for="username" class="form-label">
+                    <i class="fas fa-user me-1"></i>Username ou Email:
+                  </label>
+                  <input 
+                    type="text" 
+                    class="form-control"
+                    [ngClass]="getFieldClass('username')"
+                    formControlName="username"
+                    id="username"
+                    placeholder="Introduza username ou email"
+                    [disabled]="isBlocked"
+                    autocomplete="username"
+                  />
+                  <div *ngIf="hasError('username', 'required') || hasError('username', 'minlength')" class="invalid-feedback d-block">
+                    {{ getErrorMessage('username') }}
+                  </div>
+                  <div *ngIf="username.valid && (username.dirty || username.touched)" class="valid-feedback d-block">
+                    ✓ Username válido
+                  </div>
+                </div>
+                
+                <!-- Password -->
+                <div class="mb-3">
+                  <label for="password" class="form-label">
+                    <i class="fas fa-lock me-1"></i>Password:
+                  </label>
+                  <div class="input-group">
+                    <input 
+                      [type]="showPassword ? 'text' : 'password'"
+                      class="form-control"
+                      [ngClass]="getFieldClass('password')"
+                      formControlName="password"
+                      id="password"
+                      placeholder="Introduza a sua password"
+                      [disabled]="isBlocked"
+                      autocomplete="current-password"
+                    />
+                    <button 
+                      class="btn btn-outline-secondary" 
+                      type="button" 
+                      (click)="togglePasswordVisibility()"
+                      [disabled]="isBlocked"
+                    >
+                      <i class="fas" [ngClass]="{'fa-eye': !showPassword, 'fa-eye-slash': showPassword}"></i>
+                    </button>
+                  </div>
+                  <div *ngIf="hasError('password', 'required') || hasError('password', 'minlength')" class="invalid-feedback d-block">
+                    {{ getErrorMessage('password') }}
+                  </div>
+                  <div *ngIf="password.valid && (password.dirty || password.touched)" class="valid-feedback d-block">
+                    ✓ Password válida
+                  </div>
+                </div>
+
+                <!-- Opções adicionais -->
+                <div class="row mb-4">
+                  <div class="col-sm-6">
+                    <div class="form-check">
+                      <input 
+                        type="checkbox" 
+                        class="form-check-input" 
+                        formControlName="rememberMe"
+                        id="rememberMe"
+                        [disabled]="isBlocked"
+                      />
+                      <label class="form-check-label" for="rememberMe">
+                        <small>Lembrar-me</small>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 text-end">
+                    <button 
+                      type="button" 
+                      class="btn btn-link p-0 small text-decoration-none"
+                      (click)="forgotPassword()"
+                      [disabled]="isBlocked"
+                    >
+                      Esqueceu a password?
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Informação de Tentativas -->
+                <div *ngIf="loginAttempts > 0 && !isBlocked" class="alert alert-warning d-flex align-items-center mb-3">
+                  <i class="fas fa-exclamation-triangle me-2"></i>
+                  <small>
+                    <strong>Aviso:</strong> {{ loginAttempts }}/3 tentativas utilizadas. 
+                    Após 3 tentativas falhadas, a conta será bloqueada por 5 minutos.
+                  </small>
+                </div>
+                
+                <!-- Botão Submit -->
+                <div class="d-grid mb-3">
+                  <button 
+                    class="btn btn-primary btn-lg" 
+                    [ngClass]="{'loading': isLoading}"
+                    type="submit" 
+                    [disabled]="!isFormValid() || isLoading || isBlocked"
+                  >
+                    <span *ngIf="isLoading" class="loading-spinner">
+                      <i class="fas fa-spinner fa-spin me-2"></i>
+                    </span>
+                    <span [ngClass]="{'d-none': isLoading}">
+                      <i class="fas fa-sign-in-alt me-2"></i>
+                      {{ isBlocked ? 'Bloqueado' : 'Entrar' }}
+                    </span>
+                  </button>
+                </div>
+
+                <!-- Separador -->
+                <div class="text-center mb-3">
+                  <small class="text-muted">
+                    <span class="border-bottom px-3 py-1">ou</span>
+                  </small>
+                </div>
+
+                <!-- Botão de Registo -->
+                <div class="d-grid">
+                  <button 
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    (click)="goToRegister()"
+                    [disabled]="isLoading"
+                  >
+                    <i class="fas fa-user-plus me-2"></i>
+                    Criar Nova Conta
+                  </button>
+                </div>
+
+                <!-- Informação de Segurança -->
+                <div class="mt-4 p-3 bg-light rounded">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      <i class="fas fa-shield-alt text-success fa-2x"></i>
+                    </div>
+                    <div class="col">
+                      <h6 class="mb-1">Login Seguro</h6>
+                      <small class="text-muted">
+                        Proteção contra ataques de força bruta • Dados encriptados • Sessão segura
+                      </small>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Links adicionais -->
+                <div class="text-center mt-4">
+                  <small class="text-muted">
+                    Problemas com o login? 
+                    <a href="#" class="text-decoration-none">Contacte o suporte</a>
+                  </small>
+                </div>
+                
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

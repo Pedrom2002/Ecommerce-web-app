@@ -1,0 +1,138 @@
+<!-- header.component.html -->
+<header id="header" class="full-header">
+  <div id="header-wrap">
+    <div class="container">
+      <div class="header-row">
+        <!-- Logo -->
+        <div id="logo">
+          <a routerLink="" class="standard-logo" data-dark-logo="assets/images/logo-dark.png">
+            <img src="assets/images/logo.png" alt="Canvas Logo" />
+          </a>
+          <a routerLink="" class="retina-logo" data-dark-logo="assets/images/logo-dark@2x.png">
+            <img src="assets/images/logo@2x.png" alt="Canvas Logo" />
+          </a>
+        </div>
+
+        <div class="header-misc">
+          <!-- Profile Link - apenas para utilizadores autenticados -->
+          <div id="top-profile" class="header-misc-icon" *ngIf="isLoggedIn()">
+            <a (click)="goToProfile()" style="cursor: pointer;" title="Perfil">
+              <i class="icon-line-user"></i>
+            </a>
+          </div>
+
+          <!-- Auth Links para utilizadores não autenticados -->
+          <div class="header-misc-icon" *ngIf="!isLoggedIn()">
+            <a (click)="goToLogin()" style="cursor: pointer;" title="Login">
+              <i class="icon-line-user"></i>
+            </a>
+          </div>
+
+          <!-- Top Cart -->
+          <div id="top-cart" class="header-misc-icon" [class.cart-open]="cartOpen">
+            <a href="#" (click)="toggleCart(); $event.preventDefault()" id="top-cart-trigger">
+              <i class="icon-line-bag"></i>
+              <span class="top-cart-number">{{ getTotalItems() }}</span>
+            </a>
+            
+            <!-- Cart Dropdown -->
+            <div class="top-cart-content" [class.show]="cartOpen" (click)="$event.stopPropagation()">
+              <div class="top-cart-title">
+                <h4>Shopping Cart</h4>
+              </div>
+              
+              <!-- Cart Items -->
+              <div class="top-cart-items" *ngIf="cartItems.length > 0">
+                <div class="top-cart-item" *ngFor="let item of cartItems">
+                  <div class="top-cart-item-image">
+                    <a href="#"><img [src]="item.image" [alt]="item.name" /></a>
+                  </div>
+                  <div class="top-cart-item-desc">
+                    <div class="top-cart-item-desc-title">
+                      <a href="#">{{ item.name }}</a>
+                      <span class="top-cart-item-price d-block">${{ item.price.toFixed(2) }}</span>
+                    </div>
+                    <div class="top-cart-item-quantity">
+                      <button (click)="updateQuantity(item.id, item.quantity - 1); $event.stopPropagation()" class="qty-btn">-</button>
+                      <span>{{ item.quantity }}</span>
+                      <button (click)="updateQuantity(item.id, item.quantity + 1); $event.stopPropagation()" class="qty-btn">+</button>
+                    </div>
+                  </div>
+                  <div class="top-cart-item-remove">
+                    <button (click)="removeItem(item.id); $event.stopPropagation()" class="remove-item" title="Remover item">
+                      <i class="icon-line-cross"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Empty Cart -->
+              <div class="top-cart-empty" *ngIf="cartItems.length === 0">
+                <p>O carrinho está vazio</p>
+                <i class="icon-line-bag" style="font-size: 48px; color: #ddd; margin-bottom: 10px;"></i>
+              </div>
+              
+              <!-- Cart Actions -->
+              <div class="top-cart-action" *ngIf="cartItems.length > 0">
+                <span class="top-checkout-price">${{ getTotalPrice().toFixed(2) }}</span>
+                <div class="cart-buttons">
+                  <button (click)="goToCheckout(); $event.stopPropagation()" class="button button-3d button-small m-0 me-2">
+                    <i class="icon-line-credit-card me-1"></i>
+                    Checkout
+                  </button>
+                  <button (click)="clearCart(); $event.stopPropagation()" class="button button-mini button-red">
+                    <i class="icon-line-trash me-1"></i>
+                    Clear
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="primary-menu-trigger">
+          <svg class="svg-trigger" viewBox="0 0 100 100">
+            <path d="m 30,33 h 40 c 3.722839,0 7.5,3.126468 7.5,8.578427 0,5.451959 -2.727029,8.421573 -7.5,8.421573 h -20"></path>
+            <path d="m 30,50 h 40"></path>
+            <path d="m 70,67 h -40 c 0,0 -7.5,-0.802118 -7.5,-8.365747 0,-7.563629 7.5,-8.634253 7.5,-8.634253 h 20"></path>
+          </svg>
+        </div>
+
+        <!-- Primary Navigation -->
+        <nav class="primary-menu">
+          <ul class="menu-container">
+            <li class="menu-item">
+              <a class="menu-link" (click)="goToHome()"><div>Home</div></a>
+            </li>
+            
+            <!-- Items para utilizadores autenticados -->
+            <li class="menu-item" *ngIf="isLoggedIn()">
+              <a class="menu-link" (click)="goToProfile()"><div>Perfil</div></a>
+            </li>
+            
+            <!-- Items para utilizadores não autenticados -->
+            <li class="menu-item" *ngIf="!isLoggedIn()">
+              <a class="menu-link" (click)="goToLogin()"><div>Login</div></a>
+            </li>
+            <li class="menu-item" *ngIf="!isLoggedIn()">
+              <a class="menu-link" (click)="goToRegister()"><div>Registo</div></a>
+            </li>
+            
+            <!-- Item de logout para utilizadores autenticados -->
+            <li class="menu-item" *ngIf="isLoggedIn()">
+              <a class="menu-link" (click)="logout()"><div><i class="icon-line-sign-out"></i> Sair</div></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <div class="header-wrap-clone"></div>
+</header>
+
+<!-- Overlay para fechar o cart quando clicar fora -->
+<div class="cart-overlay" 
+     *ngIf="cartOpen" 
+     (click)="closeCart()"
+     style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 999; background: transparent;">
+</div>

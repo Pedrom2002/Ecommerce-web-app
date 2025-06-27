@@ -1,0 +1,242 @@
+<!-- register.component.html -->
+<section id="content">
+  <div class="content-wrap">
+    <div class="container clearfix">
+      <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7 col-xl-6">
+          
+          <!-- Mensagens de Alerta -->
+          <div *ngIf="alertMessage" class="alert alert-{{alertType}} alert-dismissible fade show" role="alert">
+            <i class="fas" [ngClass]="{'fa-check-circle': alertType === 'success', 'fa-exclamation-triangle': alertType === 'danger'}"></i>
+            {{ alertMessage }}
+            <button type="button" class="btn-close" (click)="alertMessage = ''" aria-label="Close"></button>
+          </div>
+          
+          <div class="card mb-0">
+            <div class="card-body" style="padding: 50px 60px;">
+              <form (ngSubmit)="onRegister()" #registerForm="ngForm" novalidate>
+                
+                <h3 class="text-center mb-4">
+                  <i class="fas fa-user-plus me-2"></i>
+                  Criar Conta
+                </h3>
+                
+                <!-- Nome -->
+                <div class="mb-3">
+                  <label for="name" class="form-label">
+                    <i class="fas fa-user me-1"></i>Nome Completo:
+                  </label>
+                  <input 
+                    type="text" 
+                    class="form-control"
+                    [ngClass]="getNameClass()"
+                    [(ngModel)]="name" 
+                    name="name" 
+                    id="name"
+                    (input)="validateName()"
+                    (blur)="validateName()"
+                    placeholder="Introduza o seu nome completo"
+                    required 
+                  />
+                  <div *ngIf="nameError" class="invalid-feedback d-block">
+                    {{ nameError }}
+                  </div>
+                  <div *ngIf="nameValid" class="valid-feedback d-block">
+                    ✓ Nome válido
+                  </div>
+                </div>
+                
+                <!-- Email -->
+                <div class="mb-3">
+                  <label for="email" class="form-label">
+                    <i class="fas fa-envelope me-1"></i>Email:
+                  </label>
+                  <input 
+                    type="email" 
+                    class="form-control"
+                    [ngClass]="getEmailClass()"
+                    [(ngModel)]="email" 
+                    name="email" 
+                    id="email"
+                    (input)="validateEmail()"
+                    (blur)="validateEmail()"
+                    placeholder="exemplo@email.com"
+                    required 
+                  />
+                  <div *ngIf="emailError" class="invalid-feedback d-block">
+                    {{ emailError }}
+                  </div>
+                  <div *ngIf="emailValid" class="valid-feedback d-block">
+                    ✓ Email válido
+                  </div>
+                </div>
+                
+                <!-- Username -->
+                <div class="mb-3">
+                  <label for="username" class="form-label">
+                    <i class="fas fa-at me-1"></i>Username:
+                  </label>
+                  <input 
+                    type="text" 
+                    class="form-control"
+                    [ngClass]="getUsernameClass()"
+                    [(ngModel)]="username" 
+                    name="username" 
+                    id="username"
+                    (input)="validateUsername()"
+                    (blur)="validateUsername()"
+                    placeholder="username (letras, números, _)"
+                    required 
+                  />
+                  <div *ngIf="usernameError" class="invalid-feedback d-block">
+                    {{ usernameError }}
+                  </div>
+                  <div *ngIf="usernameValid" class="valid-feedback d-block">
+                    ✓ Username disponível
+                  </div>
+                  <small class="text-muted">3-20 caracteres. Apenas letras, números e underscore.</small>
+                </div>
+                
+                <!-- Telefone -->
+                <div class="mb-3">
+                  <label for="phone" class="form-label">
+                    <i class="fas fa-phone me-1"></i>Telefone:
+                  </label>
+                  <input 
+                    type="tel" 
+                    class="form-control"
+                    [ngClass]="getPhoneClass()"
+                    [(ngModel)]="phone" 
+                    name="phone" 
+                    id="phone"
+                    (input)="validatePhone()"
+                    (blur)="validatePhone()"
+                    placeholder="+351 912 345 678"
+                    required 
+                  />
+                  <div *ngIf="phoneError" class="invalid-feedback d-block">
+                    {{ phoneError }}
+                  </div>
+                  <div *ngIf="phoneValid" class="valid-feedback d-block">
+                    ✓ Telefone válido
+                  </div>
+                </div>
+                
+                <!-- Password -->
+                <div class="mb-3">
+                  <label for="password" class="form-label">
+                    <i class="fas fa-lock me-1"></i>Password:
+                  </label>
+                  <div class="input-group">
+                    <input 
+                      [type]="showPassword ? 'text' : 'password'"
+                      class="form-control"
+                      [ngClass]="getPasswordClass()"
+                      [(ngModel)]="password" 
+                      name="password" 
+                      id="password"
+                      (input)="validatePassword()"
+                      (blur)="validatePassword()"
+                      placeholder="Mínimo 8 caracteres"
+                      required 
+                    />
+                    <button 
+                      class="btn btn-outline-secondary" 
+                      type="button" 
+                      (click)="togglePasswordVisibility()"
+                    >
+                      <i class="fas" [ngClass]="{'fa-eye': !showPassword, 'fa-eye-slash': showPassword}"></i>
+                    </button>
+                  </div>
+                  
+                  <!-- Barra de força da password -->
+                  <div *ngIf="password" class="password-strength mt-2" 
+                       [ngClass]="getPasswordStrengthClass()"
+                       [style.width]="getPasswordStrengthWidth()">
+                  </div>
+                  
+                  <div *ngIf="passwordError" class="invalid-feedback d-block">
+                    {{ passwordError }}
+                  </div>
+                  <div *ngIf="passwordValid" class="valid-feedback d-block">
+                    ✓ Password segura
+                  </div>
+                  <small class="text-muted">
+                    Mínimo: 8 caracteres, 1 maiúscula, 1 minúscula, 1 número
+                  </small>
+                </div>
+                
+                <!-- Confirmar Password -->
+                <div class="mb-3">
+                  <label for="confirmPassword" class="form-label">
+                    <i class="fas fa-lock me-1"></i>Confirmar Password:
+                  </label>
+                  <input 
+                    type="password" 
+                    class="form-control"
+                    [ngClass]="getConfirmPasswordClass()"
+                    [(ngModel)]="confirmPassword" 
+                    name="confirmPassword" 
+                    id="confirmPassword"
+                    (input)="validateConfirmPassword()"
+                    (blur)="validateConfirmPassword()"
+                    placeholder="Repita a password"
+                    required 
+                  />
+                  <div *ngIf="confirmPasswordError" class="invalid-feedback d-block">
+                    {{ confirmPasswordError }}
+                  </div>
+                  <div *ngIf="confirmPasswordValid" class="valid-feedback d-block">
+                    ✓ Passwords coincidem
+                  </div>
+                </div>
+                
+                <!-- Termos e Condições -->
+                <div class="mb-3 form-check">
+                  <input 
+                    type="checkbox" 
+                    class="form-check-input" 
+                    [(ngModel)]="termsAccepted"
+                    name="terms"
+                    id="terms" 
+                    required
+                  />
+                  <label class="form-check-label" for="terms">
+                    Aceito os <a href="#" class="text-decoration-none">Termos e Condições</a>
+                  </label>
+                  <div *ngIf="!termsAccepted && termsAccepted !== undefined" class="invalid-feedback d-block">
+                    Deve aceitar os termos e condições
+                  </div>
+                </div>
+                
+                <!-- Botão Submit -->
+                <div class="d-grid">
+                  <button 
+                    class="btn btn-primary btn-lg" 
+                    [ngClass]="{'loading': isLoading}"
+                    type="submit" 
+                    [disabled]="!isFormValid() || isLoading"
+                  >
+                    <span *ngIf="isLoading" class="loading-spinner">
+                      <i class="fas fa-spinner fa-spin me-2"></i>
+                    </span>
+                    <span [ngClass]="{'d-none': isLoading}">
+                      <i class="fas fa-user-plus me-2"></i>Criar Conta
+                    </span>
+                  </button>
+                </div>
+                
+                <div class="text-center mt-3">
+                  <small class="text-muted">
+                    Já tem conta? <a routerLink="/login" class="text-decoration-none">Fazer Login</a>
+                  </small>
+                </div>
+                
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
