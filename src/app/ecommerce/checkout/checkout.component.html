@@ -9,11 +9,11 @@
           <div class="d-flex justify-content-between align-items-center">
             <h2 class="mb-0">
               <i class="icon-line-bag me-2"></i>
-              Checkout
+              {{ getTranslation('checkout_title') }}
             </h2>
             <button class="btn btn-outline-secondary" (click)="goBack()">
               <i class="icon-line-arrow-left me-1"></i>
-              Voltar às Compras
+              {{ getTranslation('checkout_back_to_shopping') }}
             </button>
           </div>
         </div>
@@ -40,7 +40,7 @@
                 <i class="icon-line-truck" *ngIf="currentStep === 1"></i>
                 <i class="icon-line-check" *ngIf="currentStep > 1"></i>
               </div>
-              <h6>Informações de Envio</h6>
+              <h6>{{ getTranslation('checkout_shipping_info') }}</h6>
             </div>
           </div>
           <div class="col-md-4">
@@ -49,7 +49,7 @@
                 <i class="icon-line-credit-card" *ngIf="currentStep === 2"></i>
                 <i class="icon-line-check" *ngIf="currentStep > 2"></i>
               </div>
-              <h6>Pagamento</h6>
+              <h6>{{ getTranslation('checkout_payment') }}</h6>
             </div>
           </div>
           <div class="col-md-4">
@@ -57,7 +57,7 @@
               <div class="step-icon">
                 <i class="icon-line-eye"></i>
               </div>
-              <h6>Revisão do Pedido</h6>
+              <h6>{{ getTranslation('checkout_order_review') }}</h6>
             </div>
           </div>
         </div>
@@ -74,14 +74,14 @@
                 <div class="card-header">
                   <h4 class="mb-0">
                     <i class="icon-line-truck me-2"></i>
-                    Informações de Envio
+                    {{ getTranslation('checkout_shipping_information') }}
                   </h4>
                 </div>
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-6">
                       <div class="mb-3">
-                        <label for="firstName" class="form-label">Nome *</label>
+                        <label for="firstName" class="form-label">{{ getTranslation('checkout_first_name') }} *</label>
                         <input 
                           type="text" 
                           class="form-control"
@@ -89,7 +89,7 @@
                           [class.is-valid]="checkoutForm.get('firstName')?.valid && (checkoutForm.get('firstName')?.dirty || checkoutForm.get('firstName')?.touched)"
                           formControlName="firstName"
                           id="firstName"
-                          placeholder="Introduza o seu nome"
+                          placeholder="{{ getTranslation('checkout_enter_first_name') }}"
                         />
                         <div class="invalid-feedback" *ngIf="hasError('firstName', 'required') || hasError('firstName', 'minlength')">
                           {{ getErrorMessage('firstName') }}
@@ -98,7 +98,7 @@
                     </div>
                     <div class="col-md-6">
                       <div class="mb-3">
-                        <label for="lastName" class="form-label">Apelido *</label>
+                        <label for="lastName" class="form-label">{{ getTranslation('checkout_last_name') }} *</label>
                         <input 
                           type="text" 
                           class="form-control"
@@ -106,7 +106,7 @@
                           [class.is-valid]="checkoutForm.get('lastName')?.valid && (checkoutForm.get('lastName')?.dirty || checkoutForm.get('lastName')?.touched)"
                           formControlName="lastName"
                           id="lastName"
-                          placeholder="Introduza o seu apelido"
+                          placeholder="{{ getTranslation('checkout_enter_last_name') }}"
                         />
                         <div class="invalid-feedback" *ngIf="hasError('lastName', 'required') || hasError('lastName', 'minlength')">
                           {{ getErrorMessage('lastName') }}
@@ -118,7 +118,7 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="mb-3">
-                        <label for="email" class="form-label">Email *</label>
+                        <label for="email" class="form-label">{{ getTranslation('checkout_email') }} *</label>
                         <input 
                           type="email" 
                           class="form-control"
@@ -126,7 +126,7 @@
                           [class.is-valid]="checkoutForm.get('email')?.valid && (checkoutForm.get('email')?.dirty || checkoutForm.get('email')?.touched)"
                           formControlName="email"
                           id="email"
-                          placeholder="email@exemplo.com"
+                          placeholder="{{ getTranslation('checkout_email_placeholder') }}"
                         />
                         <div class="invalid-feedback" *ngIf="hasError('email', 'required') || hasError('email', 'email')">
                           {{ getErrorMessage('email') }}
@@ -135,7 +135,7 @@
                     </div>
                     <div class="col-md-6">
                       <div class="mb-3">
-                        <label for="phone" class="form-label">Telefone *</label>
+                        <label for="phone" class="form-label">{{ getTranslation('checkout_phone') }} *</label>
                         <input 
                           type="tel" 
                           class="form-control"
@@ -143,7 +143,7 @@
                           [class.is-valid]="checkoutForm.get('phone')?.valid && (checkoutForm.get('phone')?.dirty || checkoutForm.get('phone')?.touched)"
                           formControlName="phone"
                           id="phone"
-                          placeholder="+351 912 345 678"
+                          placeholder="{{ getTranslation('checkout_phone_placeholder') }}"
                         />
                         <div class="invalid-feedback" *ngIf="hasError('phone', 'required') || hasError('phone', 'pattern')">
                           {{ getErrorMessage('phone') }}
@@ -153,7 +153,7 @@
                   </div>
 
                   <div class="mb-3">
-                    <label for="address" class="form-label">Morada *</label>
+                    <label for="address" class="form-label">{{ getTranslation('checkout_address') }} *</label>
                     <input 
                       type="text" 
                       class="form-control"
@@ -161,7 +161,7 @@
                       [class.is-valid]="checkoutForm.get('address')?.valid && (checkoutForm.get('address')?.dirty || checkoutForm.get('address')?.touched)"
                       formControlName="address"
                       id="address"
-                      placeholder="Rua, número, andar"
+                      placeholder="{{ getTranslation('checkout_address_placeholder') }}"
                     />
                     <div class="invalid-feedback" *ngIf="hasError('address', 'required') || hasError('address', 'minlength')">
                       {{ getErrorMessage('address') }}
@@ -171,7 +171,7 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="mb-3">
-                        <label for="city" class="form-label">Cidade *</label>
+                        <label for="city" class="form-label">{{ getTranslation('checkout_city') }} *</label>
                         <input 
                           type="text" 
                           class="form-control"
@@ -179,7 +179,7 @@
                           [class.is-valid]="checkoutForm.get('city')?.valid && (checkoutForm.get('city')?.dirty || checkoutForm.get('city')?.touched)"
                           formControlName="city"
                           id="city"
-                          placeholder="Lisboa"
+                          placeholder="{{ getTranslation('checkout_city_placeholder') }}"
                         />
                         <div class="invalid-feedback" *ngIf="hasError('city', 'required') || hasError('city', 'minlength')">
                           {{ getErrorMessage('city') }}
@@ -188,7 +188,7 @@
                     </div>
                     <div class="col-md-6">
                       <div class="mb-3">
-                        <label for="postalCode" class="form-label">Código Postal *</label>
+                        <label for="postalCode" class="form-label">{{ getTranslation('checkout_postal_code') }} *</label>
                         <input 
                           type="text" 
                           class="form-control"
@@ -197,7 +197,7 @@
                           formControlName="postalCode"
                           (input)="formatPostalCode($event)"
                           id="postalCode"
-                          placeholder="1000-001"
+                          placeholder="{{ getTranslation('checkout_postal_code_placeholder') }}"
                           maxlength="8"
                         />
                         <div class="invalid-feedback" *ngIf="hasError('postalCode', 'required') || hasError('postalCode', 'pattern')">
@@ -208,16 +208,16 @@
                   </div>
 
                   <div class="mb-3">
-                    <label for="country" class="form-label">País *</label>
+                    <label for="country" class="form-label">{{ getTranslation('checkout_country') }} *</label>
                     <select 
                       class="form-select"
                       formControlName="country"
                       id="country"
                     >
-                      <option value="Portugal">Portugal</option>
-                      <option value="Espanha">Espanha</option>
-                      <option value="França">França</option>
-                      <option value="Outros">Outros</option>
+                      <option value="Portugal">{{ getTranslation('checkout_country_portugal') }}</option>
+                      <option value="Espanha">{{ getTranslation('checkout_country_spain') }}</option>
+                      <option value="França">{{ getTranslation('checkout_country_france') }}</option>
+                      <option value="Outros">{{ getTranslation('checkout_country_others') }}</option>
                     </select>
                   </div>
 
@@ -228,7 +228,7 @@
                       [disabled]="!isStepValid(1)"
                       (click)="nextStep()"
                     >
-                      Continuar para Pagamento
+                      {{ getTranslation('checkout_continue_to_payment') }}
                       <i class="icon-line-arrow-right ms-1"></i>
                     </button>
                   </div>
@@ -242,12 +242,12 @@
                 <div class="card-header">
                   <h4 class="mb-0">
                     <i class="icon-line-credit-card me-2"></i>
-                    Informações de Pagamento
+                    {{ getTranslation('checkout_payment_information') }}
                   </h4>
                 </div>
                 <div class="card-body">
                   <div class="mb-3">
-                    <label for="cardNumber" class="form-label">Número do Cartão *</label>
+                    <label for="cardNumber" class="form-label">{{ getTranslation('checkout_card_number') }} *</label>
                     <input 
                       type="text" 
                       class="form-control"
@@ -256,7 +256,7 @@
                       formControlName="cardNumber"
                       (input)="formatCardNumber($event)"
                       id="cardNumber"
-                      placeholder="1234 5678 9012 3456"
+                      placeholder="{{ getTranslation('checkout_card_number_placeholder') }}"
                       maxlength="16"
                     />
                     <div class="invalid-feedback" *ngIf="hasError('cardNumber', 'required') || hasError('cardNumber', 'pattern')">
@@ -267,7 +267,7 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="mb-3">
-                        <label for="expiryDate" class="form-label">Data de Validade *</label>
+                        <label for="expiryDate" class="form-label">{{ getTranslation('checkout_expiry_date') }} *</label>
                         <input 
                           type="text" 
                           class="form-control"
@@ -276,7 +276,7 @@
                           formControlName="expiryDate"
                           (input)="formatExpiryDate($event)"
                           id="expiryDate"
-                          placeholder="MM/AA"
+                          placeholder="{{ getTranslation('checkout_expiry_date_placeholder') }}"
                           maxlength="5"
                         />
                         <div class="invalid-feedback" *ngIf="hasError('expiryDate', 'required') || hasError('expiryDate', 'pattern')">
@@ -286,7 +286,7 @@
                     </div>
                     <div class="col-md-6">
                       <div class="mb-3">
-                        <label for="cvv" class="form-label">CVV *</label>
+                        <label for="cvv" class="form-label">{{ getTranslation('checkout_cvv') }} *</label>
                         <input 
                           type="text" 
                           class="form-control"
@@ -294,7 +294,7 @@
                           [class.is-valid]="checkoutForm.get('cvv')?.valid && (checkoutForm.get('cvv')?.dirty || checkoutForm.get('cvv')?.touched)"
                           formControlName="cvv"
                           id="cvv"
-                          placeholder="123"
+                          placeholder="{{ getTranslation('checkout_cvv_placeholder') }}"
                           maxlength="4"
                         />
                         <div class="invalid-feedback" *ngIf="hasError('cvv', 'required') || hasError('cvv', 'pattern')">
@@ -305,7 +305,7 @@
                   </div>
 
                   <div class="mb-3">
-                    <label for="cardholderName" class="form-label">Nome no Cartão *</label>
+                    <label for="cardholderName" class="form-label">{{ getTranslation('checkout_cardholder_name') }} *</label>
                     <input 
                       type="text" 
                       class="form-control"
@@ -313,7 +313,7 @@
                       [class.is-valid]="checkoutForm.get('cardholderName')?.valid && (checkoutForm.get('cardholderName')?.dirty || checkoutForm.get('cardholderName')?.touched)"
                       formControlName="cardholderName"
                       id="cardholderName"
-                      placeholder="Nome como aparece no cartão"
+                      placeholder="{{ getTranslation('checkout_cardholder_name_placeholder') }}"
                     />
                     <div class="invalid-feedback" *ngIf="hasError('cardholderName', 'required') || hasError('cardholderName', 'minlength')">
                       {{ getErrorMessage('cardholderName') }}
@@ -323,14 +323,14 @@
                   <div class="form-check mb-3">
                     <input class="form-check-input" type="checkbox" formControlName="saveInfo" id="saveInfo">
                     <label class="form-check-label" for="saveInfo">
-                      Guardar informações para futuros pedidos
+                      {{ getTranslation('checkout_save_info') }}
                     </label>
                   </div>
 
                   <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-outline-secondary" (click)="previousStep()">
                       <i class="icon-line-arrow-left me-1"></i>
-                      Voltar
+                      {{ getTranslation('checkout_back') }}
                     </button>
                     <button 
                       type="button" 
@@ -338,7 +338,7 @@
                       [disabled]="!isStepValid(2)"
                       (click)="nextStep()"
                     >
-                      Continuar para Revisão
+                      {{ getTranslation('checkout_continue_to_review') }}
                       <i class="icon-line-arrow-right ms-1"></i>
                     </button>
                   </div>
@@ -404,24 +404,24 @@
                       [class.is-invalid]="hasError('termsAccepted', 'required')"
                     >
                     <label class="form-check-label" for="termsAccepted">
-                      Aceito os <a href="#" class="text-decoration-none">Termos e Condições</a> *
+                      {{ getTranslation('checkout_accept_terms') }} <a href="#" class="text-decoration-none">{{ getTranslation('checkout_terms_conditions') }}</a> *
                     </label>
                     <div class="invalid-feedback" *ngIf="hasError('termsAccepted', 'required')">
-                      Deve aceitar os termos e condições
+                      {{ getTranslation('checkout_must_accept_terms') }}
                     </div>
                   </div>
 
                   <div class="form-check mb-4">
                     <input class="form-check-input" type="checkbox" formControlName="newsletterOptIn" id="newsletterOptIn">
                     <label class="form-check-label" for="newsletterOptIn">
-                      Quero receber ofertas especiais por email
+                      {{ getTranslation('checkout_newsletter_opt_in') }}
                     </label>
                   </div>
 
                   <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-outline-secondary" (click)="previousStep()">
                       <i class="icon-line-arrow-left me-1"></i>
-                      Voltar
+                      {{ getTranslation('checkout_back') }}
                     </button>
                     <button 
                       type="button" 
@@ -431,11 +431,11 @@
                     >
                       <span *ngIf="isProcessing">
                         <i class="fas fa-spinner fa-spin me-2"></i>
-                        A processar...
+                        {{ getTranslation('checkout_processing') }}
                       </span>
                       <span *ngIf="!isProcessing">
                         <i class="icon-line-check me-2"></i>
-                        Finalizar Pedido
+                        {{ getTranslation('checkout_place_order') }}
                       </span>
                     </button>
                   </div>
@@ -449,7 +449,7 @@
         <div class="col-lg-4">
           <div class="card position-sticky" style="top: 100px;">
             <div class="card-header">
-              <h5 class="mb-0">Resumo do Pedido</h5>
+              <h5 class="mb-0">{{ getTranslation('checkout_order_summary') }}</h5>
             </div>
             <div class="card-body">
               <!-- Items Summary -->
@@ -457,7 +457,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <div>
                     <h6 class="mb-0">{{ item.name }}</h6>
-                    <small class="text-muted">Qty: {{ item.quantity }}</small>
+                    <small class="text-muted">{{ getTranslation('checkout_qty') }}: {{ item.quantity }}</small>
                   </div>
                   <span class="fw-bold">${{ formatPrice(item.price * item.quantity) }}</span>
                 </div>
@@ -467,27 +467,27 @@
               
               <!-- Price Breakdown -->
               <div class="d-flex justify-content-between mb-2">
-                <span>Subtotal:</span>
+                <span>{{ getTranslation('checkout_subtotal') }}:</span>
                 <span>${{ formatPrice(calculateSubtotal()) }}</span>
               </div>
               
               <div class="d-flex justify-content-between mb-2">
-                <span>Envio:</span>
+                <span>{{ getTranslation('checkout_shipping') }}:</span>
                 <span>
-                  <span *ngIf="calculateShipping() === 0" class="text-success">Grátis</span>
+                  <span *ngIf="calculateShipping() === 0" class="text-success">{{ getTranslation('checkout_free') }}</span>
                   <span *ngIf="calculateShipping() > 0">${{ formatPrice(calculateShipping()) }}</span>
                 </span>
               </div>
               
               <div class="d-flex justify-content-between mb-2">
-                <span>IVA (23%):</span>
+                <span>{{ getTranslation('checkout_vat') }}:</span>
                 <span>${{ formatPrice(calculateTax()) }}</span>
               </div>
               
               <hr>
               
               <div class="d-flex justify-content-between">
-                <h5 class="mb-0">Total:</h5>
+                <h5 class="mb-0">{{ getTranslation('checkout_total') }}:</h5>
                 <h5 class="mb-0 text-primary">${{ formatPrice(calculateTotal()) }}</h5>
               </div>
               
@@ -495,7 +495,7 @@
               <div *ngIf="calculateShipping() > 0" class="alert alert-info mt-3" role="alert">
                 <small>
                   <i class="icon-line-info me-1"></i>
-                  Adicione mais ${{ formatPrice(50 - calculateSubtotal()) }} para envio grátis!
+                  {{ getTranslation('checkout_free_shipping_message') }} ${{ formatPrice(50 - calculateSubtotal()) }}!
                 </small>
               </div>
             </div>

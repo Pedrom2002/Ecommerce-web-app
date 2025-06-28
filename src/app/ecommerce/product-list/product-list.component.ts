@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
+import { LanguageService } from '../../services/language.service';
 import { Product } from '../../models/product.interface';
 
 @Component({
@@ -20,26 +21,31 @@ export class ProductListComponent implements OnInit {
   alertMessage: string = '';
   alertType: string = '';
 
-  // Filtros disponíveis
-  categories = [
-    { value: 'all', label: 'Todas as Categorias' },
-    { value: 'dress', label: 'Vestidos' },
-    { value: 'pants', label: 'Calças' },
-    { value: 'shoes', label: 'Sapatos' },
-    { value: 'tshirts', label: 'T-Shirts' },
-    { value: 'accessories', label: 'Acessórios' }
-  ];
+  // Filtros disponíveis - agora dinâmicos
+  get categories() {
+    return [
+      { value: 'all', label: this.getTranslation('all_categories') },
+      { value: 'dress', label: this.getTranslation('dresses') },
+      { value: 'pants', label: this.getTranslation('pants') },
+      { value: 'shoes', label: this.getTranslation('shoes') },
+      { value: 'tshirts', label: this.getTranslation('tshirts') },
+      { value: 'accessories', label: this.getTranslation('accessories') }
+    ];
+  }
 
-  sortOptions = [
-    { value: 'name', label: 'Nome' },
-    { value: 'price_asc', label: 'Preço (Menor → Maior)' },
-    { value: 'price_desc', label: 'Preço (Maior → Menor)' },
-    { value: 'rating', label: 'Avaliação' }
-  ];
+  get sortOptions() {
+    return [
+      { value: 'name', label: this.getTranslation('sort_by_name') },
+      { value: 'price_asc', label: this.getTranslation('sort_by_price_asc') },
+      { value: 'price_desc', label: this.getTranslation('sort_by_price_desc') },
+      { value: 'rating', label: this.getTranslation('sort_by_rating') }
+    ];
+  }
 
   constructor(
     private productService: ProductService,
     private cartService: CartService,
+    private languageService: LanguageService,
     private router: Router
   ) {}
 
@@ -225,5 +231,10 @@ export class ProductListComponent implements OnInit {
   changeSorting(sortBy: string): void {
     this.sortBy = sortBy;
     this.applyFilters();
+  }
+
+  // Método para obter traduções
+  getTranslation(key: string): string {
+    return this.languageService.getTranslation(key);
   }
 }

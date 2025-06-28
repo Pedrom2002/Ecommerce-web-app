@@ -9,11 +9,21 @@ import { Product, CartItem, CartSummary } from '../models/product.interface';
 })
 export class CartService {
   private cartItems: CartItem[] = [];
-  private cartSubject = new BehaviorSubject<CartSummary>(this.getCartSummary());
+  private cartSubject: BehaviorSubject<CartSummary>;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    // Initialize with empty cart summary first
+    this.cartSubject = new BehaviorSubject<CartSummary>({
+      totalItems: 0,
+      totalPrice: 0,
+      items: []
+    });
+    
     if (isPlatformBrowser(this.platformId)) {
       this.loadCartFromStorage();
+    } else {
+      // Update with actual cart summary after initialization
+      this.cartSubject.next(this.getCartSummary());
     }
   }
 

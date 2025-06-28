@@ -8,7 +8,9 @@ import { ProductListComponent } from './ecommerce/product-list/product-list.comp
 import { ProductSingleComponent } from './ecommerce/product-single/product-single.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CheckoutComponent } from './ecommerce/checkout/checkout.component';
+import { AdminComponent } from './admin/admin.component';
 import { AuthGuard, GuestGuard } from './guards/auth.guard';
+import { AdminGuard } from './guards/admin.guard';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { TermsOfServiceComponent } from './pages/terms-of-service/terms-of-service.component';
 import { ShippingReturnsComponent } from './pages/shipping-returns/shipping-returns.component';
@@ -21,6 +23,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent, canActivate: [GuestGuard] },  // Registo (apenas para não autenticados)
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },     // Perfil (protegido)
   { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },   // Checkout (protegido)
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard] },  // Admin (apenas para admins)
   { path: 'product/:id', component: ProductSingleComponent },                     // Produto individual
   { path: 'privacy-policy', component: PrivacyPolicyComponent },                  // Política de Privacidade
   { path: 'terms-of-service', component: TermsOfServiceComponent },               // Termos de Uso

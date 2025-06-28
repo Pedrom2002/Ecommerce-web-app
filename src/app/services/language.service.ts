@@ -16,13 +16,13 @@ export class LanguageService {
 
   // Idiomas disponíveis
   public availableLanguages: Language[] = [
-    { code: 'pt', name: 'Português', flag: '🇵🇹' },
-    { code: 'en', name: 'English', flag: '🇬🇧' }
+    { code: 'pt', name: 'Português', flag: 'assets/images/icons/flags/bandeira-portugal-flag-0.png' },
+    { code: 'en', name: 'English', flag: 'assets/images/icons/flags/GB-United-Kingdom-Flag-icon.png' }
   ];
 
   constructor(@Inject(LOCALE_ID) private currentLocale: string) {
     // Inicializar com o locale atual ou padrão
-    const initialLang = this.getStoredLanguage() || this.currentLocale.split('-')[0] || 'pt';
+    const initialLang = this.getStoredLanguage() || (this.currentLocale ? this.currentLocale.split('-')[0] : 'pt') || 'pt';
     this.currentLanguageSubject.next(initialLang);
   }
 
@@ -190,6 +190,116 @@ export class LanguageService {
       'language': {
         'pt': 'Idioma',
         'en': 'Language'
+      },
+      
+      // ===== FOOTER =====
+      'footer_home': {
+        'pt': 'Página Inicial',
+        'en': 'Home'
+      },
+      'footer_my_account': {
+        'pt': 'Minha Conta',
+        'en': 'My Account'
+      },
+      'footer_privacy_policy': {
+        'pt': 'Política de Privacidade',
+        'en': 'Privacy Policy'
+      },
+      'footer_terms_of_service': {
+        'pt': 'Termos de Uso',
+        'en': 'Terms of Service'
+      },
+      'footer_shipping_returns': {
+        'pt': 'Envios e Devoluções',
+        'en': 'Shipping & Returns'
+      },
+      'footer_customer_support': {
+        'pt': 'Suporte ao Cliente',
+        'en': 'Customer Support'
+      },
+      'footer_faq': {
+        'pt': 'Perguntas Frequentes',
+        'en': 'FAQ'
+      },
+      'footer_headquarters': {
+        'pt': 'Sede',
+        'en': 'Headquarters'
+      },
+      'footer_phone': {
+        'pt': 'Telefone',
+        'en': 'Phone'
+      },
+      'footer_email': {
+        'pt': 'Email',
+        'en': 'Email'
+      },
+      'footer_useful_links': {
+        'pt': 'Links Úteis',
+        'en': 'Useful Links'
+      },
+      'footer_latest_news': {
+        'pt': 'Últimas Novidades',
+        'en': 'Latest News'
+      },
+      'footer_news_spring_collection': {
+        'pt': 'Nova Coleção de Primavera Chegou!',
+        'en': 'New Spring Collection Arrived!'
+      },
+      'footer_news_date_1': {
+        'pt': '15 de Janeiro 2025',
+        'en': 'January 15, 2025'
+      },
+      'footer_news_january_promotions': {
+        'pt': 'Promoções de Janeiro - Até 50% OFF',
+        'en': 'January Promotions - Up to 50% OFF'
+      },
+      'footer_news_date_2': {
+        'pt': '10 de Janeiro 2025',
+        'en': 'January 10, 2025'
+      },
+      'footer_news_free_shipping': {
+        'pt': 'Frete Grátis para Compras Acima de €50',
+        'en': 'Free Shipping for Orders Over €50'
+      },
+      'footer_news_date_3': {
+        'pt': '5 de Janeiro 2025',
+        'en': 'January 5, 2025'
+      },
+      'footer_total_downloads': {
+        'pt': 'Total Downloads',
+        'en': 'Total Downloads'
+      },
+      'footer_clients': {
+        'pt': 'Clientes',
+        'en': 'Clients'
+      },
+      'footer_subscribe': {
+        'pt': 'Subscrever',
+        'en': 'Subscribe'
+      },
+      'footer_newsletter_text': {
+        'pt': 'a nossa Newsletter para receber Novidades, Ofertas Especiais & Promoções Exclusivas',
+        'en': 'to our Newsletter to receive News, Special Offers & Exclusive Promotions'
+      },
+      'footer_email_placeholder': {
+        'pt': 'Digite o seu email',
+        'en': 'Enter your email'
+      },
+      'footer_like_page': {
+        'pt': 'Curta nossa página',
+        'en': 'Like our page'
+      },
+      'footer_on_facebook': {
+        'pt': 'no Facebook',
+        'en': 'on Facebook'
+      },
+      'footer_rss_feed': {
+        'pt': 'nosso Feed RSS',
+        'en': 'our RSS Feed'
+      },
+      'footer_copyright': {
+        'pt': 'Direitos Autorais © 2025 Todos os Direitos Reservados por E-Commerce PT.',
+        'en': 'Copyright © 2025 All Rights Reserved by E-Commerce PT.'
       },
       
       // ===== AUTENTICAÇÃO =====
@@ -2272,10 +2382,6 @@ export class LanguageService {
       'order_question': {
         'pt': 'Questão sobre encomenda',
         'en': 'Order question'
-      },
-      'product_information': {
-        'pt': 'Informação sobre produto',
-        'en': 'Product information'
       },
       'delivery_problem': {
         'pt': 'Problema de entrega',

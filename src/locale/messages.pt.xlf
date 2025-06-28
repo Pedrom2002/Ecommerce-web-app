@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="welcome.title" datatype="html">
+        <source>Welcome to our E-Commerce</source>
+        <target>Bem-vindo ao nosso E-Commerce</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ecommerce/product-list/product-list.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      
+      <trans-unit id="login.title" datatype="html">
+        <source>Login</source>
+        <target>Entrar</target>
+      </trans-unit>
+      
+      <trans-unit id="login.username" datatype="html">
+        <source>Username</source>
+        <target>Nome de utilizador</target>
+      </trans-unit>
+      
+      <trans-unit id="login.password" datatype="html">
+        <source>Password</source>
+        <target>Palavra-passe</target>
+      </trans-unit>
+      
+      <trans-unit id="login.button" datatype="html">
+        <source>Sign In</source>
+        <target>Entrar</target>
+      </trans-unit>
+      
+      <trans-unit id="register.title" datatype="html">
+        <source>Register</source>
+        <target>Registar</target>
+      </trans-unit>
+      
+      <trans-unit id="register.name" datatype="html">
+        <source>Full Name</source>
+        <target>Nome Completo</target>
+      </trans-unit>
+      
+      <trans-unit id="register.email" datatype="html">
+        <source>Email</source>
+        <target>Email</target>
+      </trans-unit>
+      
+      <trans-unit id="register.phone" datatype="html">
+        <source>Phone</source>
+        <target>Telefone</target>
+      </trans-unit>
+      
+      <trans-unit id="register.button" datatype="html">
+        <source>Create Account</source>
+        <target>Criar Conta</target>
+      </trans-unit>
+      
+      <trans-unit id="products.title" datatype="html">
+        <source>Products</source>
+        <target>Produtos</target>
+      </trans-unit>
+      
+      <trans-unit id="products.add_to_cart" datatype="html">
+        <source>Add to Cart</source>
+        <target>Adicionar ao Carrinho</target>
+      </trans-unit>
+      
+      <trans-unit id="cart.title" datatype="html">
+        <source>Shopping Cart</source>
+        <target>Carrinho de Compras</target>
+      </trans-unit>
+      
+      <trans-unit id="cart.empty" datatype="html">
+        <source>Your cart is empty</source>
+        <target>O seu carrinho está vazio</target>
+      </trans-unit>
+      
+      <trans-unit id="cart.checkout" datatype="html">
+        <source>Checkout</source>
+        <target>Finalizar Compra</target>
+      </trans-unit>
+      
+      <trans-unit id="profile.title" datatype="html">
+        <source>My Profile</source>
+        <target>Meu Perfil</target>
+      </trans-unit>
+      
+      <trans-unit id="profile.personal_data" datatype="html">
+        <source>Personal Data</source>
+        <target>Dados Pessoais</target>
+      </trans-unit>
+      
+      <trans-unit id="profile.order_history" datatype="html">
+        <source>Order History</source>
+        <target>Histórico de Encomendas</target>
+      </trans-unit>
+      
+      <trans-unit id="profile.change_password" datatype="html">
+        <source>Change Password</source>
+        <target>Alterar Palavra-passe</target>
+      </trans-unit>
+      
+      <trans-unit id="navigation.home" datatype="html">
+        <source>Home</source>
+        <target>Início</target>
+      </trans-unit>
+      
+      <trans-unit id="navigation.products" datatype="html">
+        <source>Products</source>
+        <target>Produtos</target>
+      </trans-unit>
+      
+      <trans-unit id="navigation.profile" datatype="html">
+        <source>Profile</source>
+        <target>Perfil</target>
+      </trans-unit>
+      
+      <trans-unit id="navigation.logout" datatype="html">
+        <source>Logout</source>
+        <target>Sair</target>
+      </trans-unit>
+      
+      <trans-unit id="footer.privacy_policy" datatype="html">
+        <source>Privacy Policy</source>
+        <target>Política de Privacidade</target>
+      </trans-unit>
+      
+      <trans-unit id="footer.terms_of_service" datatype="html">
+        <source>Terms of Service</source>
+        <target>Termos de Uso</target>
+      </trans-unit>
+      
+      <trans-unit id="footer.shipping_returns" datatype="html">
+        <source>Shipping &amp; Returns</source>
+        <target>Envios e Devoluções</target>
+      </trans-unit>
+      
+      <trans-unit id="footer.customer_support" datatype="html">
+        <source>Customer Support</source>
+        <target>Suporte ao Cliente</target>
+      </trans-unit>
+      
+      <trans-unit id="footer.faq" datatype="html">
+        <source>FAQ</source>
+        <target>Perguntas Frequentes</target>
+      </trans-unit>
+      
+      <trans-unit id="common.save" datatype="html">
+        <source>Save</source>
+        <target>Guardar</target>
+      </trans-unit>
+      
+      <trans-unit id="common.cancel" datatype="html">
+        <source>Cancel</source>
+        <target>Cancelar</target>
+      </trans-unit>
+      
+      <trans-unit id="common.loading" datatype="html">
+        <source>Loading...</source>
+        <target>A carregar...</target>
+      </trans-unit>
+      
+      <trans-unit id="common.error" datatype="html">
+        <source>An error occurred</source>
+        <target>Ocorreu um erro</target>
+      </trans-unit>
+      
+      <trans-unit id="validation.required" datatype="html">
+        <source>This field is required</source>
+        <target>Este campo é obrigatório</target>
+      </trans-unit>
+      
+      <trans-unit id="validation.email" datatype="html">
+        <source>Please enter a valid email</source>
+        <target>Por favor, introduza um email válido</target>
+      </trans-unit>
+      
+      <trans-unit id="validation.minlength" datatype="html">
+        <source>Minimum length is {minLength} characters</source>
+        <target>O comprimento mínimo é {minLength} caracteres</target>
+      </trans-unit>
+      
+      <trans-unit id="cart.clear" datatype="html">
+        <source>Clear</source>
+        <target>Limpar</target>
+      </trans-unit>
+      
+      <trans-unit id="cart.remove" datatype="html">
+        <source>Remove</source>
+        <target>Remover</target>
+      </trans-unit>
+      
+      <trans-unit id="language.selector" datatype="html">
+        <source>Language</source>
+        <target>Idioma</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

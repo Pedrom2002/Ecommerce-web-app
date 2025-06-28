@@ -3,6 +3,7 @@ import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { LanguageService } from '../../services/language.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService, 
+    private languageService: LanguageService,
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
@@ -257,5 +259,10 @@ export class LoginComponent implements OnInit {
     const minutes = Math.floor(this.blockTimeRemaining / 60);
     const seconds = this.blockTimeRemaining % 60;
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  }
+
+  // Método para obter traduções
+  getTranslation(key: string): string {
+    return this.languageService.getTranslation(key);
   }
 }

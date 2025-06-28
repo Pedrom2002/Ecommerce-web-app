@@ -14,16 +14,45 @@
         </div>
 
         <div class="header-misc">
+          <!-- Language Switcher -->
+          <div id="top-language" class="header-misc-icon dropdown">
+            <a href="#" (click)="toggleLanguageMenu(); $event.preventDefault()" 
+               class="language-trigger" 
+               [title]="getCurrentLanguage().name">
+              <img class="lang-flag" [src]="getCurrentLanguage().flag" [alt]="getCurrentLanguage().name" />
+            </a>
+            <div class="language-dropdown" [class.show]="languageMenuOpen">
+              <div class="language-option" 
+                   *ngFor="let lang of getOtherLanguages()" 
+                   (click)="changeLanguage(lang.code); $event.stopPropagation()"
+                   [title]="'Mudar para ' + lang.name">
+                <img class="lang-flag" [src]="lang.flag" [alt]="lang.name" />
+                <span class="lang-name">{{ lang.name }}</span>
+                <span class="lang-button">
+                  <i class="fas fa-globe"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+
           <!-- Profile Link - apenas para utilizadores autenticados -->
           <div id="top-profile" class="header-misc-icon" *ngIf="isLoggedIn()">
-            <a (click)="goToProfile()" style="cursor: pointer;" title="Perfil">
+            <a (click)="goToProfile()" style="cursor: pointer;" [title]="getTranslation('profile')">
               <i class="icon-line-user"></i>
             </a>
           </div>
 
+          <!-- Admin Link - apenas para admins -->
+          <div id="top-admin" class="header-misc-icon admin-link" *ngIf="isAdmin()">
+            <a (click)="goToAdmin()" style="cursor: pointer;" title="Painel de Administração" class="admin-button">
+              <span class="admin-label">ADMIN</span>
+            </a>
+          </div>
+
+
           <!-- Auth Links para utilizadores não autenticados -->
           <div class="header-misc-icon" *ngIf="!isLoggedIn()">
-            <a (click)="goToLogin()" style="cursor: pointer;" title="Login">
+            <a (click)="goToLogin()" style="cursor: pointer;" [title]="getTranslation('login')">
               <i class="icon-line-user"></i>
             </a>
           </div>
@@ -38,7 +67,7 @@
             <!-- Cart Dropdown -->
             <div class="top-cart-content" [class.show]="cartOpen" (click)="$event.stopPropagation()">
               <div class="top-cart-title">
-                <h4>Shopping Cart</h4>
+                <h4>{{ getTranslation('shopping_cart') }}</h4>
               </div>
               
               <!-- Cart Items -->
@@ -59,7 +88,7 @@
                     </div>
                   </div>
                   <div class="top-cart-item-remove">
-                    <button (click)="removeItem(item.id); $event.stopPropagation()" class="remove-item" title="Remover item">
+                    <button (click)="removeItem(item.id); $event.stopPropagation()" class="remove-item" [title]="getTranslation('remove')">
                       <i class="icon-line-cross"></i>
                     </button>
                   </div>
@@ -68,7 +97,7 @@
               
               <!-- Empty Cart -->
               <div class="top-cart-empty" *ngIf="cartItems.length === 0">
-                <p>O carrinho está vazio</p>
+                <p>{{ getTranslation('empty_cart') }}</p>
                 <i class="icon-line-bag" style="font-size: 48px; color: #ddd; margin-bottom: 10px;"></i>
               </div>
               
@@ -78,11 +107,11 @@
                 <div class="cart-buttons">
                   <button (click)="goToCheckout(); $event.stopPropagation()" class="button button-3d button-small m-0 me-2">
                     <i class="icon-line-credit-card me-1"></i>
-                    Checkout
+                    {{ getTranslation('checkout') }}
                   </button>
                   <button (click)="clearCart(); $event.stopPropagation()" class="button button-mini button-red">
                     <i class="icon-line-trash me-1"></i>
-                    Clear
+                    {{ getTranslation('clear') }}
                   </button>
                 </div>
               </div>
@@ -102,25 +131,25 @@
         <nav class="primary-menu">
           <ul class="menu-container">
             <li class="menu-item">
-              <a class="menu-link" (click)="goToHome()"><div>Home</div></a>
+              <a class="menu-link" (click)="goToHome()"><div>{{ getTranslation('home') }}</div></a>
             </li>
             
             <!-- Items para utilizadores autenticados -->
             <li class="menu-item" *ngIf="isLoggedIn()">
-              <a class="menu-link" (click)="goToProfile()"><div>Perfil</div></a>
+              <a class="menu-link" (click)="goToProfile()"><div>{{ getTranslation('profile') }}</div></a>
             </li>
             
             <!-- Items para utilizadores não autenticados -->
             <li class="menu-item" *ngIf="!isLoggedIn()">
-              <a class="menu-link" (click)="goToLogin()"><div>Login</div></a>
+              <a class="menu-link" (click)="goToLogin()"><div>{{ getTranslation('login') }}</div></a>
             </li>
             <li class="menu-item" *ngIf="!isLoggedIn()">
-              <a class="menu-link" (click)="goToRegister()"><div>Registo</div></a>
+              <a class="menu-link" (click)="goToRegister()"><div>{{ getTranslation('register') }}</div></a>
             </li>
             
             <!-- Item de logout para utilizadores autenticados -->
             <li class="menu-item" *ngIf="isLoggedIn()">
-              <a class="menu-link" (click)="logout()"><div><i class="icon-line-sign-out"></i> Sair</div></a>
+              <a class="menu-link" (click)="logout()"><div><i class="icon-line-sign-out"></i> {{ getTranslation('logout') }}</div></a>
             </li>
           </ul>
         </nav>

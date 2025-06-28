@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-faq',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class FaqComponent {
 
+  constructor(private languageService: LanguageService) {}
+
+  getTranslation(key: string): string {
+    return this.languageService.getTranslation(key);
+  }
 }

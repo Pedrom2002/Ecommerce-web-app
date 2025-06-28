@@ -1,6 +1,7 @@
 // register.component.ts
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { LanguageService } from '../../services/language.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -40,7 +41,16 @@ export class RegisterComponent {
   alertType = '';
   passwordStrength = 0;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService, 
+    private languageService: LanguageService,
+    private router: Router
+  ) {}
+  
+  // Método para obter traduções
+  getTranslation(key: string): string {
+    return this.languageService.getTranslation(key);
+  }
 
   // Validação do nome
   validateName(): void {

@@ -1,0 +1,298 @@
+.admin-header {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.nav-tabs .nav-link {
+  border: none;
+  border-bottom: 3px solid transparent;
+  background: none;
+  color: #6c757d;
+  padding: 12px 16px;
+  transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link:hover {
+  border-color: transparent;
+  color: #0d6efd;
+  background-color: #f8f9fa;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: transparent;
+  border-color: transparent transparent #0d6efd transparent;
+  color: #0d6efd;
+  font-weight: 600;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  transition: box-shadow 0.15s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 12px;
+}
+
+.table td {
+  padding: 12px;
+  vertical-align: middle;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > td {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.btn-sm {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8rem;
+  border: 1px solid;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  min-width: 60px;
+  height: 32px;
+  white-space: nowrap;
+}
+
+/* Action buttons styling */
+.btn-primary {
+  color: #fff;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  font-weight: 500;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(13, 110, 253, 0.3);
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+  font-weight: 500;
+}
+
+.btn-danger:hover {
+  color: #fff;
+  background-color: #bb2d3b;
+  border-color: #b02a37;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+.btn-info {
+  color: #000;
+  background-color: #0dcaf0;
+  border-color: #0dcaf0;
+  font-weight: 500;
+}
+
+.btn-info:hover {
+  color: #000;
+  background-color: #31d2f2;
+  border-color: #25cff2;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(13, 202, 240, 0.3);
+}
+
+/* Button groups in table actions */
+.table td .btn-sm {
+  margin-right: 0.25rem;
+}
+
+.table td .btn-sm:last-child {
+  margin-right: 0;
+}
+
+.modal-content {
+  border: none;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+}
+
+.modal-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modal-title {
+  font-weight: 600;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.alert {
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+.badge {
+  font-size: 0.75em;
+  padding: 0.5em 0.75em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .admin-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .table-responsive {
+    font-size: 0.875rem;
+  }
+  
+  .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    min-width: 55px;
+    height: 28px;
+  }
+  
+  .table td .btn-sm {
+    margin-right: 0.125rem;
+  }
+  
+  /* Stack action buttons vertically on very small screens */
+  @media (max-width: 576px) {
+    .table td {
+      padding: 8px 4px;
+    }
+    
+    .btn-sm {
+      padding: 0.2rem 0.4rem;
+      font-size: 0.7rem;
+      min-width: 50px;
+      height: 24px;
+    }
+    
+    /* Stack buttons vertically on very small screens */
+    .table td {
+      text-align: center;
+    }
+    
+    .table td .btn-sm {
+      display: block;
+      margin: 0.125rem auto;
+      width: 50px;
+    }
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .card {
+    background-color: #343a40;
+    color: white;
+  }
+  
+  .table th {
+    background-color: #495057;
+    color: white;
+  }
+  
+  .modal-content {
+    background-color: #343a40;
+    color: white;
+  }
+  
+  .modal-header {
+    background-color: #495057;
+    border-bottom-color: #6c757d;
+  }
+}
+
+/* Status-specific styles */
+.status-processando {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-em-transito {
+  background-color: #cff4fc;
+  color: #055160;
+}
+
+.status-entregue {
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+.status-cancelado {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Animation for loading states */
+.loading-fade {
+  opacity: 0.6;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Custom scrollbar for tables */
+.table-responsive::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

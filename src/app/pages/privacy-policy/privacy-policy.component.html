@@ -5,88 +5,81 @@
         <div class="card-header">
           <h1 class="h2 mb-0">
             <i class="icon-line-shield me-2"></i>
-            Política de Privacidade
+            {{ getTranslation('privacy_policy_title') }}
           </h1>
         </div>
         <div class="card-body">
           <div class="content">
             <p class="lead">
-              A sua privacidade é importante para nós. Esta política de privacidade explica como coletamos, 
-              usamos e protegemos as suas informações pessoais.
+              {{ getTranslation('privacy_policy_intro') }}
             </p>
 
-            <h3><i class="icon-line-info me-2"></i>Informações que Coletamos</h3>
-            <p>Coletamos as seguintes informações quando utiliza os nossos serviços:</p>
+            <h3><i class="icon-line-info me-2"></i>{{ getTranslation('information_we_collect') }}</h3>
+            <p>{{ getTranslation('information_collected_intro') }}</p>
             <ul>
-              <li><strong>Informações de Conta:</strong> Nome, email, telefone e morada de entrega</li>
-              <li><strong>Informações de Compra:</strong> Histórico de encomendas e preferências</li>
-              <li><strong>Informações Técnicas:</strong> Endereço IP, tipo de navegador e dispositivo</li>
-              <li><strong>Cookies:</strong> Para melhorar a experiência de navegação</li>
+              <li><strong>{{ getTranslation('account_information') }}:</strong> {{ getTranslation('account_info_details') }}</li>
+              <li><strong>{{ getTranslation('purchase_information') }}:</strong> {{ getTranslation('purchase_info_details') }}</li>
+              <li><strong>{{ getTranslation('technical_information') }}:</strong> {{ getTranslation('technical_info_details') }}</li>
+              <li><strong>{{ getTranslation('cookies') }}:</strong> {{ getTranslation('cookies_details') }}</li>
             </ul>
 
-            <h3><i class="icon-line-shield me-2"></i>Como Utilizamos as Suas Informações</h3>
-            <p>Utilizamos as suas informações para:</p>
+            <h3><i class="icon-line-shield me-2"></i>{{ getTranslation('how_we_use_information') }}</h3>
+            <p>{{ getTranslation('information_usage_intro') }}</p>
             <ul>
-              <li>Processar e entregar as suas encomendas</li>
-              <li>Comunicar sobre o estado das encomendas</li>
-              <li>Melhorar os nossos produtos e serviços</li>
-              <li>Enviar ofertas especiais e promoções (com o seu consentimento)</li>
-              <li>Cumprir obrigações legais</li>
+              <li>{{ getTranslation('process_orders') }}</li>
+              <li>{{ getTranslation('communicate_order_status') }}</li>
+              <li>{{ getTranslation('improve_services') }}</li>
+              <li>{{ getTranslation('send_promotions') }}</li>
+              <li>{{ getTranslation('legal_obligations') }}</li>
             </ul>
 
-            <h3><i class="icon-line-users me-2"></i>Partilha de Informações</h3>
+            <h3><i class="icon-line-users me-2"></i>{{ getTranslation('information_sharing') }}</h3>
             <p>
-              Não vendemos, trocamos ou transferimos as suas informações pessoais para terceiros, 
-              exceto quando necessário para:
+              {{ getTranslation('no_selling_info') }}
             </p>
             <ul>
-              <li>Processar pagamentos através de fornecedores de pagamento seguros</li>
-              <li>Entregar encomendas através de empresas de transporte</li>
-              <li>Cumprir requisitos legais ou regulamentares</li>
+              <li>{{ getTranslation('process_payments') }}</li>
+              <li>{{ getTranslation('deliver_orders') }}</li>
+              <li>{{ getTranslation('legal_requirements') }}</li>
             </ul>
 
-            <h3><i class="icon-line-lock me-2"></i>Segurança dos Dados</h3>
+            <h3><i class="icon-line-lock me-2"></i>{{ getTranslation('data_security') }}</h3>
             <p>
-              Implementamos medidas de segurança técnicas e organizacionais para proteger 
-              as suas informações pessoais contra acesso não autorizado, alteração, 
-              divulgação ou destruição.
+              {{ getTranslation('security_measures') }}
             </p>
 
-            <h3><i class="icon-line-settings me-2"></i>Os Seus Direitos</h3>
-            <p>De acordo com o RGPD, tem os seguintes direitos:</p>
+            <h3><i class="icon-line-settings me-2"></i>{{ getTranslation('your_rights') }}</h3>
+            <p>{{ getTranslation('gdpr_rights_intro') }}</p>
             <ul>
-              <li><strong>Acesso:</strong> Solicitar uma cópia das suas informações pessoais</li>
-              <li><strong>Retificação:</strong> Corrigir informações incorretas ou desatualizadas</li>
-              <li><strong>Eliminação:</strong> Solicitar a eliminação dos seus dados</li>
-              <li><strong>Portabilidade:</strong> Transferir os seus dados para outro fornecedor</li>
-              <li><strong>Oposição:</strong> Opor-se ao processamento dos seus dados</li>
+              <li><strong>{{ getTranslation('right_access') }}:</strong> {{ getTranslation('right_access_desc') }}</li>
+              <li><strong>{{ getTranslation('right_rectification') }}:</strong> {{ getTranslation('right_rectification_desc') }}</li>
+              <li><strong>{{ getTranslation('right_erasure') }}:</strong> {{ getTranslation('right_erasure_desc') }}</li>
+              <li><strong>{{ getTranslation('right_portability') }}:</strong> {{ getTranslation('right_portability_desc') }}</li>
+              <li><strong>{{ getTranslation('right_objection') }}:</strong> {{ getTranslation('right_objection_desc') }}</li>
             </ul>
 
-            <h3><i class="icon-line-cookie me-2"></i>Cookies</h3>
+            <h3><i class="icon-line-cookie me-2"></i>{{ getTranslation('cookies') }}</h3>
             <p>
-              Utilizamos cookies para melhorar a funcionalidade do site e a sua experiência. 
-              Pode gerir as suas preferências de cookies nas configurações do seu navegador.
+              {{ getTranslation('cookies_description') }}
             </p>
 
-            <h3><i class="icon-line-refresh me-2"></i>Alterações à Política</h3>
+            <h3><i class="icon-line-refresh me-2"></i>{{ getTranslation('policy_changes') }}</h3>
             <p>
-              Reservamo-nos o direito de atualizar esta política de privacidade. 
-              Notificaremos sobre alterações significativas através do nosso site ou por email.
+              {{ getTranslation('policy_updates') }}
             </p>
 
-            <h3><i class="icon-line-phone me-2"></i>Contacto</h3>
+            <h3><i class="icon-line-phone me-2"></i>{{ getTranslation('contact_us') }}</h3>
             <p>
-              Para questões sobre esta política de privacidade ou para exercer os seus direitos, 
-              contacte-nos:
+              {{ getTranslation('privacy_contact_intro') }}
             </p>
             <div class="alert alert-info">
-              <p class="mb-1"><strong>Email:</strong> privacidade&#64;ecommerce.pt</p>
-              <p class="mb-1"><strong>Telefone:</strong> +351 21 123 4567</p>
-              <p class="mb-0"><strong>Morada:</strong> Rua do Comércio, 123, 1000-100 Lisboa, Portugal</p>
+              <p class="mb-1"><strong>{{ getTranslation('email') }}:</strong> {{ getTranslation('privacy_email') }}</p>
+              <p class="mb-1"><strong>{{ getTranslation('phone') }}:</strong> {{ getTranslation('support_phone') }}</p>
+              <p class="mb-0"><strong>{{ getTranslation('address') }}:</strong> {{ getTranslation('company_address') }}</p>
             </div>
 
             <p class="text-muted small">
-              <strong>Última atualização:</strong> 1 de Janeiro de 2025
+              <strong>{{ getTranslation('last_updated') }}</strong> {{ getTranslation('policy_update_date') }}
             </p>
           </div>
         </div>

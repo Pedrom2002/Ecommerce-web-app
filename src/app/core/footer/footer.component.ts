@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-footer',
@@ -15,6 +16,8 @@ export class FooterComponent implements OnInit, AfterViewInit {
   
   @ViewChild('downloadsCounter', { static: false }) downloadsElement!: ElementRef;
   @ViewChild('clientsCounter', { static: false }) clientsElement!: ElementRef;
+
+  constructor(private languageService: LanguageService) {}
 
   ngOnInit(): void {
     // Component initialization
@@ -83,5 +86,9 @@ export class FooterComponent implements OnInit, AfterViewInit {
       rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
       rect.right <= (window.innerWidth || document.documentElement.clientWidth)
     );
+  }
+
+  getTranslation(key: string): string {
+    return this.languageService.getTranslation(key);
   }
 }

@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../services/auth.service';
+import { LanguageService } from '../../services/language.service';
+import { OrderService } from '../../services/order.service';
+import { CreateOrderRequest, OrderItem } from '../../models/order.interface';
 import { CartItem, CartSummary } from '../../models/product.interface';
 
 @Component({
@@ -29,6 +32,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private cartService: CartService,
     private authService: AuthService,
+    private languageService: LanguageService,
+    private orderService: OrderService,
     private router: Router
   ) {
     this.checkoutForm = this.fb.group({
@@ -180,17 +185,28 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   completeOrder(): void {
+    // Converter items do carrinho para OrderItems
+    const orderItems: OrderItem[] = this.cartItems.map(item => ({
+      product_id: item.id,
+      name: item.name,
+      price: item.price,
+      quantity: item.quantity,
+      image: item.image
+    }));
+
     // Preparar dados da encomenda
-    const orderData = {
-      firstName: this.checkoutForm.value.firstName,
-      lastName: this.checkoutForm.value.lastName,
-      email: this.checkoutForm.value.email,
-      phone: this.checkoutForm.value.phone,
-      address: this.checkoutForm.value.address,
-      city: this.checkoutForm.value.city,
-      postalCode: this.checkoutForm.value.postalCode,
-      country: this.checkoutForm.value.country,
-      cartItems: this.cartItems,
+    const orderData: CreateOrderRequest = {
+      shipping_info: {
+        first_name: this.checkoutForm.value.firstName,
+        last_name: this.checkoutForm.value.lastName,
+        email: this.checkoutForm.value.email,
+        phone: this.checkoutForm.value.phone,
+        address: this.checkoutForm.value.address,
+        city: this.checkoutForm.value.city,
+        postal_code: this.checkoutForm.value.postalCode,
+        country: this.checkoutForm.value.country
+      },
+      items: orderItems,
       totals: {
         subtotal: this.calculateSubtotal(),
         shipping: this.calculateShipping(),
@@ -199,34 +215,50 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       }
     };
 
-    // Salvar encomenda na base de dados
-    this.authService.createOrder(orderData).subscribe({
+    // Validar dados antes de enviar
+    const validation = this.orderService.validateOrderData(orderData);
+    if (!validation.valid) {
+      this.showAlert('danger', 'Erro de validação: ' + validation.errors.join(', '));
+      this.isProcessing = false;
+      return;
+    }
+
+    console.log('🛒 Processando encomenda:', orderData);
+
+    // Salvar encomenda na base de dados usando OrderService
+    this.orderService.createOrder(orderData).subscribe({
       next: (response) => {
-        console.log('Encomenda criada:', response);
+        console.log('✅ Encomenda criada com sucesso:', response);
         
-        // Clear cart
-        this.cartService.clearCart();
-        
-        // Show success message
-        this.showAlert('success', `Pedido #${response.order_id} realizado com sucesso!`);
-        
-        // Redirect to profile orders section after delay
-        setTimeout(() => {
-          this.router.navigate(['/profile'], { fragment: 'orders' });
-        }, 3000);
+        if (response.success) {
+          // Clear cart
+          this.cartService.clearCart();
+          
+          // Show success message
+          const orderId = response.order_id ? `#${response.order_id}` : '';
+          this.showAlert('success', `🎉 Pedido ${orderId} realizado com sucesso!`);
+          
+          // Redirect to profile orders section after delay
+          setTimeout(() => {
+            this.router.navigate(['/profile'], { fragment: 'orders' });
+          }, 3000);
+        } else {
+          this.showAlert('danger', response.message || 'Erro ao processar pedido');
+        }
         
         this.isProcessing = false;
       },
       error: (error) => {
-        console.error('Erro ao criar encomenda:', error);
+        console.error('❌ Erro ao criar encomenda:', error);
         
         let errorMessage = 'Erro ao processar encomenda. Tente novamente.';
-        if (error.status === 0) {
-          errorMessage = 'Servidor não disponível. Certifique-se que o backend Flask está rodando na porta 5000.';
-        } else if (error.status === 401) {
-          errorMessage = 'Sessão expirada. Por favor, faça login novamente.';
-          this.authService.logout();
-          return;
+        
+        if (error && typeof error === 'object') {
+          if (error.status === 401) {
+            this.authService.logout();
+            return;
+          }
+          errorMessage = error.message || errorMessage;
         }
         
         this.showAlert('danger', errorMessage);
@@ -281,6 +313,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   goBack(): void {
     this.router.navigate(['/']);
+  }
+
+  getTranslation(key: string): string {
+    return this.languageService.getTranslation(key);
   }
 
   // Format postal code input

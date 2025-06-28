@@ -73,14 +73,6 @@ npm run watch
 pip install -r requirements.txt
 ```
 
-#### Ou instalar individualmente:
-```bash
-pip install Flask==2.3.3
-pip install Flask-SQLAlchemy==3.0.5
-pip install Flask-JWT-Extended==4.5.3
-pip install Flask-CORS==4.0.0
-pip install Werkzeug==2.3.7
-```
 
 ## 🗃️ Configuração da Base de Dados
 
@@ -88,7 +80,7 @@ pip install Werkzeug==2.3.7
 A base de dados SQLite é criada automaticamente na primeira execução do Flask:
 
 ```bash
-python app.py
+py -3.11 app.py
 ```
 
 ### Estrutura da Base de Dados
@@ -98,16 +90,12 @@ O sistema cria automaticamente as seguintes tabelas:
 - **orders**: Encomendas
 - **order_items**: Itens das encomendas
 
-### Dados de Exemplo
-Para popular a base de dados com produtos de exemplo:
-1. Os dados estão disponíveis em `artigos.json`
-2. Podem ser importados manualmente ou através da interface
 
 ## 🏃‍♂️ Execução do Projeto
 
 ### 1. Iniciar o Backend (Flask)
 ```bash
-python app.py
+py -3.11 app.py
 ```
 - Servidor Flask executa na porta **5000**
 - URL: `http://localhost:5000`
@@ -176,40 +164,7 @@ pw-2-pl/
 └── artigos.json            # Dados de exemplo
 ```
 
-## 🔧 Configurações Avançadas
 
-### Variáveis de Ambiente
-Criar ficheiro `.env` na raiz do projeto (opcional):
-```env
-# Flask
-FLASK_ENV=development
-FLASK_DEBUG=True
-JWT_SECRET_KEY=your-secret-key-here
-
-# Database
-DATABASE_URL=sqlite:///instance/app.db
-```
-
-### Configuração de Produção
-
-#### Frontend:
-```bash
-# Build otimizado
-npm run build
-
-# Servidor SSR
-npm run serve:ssr:pw-2-pl
-```
-
-#### Backend:
-```bash
-# Configurar variáveis de ambiente
-export FLASK_ENV=production
-export FLASK_DEBUG=False
-
-# Executar Flask
-python app.py
-```
 
 ## 📱 Funcionalidades do Sistema
 
@@ -227,6 +182,21 @@ python app.py
 - **SEO Friendly**: SSR para melhor indexação
 - **Acessibilidade**: Interfaces acessíveis
 - **Performance**: Loading states e lazy loading
+- **Internacionalização**: Suporte multi-idioma (Português/Inglês)
+
+## 🌐 Internacionalização (i18n)
+
+O projeto suporta múltiplos idiomas usando o sistema de internacionalização do Angular.
+
+### Idiomas Suportados
+- 🇵🇹 **Português** (padrão)
+- 🇬🇧 **Inglês**
+
+### Troca de Idioma
+- **Interface**: Seletor de idioma no header da aplicação
+- **Persistência**: Idioma selecionado guardado no localStorage
+- **Automática**: Deteção automática do idioma do browser
+
 
 ## 🧪 Testes
 

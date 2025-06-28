@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import { LanguageService } from '../services/language.service';
+import { OrderService } from '../services/order.service';
+import { Order } from '../models/order.interface';
 import { Router, ActivatedRoute } from '@angular/router';
 
 interface UserData {
@@ -9,26 +12,6 @@ interface UserData {
   username: string;
   email: string;
   phone: string;
-}
-
-interface Order {
-  id: number;
-  date: string;
-  status: string;
-  total: number;
-  items: {
-    name: string;
-    quantity: number;
-    price: number;
-  }[];
-  shipping_info?: {
-    first_name: string;
-    last_name: string;
-    address: string;
-    city: string;
-    postal_code: string;
-    country: string;
-  };
 }
 
 @Component({
@@ -65,6 +48,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private languageService: LanguageService,
+    private orderService: OrderService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -84,7 +69,7 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadUserData();
+    this.loadProfile();
     this.loadUserOrders();
     
     // Verificar se foi direcionado para seção específica
@@ -107,49 +92,60 @@ export class ProfileComponent implements OnInit {
   }
 
   // Carregar dados do utilizador
-  loadUserData(): void {
+  loadProfile(): void {
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.isLoading = true;
+    
     this.authService.getProfile().subscribe({
-      next: (profileData) => {
-        this.userData = profileData;
-        // Preencher formulário com dados reais
-        this.personalForm.patchValue(this.userData);
+      next: (data) => {
+        this.userData = data;
+        this.personalForm.patchValue({
+          name: data.name,
+          username: data.username,
+          email: data.email,
+          phone: data.phone
+        });
+        this.isLoading = false;
+        console.log('✅ Profile carregado:', data);
       },
-      error: (error) => {
-        console.error('Erro ao carregar dados do perfil:', error);
+      error: (err) => {
+        this.isLoading = false;
+        console.error('❌ Erro ao carregar profile:', err);
         
-        let errorMessage = 'Erro ao carregar dados do perfil.';
-        if (error.status === 0) {
-          errorMessage = 'Servidor não disponível. Certifique-se que o backend Flask está rodando na porta 5000.';
-        } else if (error.status === 401) {
-          errorMessage = 'Sessão expirada. Por favor, faça login novamente.';
-          this.authService.logout();
-          return;
+        if (err.status === 0) {
+          this.showAlert('danger', 'Servidor não disponível. Execute: py -3.11 app.py');
+        } else if (err.status === 401) {
+          this.showAlert('danger', 'Sessão expirada.');
+          setTimeout(() => this.authService.logout(), 3000);
+        } else {
+          this.showAlert('danger', 'Erro ao carregar perfil.');
         }
-        
-        this.showAlert('danger', errorMessage);
       }
     });
   }
 
   // Carregar encomendas do utilizador
   loadUserOrders(): void {
-    this.authService.getUserOrders().subscribe({
+    if (!this.authService.isLoggedIn()) {
+      return;
+    }
+    
+    this.orderService.getUserOrders().subscribe({
       next: (orders) => {
         this.orders = orders;
+        console.log('✅ Encomendas carregadas:', orders);
       },
       error: (error) => {
-        console.error('Erro ao carregar encomendas:', error);
-        
-        let errorMessage = 'Erro ao carregar encomendas.';
+        console.error('❌ Erro ao carregar encomendas:', error);
         if (error.status === 0) {
-          errorMessage = 'Servidor não disponível. Certifique-se que o backend Flask está rodando na porta 5000.';
+          this.showAlert('warning', 'Não foi possível carregar encomendas. Servidor não disponível.');
         } else if (error.status === 401) {
-          errorMessage = 'Sessão expirada. Por favor, faça login novamente.';
           this.authService.logout();
-          return;
         }
-        
-        this.showAlert('danger', errorMessage);
       }
     });
   }
@@ -185,15 +181,13 @@ export class ProfileComponent implements OnInit {
         let errorMessage = 'Erro ao atualizar dados. Tente novamente.';
         
         if (error.status === 0) {
-          errorMessage = 'Servidor não disponível. Certifique-se que o backend Flask está rodando na porta 5000.';
+          errorMessage = 'Servidor não disponível.';
         } else if (error.status === 409) {
           errorMessage = 'Username ou email já existem.';
         } else if (error.status === 401) {
-          errorMessage = 'Sessão expirada. Por favor, faça login novamente.';
+          errorMessage = 'Sessão expirada.';
           this.authService.logout();
           return;
-        } else if (error.status === 400) {
-          errorMessage = 'Dados inválidos. Verifique os campos.';
         }
         
         this.showAlert('danger', errorMessage);
@@ -226,20 +220,18 @@ export class ProfileComponent implements OnInit {
         this.isLoading = false;
         console.error('Erro ao alterar password:', error);
         
-        let errorMessage = 'Erro ao alterar password. Tente novamente.';
+        let errorMessage = 'Erro ao alterar password.';
         
         if (error.status === 0) {
-          errorMessage = 'Servidor não disponível. Certifique-se que o backend Flask está rodando na porta 5000.';
+          errorMessage = 'Servidor não disponível.';
         } else if (error.status === 401) {
           if (error.error?.msg === 'Current password is incorrect.') {
             errorMessage = 'Password atual incorreta.';
           } else {
-            errorMessage = 'Sessão expirada. Por favor, faça login novamente.';
+            errorMessage = 'Sessão expirada.';
             this.authService.logout();
             return;
           }
-        } else if (error.status === 400) {
-          errorMessage = 'Dados inválidos. Verifique os campos.';
         }
         
         this.showAlert('danger', errorMessage);
@@ -319,7 +311,8 @@ export class ProfileComponent implements OnInit {
   }
 
   // Formatar data
-  formatDate(dateString: string): string {
+  formatDate(dateString?: string): string {
+    if (!dateString) return 'N/A';
     const date = new Date(dateString);
     return date.toLocaleDateString('pt-PT');
   }
@@ -371,6 +364,25 @@ export class ProfileComponent implements OnInit {
 
   // Logout
   logout(): void {
+    // Limpar dados locais
+    this.userData = {
+      name: '',
+      username: '',
+      email: '',
+      phone: ''
+    };
+    this.orders = [];
+    this.alertMessage = '';
+    
+    // Resetar formulários
+    this.personalForm.reset();
+    this.passwordForm.reset();
+    
+    // Chamar logout do AuthService
     this.authService.logout();
+  }
+
+  getTranslation(key: string): string {
+    return this.languageService.getTranslation(key);
   }
 }

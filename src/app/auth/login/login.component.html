@@ -31,14 +31,14 @@
                 
                 <div class="text-center mb-4">
                   <i class="fas fa-sign-in-alt fa-3x text-primary mb-3"></i>
-                  <h3 class="mb-2">Entrar na Conta</h3>
-                  <p class="text-muted">Introduza as suas credenciais para continuar</p>
+                  <h3 class="mb-2">{{ getTranslation('login') }}</h3>
+                  <p class="text-muted">{{ getTranslation('login_subtitle') }}</p>
                 </div>
                 
                 <!-- Username/Email -->
                 <div class="mb-3">
                   <label for="username" class="form-label">
-                    <i class="fas fa-user me-1"></i>Username ou Email:
+                    <i class="fas fa-user me-1"></i>{{ getTranslation('username_or_email') }}:
                   </label>
                   <input 
                     type="text" 
@@ -46,7 +46,7 @@
                     [ngClass]="getFieldClass('username')"
                     formControlName="username"
                     id="username"
-                    placeholder="Introduza username ou email"
+                    [placeholder]="getTranslation('enter_username_or_email')"
                     [disabled]="isBlocked"
                     autocomplete="username"
                   />
@@ -61,7 +61,7 @@
                 <!-- Password -->
                 <div class="mb-3">
                   <label for="password" class="form-label">
-                    <i class="fas fa-lock me-1"></i>Password:
+                    <i class="fas fa-lock me-1"></i>{{ getTranslation('password') }}:
                   </label>
                   <div class="input-group">
                     <input 
@@ -70,7 +70,7 @@
                       [ngClass]="getFieldClass('password')"
                       formControlName="password"
                       id="password"
-                      placeholder="Introduza a sua password"
+                      [placeholder]="getTranslation('enter_your_password')"
                       [disabled]="isBlocked"
                       autocomplete="current-password"
                     />
@@ -103,7 +103,7 @@
                         [disabled]="isBlocked"
                       />
                       <label class="form-check-label" for="rememberMe">
-                        <small>Lembrar-me</small>
+                        <small>{{ getTranslation('remember_me') }}</small>
                       </label>
                     </div>
                   </div>
@@ -114,7 +114,7 @@
                       (click)="forgotPassword()"
                       [disabled]="isBlocked"
                     >
-                      Esqueceu a password?
+                      {{ getTranslation('forgot_password') }}
                     </button>
                   </div>
                 </div>

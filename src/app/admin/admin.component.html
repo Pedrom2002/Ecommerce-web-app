@@ -1,0 +1,486 @@
+<!-- Admin Header -->
+<div class="admin-header bg-dark text-white py-3 mb-4">
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="mb-0">
+          <i class="fas fa-cogs me-2"></i>
+          Painel de Administração
+        </h2>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-outline-light" (click)="logout()">
+          <i class="fas fa-sign-out-alt me-1"></i>
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Alert Messages -->
+<div class="container-fluid" *ngIf="alertMessage">
+  <div class="alert alert-{{ alertType }} alert-dismissible fade show" role="alert">
+    {{ alertMessage }}
+    <button type="button" class="btn-close" (click)="alertMessage = ''"></button>
+  </div>
+</div>
+
+<!-- Navigation Tabs -->
+<div class="container-fluid">
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+      <button 
+        class="nav-link" 
+        [class.active]="activeSection === 'dashboard'"
+        (click)="setActiveSection('dashboard')">
+        <i class="fas fa-tachometer-alt me-1"></i>
+        Dashboard
+      </button>
+    </li>
+    <li class="nav-item">
+      <button 
+        class="nav-link" 
+        [class.active]="activeSection === 'users'"
+        (click)="setActiveSection('users')">
+        <i class="fas fa-users me-1"></i>
+        Utilizadores
+      </button>
+    </li>
+    <li class="nav-item">
+      <button 
+        class="nav-link" 
+        [class.active]="activeSection === 'articles'"
+        (click)="setActiveSection('articles')">
+        <i class="fas fa-box me-1"></i>
+        Produtos
+      </button>
+    </li>
+    <li class="nav-item">
+      <button 
+        class="nav-link" 
+        [class.active]="activeSection === 'orders'"
+        (click)="setActiveSection('orders')">
+        <i class="fas fa-shopping-cart me-1"></i>
+        Encomendas
+      </button>
+    </li>
+  </ul>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">A carregar...</span>
+    </div>
+  </div>
+
+  <!-- Dashboard Section -->
+  <div *ngIf="activeSection === 'dashboard' && !isLoading">
+    <div class="row" *ngIf="stats">
+      <!-- Stats Cards -->
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-primary">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col">
+                <h5 class="card-title text-primary">Utilizadores</h5>
+                <h3 class="mb-0">{{ stats.total_users }}</h3>
+                <small class="text-muted">{{ stats.active_users }} ativos</small>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-users fa-2x text-primary"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-success">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col">
+                <h5 class="card-title text-success">Produtos</h5>
+                <h3 class="mb-0">{{ stats.total_articles }}</h3>
+                <small class="text-muted">Total de artigos</small>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-box fa-2x text-success"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-warning">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col">
+                <h5 class="card-title text-warning">Encomendas</h5>
+                <h3 class="mb-0">{{ stats.total_orders }}</h3>
+                <small class="text-muted">Total de encomendas</small>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-shopping-cart fa-2x text-warning"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-info">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col">
+                <h5 class="card-title text-info">Receita</h5>
+                <h3 class="mb-0">{{ formatCurrency(stats.total_revenue) }}</h3>
+                <small class="text-muted">Total vendas</small>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-euro-sign fa-2x text-info"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Status Chart -->
+    <div class="row" *ngIf="stats">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="mb-0">Status das Encomendas</h5>
+          </div>
+          <div class="card-body">
+            <div *ngFor="let status of getOrderStatusEntries()" class="d-flex justify-content-between mb-2">
+              <span>{{ status.key }}</span>
+              <span class="badge bg-secondary">{{ status.value }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Users Section -->
+  <div *ngIf="activeSection === 'users' && !isLoading">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4>Gestão de Utilizadores</h4>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Encomendas</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <span [class]="user.role === 'admin' ? 'badge bg-danger' : 'badge bg-primary'">
+                {{ user.role }}
+              </span>
+            </td>
+            <td>
+              <span [class]="user.is_active ? 'badge bg-success' : 'badge bg-secondary'">
+                {{ user.is_active ? 'Ativo' : 'Inativo' }}
+              </span>
+            </td>
+            <td>{{ user.total_orders }}</td>
+            <td>
+              <button class="btn btn-sm btn-primary me-1" (click)="editUser(user)">
+                Editar
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="confirmDeleteUser(user)">
+                Apagar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Articles Section -->
+  <div *ngIf="activeSection === 'articles' && !isLoading">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4>Gestão de Produtos</h4>
+      <button class="btn btn-primary" (click)="createArticle()">
+        <i class="fas fa-plus me-1"></i>
+        Novo Produto
+      </button>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Descrição</th>
+            <th>Vendidos</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let article of articles">
+            <td>{{ article.id }}</td>
+            <td>{{ article.name }}</td>
+            <td><strong>${{ article.price?.toFixed(2) || '0.00' }}</strong></td>
+            <td>{{ article.content | slice:0:50 }}{{ article.content.length > 50 ? '...' : '' }}</td>
+            <td>{{ article.total_sold }}</td>
+            <td>
+              <button class="btn btn-sm btn-primary me-1" (click)="editArticle(article)">
+                Editar
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="confirmDeleteArticle(article)">
+                Apagar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Orders Section -->
+  <div *ngIf="activeSection === 'orders' && !isLoading">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4>Gestão de Encomendas</h4>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Data</th>
+            <th>Status</th>
+            <th>Total</th>
+            <th>Items</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders">
+            <td>{{ order.id }}</td>
+            <td>{{ order.user_name }}</td>
+            <td>{{ formatDate(order.order_date) }}</td>
+            <td>
+              <select 
+                class="form-select form-select-sm" 
+                [value]="order.status"
+                (change)="onOrderStatusChange(order, $event)">
+                <option value="processando">Processando</option>
+                <option value="em trânsito">Em Trânsito</option>
+                <option value="entregue">Entregue</option>
+                <option value="cancelado">Cancelado</option>
+              </select>
+            </td>
+            <td>{{ formatCurrency(order.total) }}</td>
+            <td>{{ order.items_count }}</td>
+            <td>
+              <button class="btn btn-sm btn-info" (click)="viewOrder(order)">
+                Ver
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- User Edit Modal -->
+<div class="modal fade" [class.show]="showUserModal" [style.display]="showUserModal ? 'block' : 'none'" *ngIf="showUserModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Utilizador</h5>
+        <button type="button" class="btn-close" (click)="closeUserModal()"></button>
+      </div>
+      <div class="modal-body" *ngIf="selectedUser">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Nome</label>
+            <input type="text" class="form-control" [(ngModel)]="selectedUser.name" name="name">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" [(ngModel)]="selectedUser.email" name="email">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Telefone</label>
+            <input type="text" class="form-control" [(ngModel)]="selectedUser.phone" name="phone">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Role</label>
+            <select class="form-select" [(ngModel)]="selectedUser.role" name="role">
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" [(ngModel)]="selectedUser.is_active" name="is_active">
+              <label class="form-check-label">Ativo</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeUserModal()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="saveUser()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Article Edit Modal -->
+<div class="modal fade" [class.show]="showArticleModal" [style.display]="showArticleModal ? 'block' : 'none'" *ngIf="showArticleModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ isEditingArticle ? 'Editar' : 'Novo' }} Produto</h5>
+        <button type="button" class="btn-close" (click)="closeArticleModal()"></button>
+      </div>
+      <div class="modal-body" *ngIf="selectedArticle">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Nome *</label>
+            <input type="text" class="form-control" [(ngModel)]="selectedArticle.name" name="name" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Descrição *</label>
+            <textarea class="form-control" rows="4" [(ngModel)]="selectedArticle.content" name="content" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">URL da Imagem</label>
+            <input type="text" class="form-control" [(ngModel)]="selectedArticle.image_url" name="image_url">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Preço ($) *</label>
+            <input type="number" step="0.01" min="0" class="form-control" [(ngModel)]="selectedArticle.price" name="price" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeArticleModal()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="saveArticle()">
+          {{ isEditingArticle ? 'Atualizar' : 'Criar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Order Details Modal -->
+<div class="modal fade" [class.show]="showOrderModal" [style.display]="showOrderModal ? 'block' : 'none'" *ngIf="showOrderModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Detalhes da Encomenda #{{ selectedOrder?.id }}</h5>
+        <button type="button" class="btn-close" (click)="closeOrderModal()"></button>
+      </div>
+      <div class="modal-body" *ngIf="selectedOrder">
+        <div class="row">
+          <div class="col-md-6">
+            <h6>Informações do Cliente</h6>
+            <p><strong>Nome:</strong> {{ selectedOrder.user_name }}</p>
+            <p><strong>Email:</strong> {{ selectedOrder.user_email }}</p>
+          </div>
+          <div class="col-md-6">
+            <h6>Informações da Encomenda</h6>
+            <p><strong>Data:</strong> {{ formatDate(selectedOrder.order_date) }}</p>
+            <p><strong>Status:</strong> 
+              <span [class]="getStatusClass(selectedOrder.status)">{{ selectedOrder.status }}</span>
+            </p>
+          </div>
+        </div>
+        
+        <hr>
+        
+        <h6>Endereço de Entrega</h6>
+        <p>
+          {{ selectedOrder.shipping_info.name }}<br>
+          {{ selectedOrder.shipping_info.address }}<br>
+          {{ selectedOrder.shipping_info.city }} {{ selectedOrder.shipping_info.postal_code }}<br>
+          {{ selectedOrder.shipping_info.country }}
+        </p>
+        
+        <hr>
+        
+        <h6>Items da Encomenda</h6>
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Preço Unit.</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of selectedOrder.items">
+                <td>{{ item.article_name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ formatCurrency(item.price) }}</td>
+                <td>{{ formatCurrency(item.price * item.quantity) }}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th colspan="3">Total da Encomenda</th>
+                <th>{{ formatCurrency(selectedOrder.total) }}</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeOrderModal()">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" [class.show]="showDeleteConfirm" [style.display]="showDeleteConfirm ? 'block' : 'none'" *ngIf="showDeleteConfirm">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmar Eliminação</h5>
+        <button type="button" class="btn-close" (click)="closeDeleteConfirm()"></button>
+      </div>
+      <div class="modal-body" *ngIf="deleteTarget">
+        <p>Tem certeza que pretende eliminar <strong>{{ deleteTarget.name }}</strong>?</p>
+        <p class="text-danger"><small>Esta ação não pode ser desfeita.</small></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeDeleteConfirm()">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="executeDelete()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Backdrop -->
+<div class="modal-backdrop fade show" *ngIf="showUserModal || showArticleModal || showOrderModal || showDeleteConfirm"></div>

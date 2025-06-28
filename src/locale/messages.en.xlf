@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="welcome.title" datatype="html">
+        <source>Welcome to our E-Commerce</source>
+        <target>Welcome to our E-Commerce</target>
+      </trans-unit>
+      
+      <trans-unit id="login.title" datatype="html">
+        <source>Login</source>
+        <target>Login</target>
+      </trans-unit>
+      
+      <trans-unit id="login.username" datatype="html">
+        <source>Username</source>
+        <target>Username</target>
+      </trans-unit>
+      
+      <trans-unit id="login.password" datatype="html">
+        <source>Password</source>
+        <target>Password</target>
+      </trans-unit>
+      
+      <trans-unit id="login.button" datatype="html">
+        <source>Sign In</source>
+        <target>Sign In</target>
+      </trans-unit>
+      
+      <trans-unit id="register.title" datatype="html">
+        <source>Register</source>
+        <target>Register</target>
+      </trans-unit>
+      
+      <trans-unit id="register.name" datatype="html">
+        <source>Full Name</source>
+        <target>Full Name</target>
+      </trans-unit>
+      
+      <trans-unit id="register.email" datatype="html">
+        <source>Email</source>
+        <target>Email</target>
+      </trans-unit>
+      
+      <trans-unit id="register.phone" datatype="html">
+        <source>Phone</source>
+        <target>Phone</target>
+      </trans-unit>
+      
+      <trans-unit id="register.button" datatype="html">
+        <source>Create Account</source>
+        <target>Create Account</target>
+      </trans-unit>
+      
+      <trans-unit id="products.title" datatype="html">
+        <source>Products</source>
+        <target>Products</target>
+      </trans-unit>
+      
+      <trans-unit id="products.add_to_cart" datatype="html">
+        <source>Add to Cart</source>
+        <target>Add to Cart</target>
+      </trans-unit>
+      
+      <trans-unit id="cart.title" datatype="html">
+        <source>Shopping Cart</source>
+        <target>Shopping Cart</target>
+      </trans-unit>
+      
+      <trans-unit id="cart.empty" datatype="html">
+        <source>Your cart is empty</source>
+        <target>Your cart is empty</target>
+      </trans-unit>
+      
+      <trans-unit id="cart.checkout" datatype="html">
+        <source>Checkout</source>
+        <target>Checkout</target>
+      </trans-unit>
+      
+      <trans-unit id="profile.title" datatype="html">
+        <source>My Profile</source>
+        <target>My Profile</target>
+      </trans-unit>
+      
+      <trans-unit id="profile.personal_data" datatype="html">
+        <source>Personal Data</source>
+        <target>Personal Data</target>
+      </trans-unit>
+      
+      <trans-unit id="profile.order_history" datatype="html">
+        <source>Order History</source>
+        <target>Order History</target>
+      </trans-unit>
+      
+      <trans-unit id="profile.change_password" datatype="html">
+        <source>Change Password</source>
+        <target>Change Password</target>
+      </trans-unit>
+      
+      <trans-unit id="navigation.home" datatype="html">
+        <source>Home</source>
+        <target>Home</target>
+      </trans-unit>
+      
+      <trans-unit id="navigation.products" datatype="html">
+        <source>Products</source>
+        <target>Products</target>
+      </trans-unit>
+      
+      <trans-unit id="navigation.profile" datatype="html">
+        <source>Profile</source>
+        <target>Profile</target>
+      </trans-unit>
+      
+      <trans-unit id="navigation.logout" datatype="html">
+        <source>Logout</source>
+        <target>Logout</target>
+      </trans-unit>
+      
+      <trans-unit id="footer.privacy_policy" datatype="html">
+        <source>Privacy Policy</source>
+        <target>Privacy Policy</target>
+      </trans-unit>
+      
+      <trans-unit id="footer.terms_of_service" datatype="html">
+        <source>Terms of Service</source>
+        <target>Terms of Service</target>
+      </trans-unit>
+      
+      <trans-unit id="footer.shipping_returns" datatype="html">
+        <source>Shipping &amp; Returns</source>
+        <target>Shipping &amp; Returns</target>
+      </trans-unit>
+      
+      <trans-unit id="footer.customer_support" datatype="html">
+        <source>Customer Support</source>
+        <target>Customer Support</target>
+      </trans-unit>
+      
+      <trans-unit id="footer.faq" datatype="html">
+        <source>FAQ</source>
+        <target>FAQ</target>
+      </trans-unit>
+      
+      <trans-unit id="common.save" datatype="html">
+        <source>Save</source>
+        <target>Save</target>
+      </trans-unit>
+      
+      <trans-unit id="common.cancel" datatype="html">
+        <source>Cancel</source>
+        <target>Cancel</target>
+      </trans-unit>
+      
+      <trans-unit id="common.loading" datatype="html">
+        <source>Loading...</source>
+        <target>Loading...</target>
+      </trans-unit>
+      
+      <trans-unit id="common.error" datatype="html">
+        <source>An error occurred</source>
+        <target>An error occurred</target>
+      </trans-unit>
+      
+      <trans-unit id="validation.required" datatype="html">
+        <source>This field is required</source>
+        <target>This field is required</target>
+      </trans-unit>
+      
+      <trans-unit id="validation.email" datatype="html">
+        <source>Please enter a valid email</source>
+        <target>Please enter a valid email</target>
+      </trans-unit>
+      
+      <trans-unit id="validation.minlength" datatype="html">
+        <source>Minimum length is {minLength} characters</source>
+        <target>Minimum length is {minLength} characters</target>
+      </trans-unit>
+      
+      <trans-unit id="cart.clear" datatype="html">
+        <source>Clear</source>
+        <target>Clear</target>
+      </trans-unit>
+      
+      <trans-unit id="cart.remove" datatype="html">
+        <source>Remove</source>
+        <target>Remove</target>
+      </trans-unit>
+      
+      <trans-unit id="language.selector" datatype="html">
+        <source>Language</source>
+        <target>Language</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

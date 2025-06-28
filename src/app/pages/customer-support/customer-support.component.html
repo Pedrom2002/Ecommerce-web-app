@@ -5,26 +5,26 @@
         <div class="card-header">
           <h1 class="h2 mb-0">
             <i class="icon-line-support me-2"></i>
-            Suporte ao Cliente
+            {{ getTranslation('customer_support_title') }}
           </h1>
         </div>
         <div class="card-body">
           <div class="content">
             <p class="lead">
-              Estamos aqui para ajudar! Entre em contacto connosco através dos canais disponíveis.
+              {{ getTranslation('support_intro_message') }}
             </p>
 
-            <h3><i class="icon-line-phone me-2"></i>Contactos Diretos</h3>
+            <h3><i class="icon-line-phone me-2"></i>{{ getTranslation('direct_contacts') }}</h3>
             
             <div class="row">
               <div class="col-md-6 mb-4">
                 <div class="card border-primary">
                   <div class="card-body text-center">
                     <i class="icon-line-phone text-primary mb-3" style="font-size: 3rem;"></i>
-                    <h5>Telefone</h5>
+                    <h5>{{ getTranslation('phone') }}</h5>
                     <p class="mb-1"><strong>+351 21 123 4567</strong></p>
-                    <p class="text-muted">Segunda a Sexta: 9h-18h</p>
-                    <small class="text-success">Resposta imediata</small>
+                    <p class="text-muted">{{ getTranslation('weekday_hours') }}</p>
+                    <small class="text-success">{{ getTranslation('immediate_response') }}</small>
                   </div>
                 </div>
               </div>
@@ -32,10 +32,10 @@
                 <div class="card border-success">
                   <div class="card-body text-center">
                     <i class="icon-line-envelope text-success mb-3" style="font-size: 3rem;"></i>
-                    <h5>Email</h5>
+                    <h5>{{ getTranslation('email') }}</h5>
                     <p class="mb-1"><strong>suporte&#64;ecommerce.pt</strong></p>
-                    <p class="text-muted">Resposta em 2-4 horas</p>
-                    <small class="text-success">24/7 disponível</small>
+                    <p class="text-muted">{{ getTranslation('email_response_time') }}</p>
+                    <small class="text-success">{{ getTranslation('available_24_7') }}</small>
                   </div>
                 </div>
               </div>
@@ -46,10 +46,10 @@
                 <div class="card border-info">
                   <div class="card-body text-center">
                     <i class="icon-line-chat text-info mb-3" style="font-size: 3rem;"></i>
-                    <h5>Chat Online</h5>
-                    <p class="mb-1"><strong>Chat ao Vivo</strong></p>
-                    <p class="text-muted">Segunda a Sexta: 9h-18h</p>
-                    <button class="btn btn-info btn-sm">Iniciar Chat</button>
+                    <h5>{{ getTranslation('online_chat') }}</h5>
+                    <p class="mb-1"><strong>{{ getTranslation('live_chat') }}</strong></p>
+                    <p class="text-muted">{{ getTranslation('weekday_hours') }}</p>
+                    <button class="btn btn-info btn-sm">{{ getTranslation('start_chat') }}</button>
                   </div>
                 </div>
               </div>
@@ -57,37 +57,37 @@
                 <div class="card border-warning">
                   <div class="card-body text-center">
                     <i class="icon-line-whatsapp text-warning mb-3" style="font-size: 3rem;"></i>
-                    <h5>WhatsApp</h5>
+                    <h5>{{ getTranslation('whatsapp') }}</h5>
                     <p class="mb-1"><strong>+351 91 123 4567</strong></p>
-                    <p class="text-muted">Resposta em 1-2 horas</p>
+                    <p class="text-muted">{{ getTranslation('whatsapp_response_time') }}</p>
                     <a href="https://wa.me/351911234567" class="btn btn-warning btn-sm" target="_blank">
-                      Enviar Mensagem
+                      {{ getTranslation('send_message') }}
                     </a>
                   </div>
                 </div>
               </div>
             </div>
 
-            <h3><i class="icon-line-layers me-2"></i>Departamentos Especializados</h3>
+            <h3><i class="icon-line-layers me-2"></i>{{ getTranslation('specialized_departments') }}</h3>
             
             <div class="accordion" id="departmentsAccordion">
               <div class="accordion-item">
                 <h2 class="accordion-header">
                   <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#dept1">
                     <i class="icon-line-shopping-cart me-2"></i>
-                    Encomendas e Pagamentos
+                    {{ getTranslation('orders_payments') }}
                   </button>
                 </h2>
                 <div id="dept1" class="accordion-collapse collapse show" data-bs-parent="#departmentsAccordion">
                   <div class="accordion-body">
-                    <p><strong>Email:</strong> encomendas&#64;ecommerce.pt</p>
-                    <p><strong>Telefone:</strong> +351 21 123 4567 (Extensão 1)</p>
-                    <p><strong>Especialidades:</strong></p>
+                    <p><strong>{{ getTranslation('email') }}:</strong> {{ getTranslation('orders_email') }}</p>
+                    <p><strong>{{ getTranslation('phone') }}:</strong> {{ getTranslation('orders_phone') }}</p>
+                    <p><strong>{{ getTranslation('specialties') }}:</strong></p>
                     <ul>
-                      <li>Estado de encomendas</li>
-                      <li>Problemas de pagamento</li>
-                      <li>Alterações de encomenda</li>
-                      <li>Cancelamentos</li>
+                      <li>{{ getTranslation('order_status') }}</li>
+                      <li>{{ getTranslation('payment_issues') }}</li>
+                      <li>{{ getTranslation('order_changes') }}</li>
+                      <li>{{ getTranslation('cancellations') }}</li>
                     </ul>
                   </div>
                 </div>
@@ -97,19 +97,19 @@
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#dept2">
                     <i class="icon-line-truck me-2"></i>
-                    Envios e Entregas
+                    {{ getTranslation('shipping_delivery') }}
                   </button>
                 </h2>
                 <div id="dept2" class="accordion-collapse collapse" data-bs-parent="#departmentsAccordion">
                   <div class="accordion-body">
-                    <p><strong>Email:</strong> envios&#64;ecommerce.pt</p>
-                    <p><strong>Telefone:</strong> +351 21 123 4567 (Extensão 2)</p>
-                    <p><strong>Especialidades:</strong></p>
+                    <p><strong>{{ getTranslation('email') }}:</strong> {{ getTranslation('shipping_email_address') }}</p>
+                    <p><strong>{{ getTranslation('phone') }}:</strong> {{ getTranslation('shipping_phone') }}</p>
+                    <p><strong>{{ getTranslation('specialties') }}:</strong></p>
                     <ul>
-                      <li>Rastreamento de encomendas</li>
-                      <li>Problemas de entrega</li>
-                      <li>Alteração de morada</li>
-                      <li>Entregas especiais</li>
+                      <li>{{ getTranslation('order_tracking') }}</li>
+                      <li>{{ getTranslation('delivery_issues') }}</li>
+                      <li>{{ getTranslation('address_change') }}</li>
+                      <li>{{ getTranslation('special_deliveries') }}</li>
                     </ul>
                   </div>
                 </div>
@@ -119,19 +119,19 @@
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#dept3">
                     <i class="icon-line-refresh me-2"></i>
-                    Devoluções e Trocas
+                    {{ getTranslation('returns_exchanges') }}
                   </button>
                 </h2>
                 <div id="dept3" class="accordion-collapse collapse" data-bs-parent="#departmentsAccordion">
                   <div class="accordion-body">
-                    <p><strong>Email:</strong> devolver&#64;ecommerce.pt</p>
-                    <p><strong>Telefone:</strong> +351 21 123 4567 (Extensão 3)</p>
-                    <p><strong>Especialidades:</strong></p>
+                    <p><strong>{{ getTranslation('email') }}:</strong> {{ getTranslation('returns_email_address') }}</p>
+                    <p><strong>{{ getTranslation('phone') }}:</strong> {{ getTranslation('returns_phone') }}</p>
+                    <p><strong>{{ getTranslation('specialties') }}:</strong></p>
                     <ul>
-                      <li>Processo de devolução</li>
-                      <li>Trocas de produtos</li>
-                      <li>Reembolsos</li>
-                      <li>Produtos com defeito</li>
+                      <li>{{ getTranslation('return_process') }}</li>
+                      <li>{{ getTranslation('product_exchanges') }}</li>
+                      <li>{{ getTranslation('refunds') }}</li>
+                      <li>{{ getTranslation('defective_products') }}</li>
                     </ul>
                   </div>
                 </div>
@@ -141,139 +141,137 @@
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#dept4">
                     <i class="icon-line-support me-2"></i>
-                    Suporte Técnico
+                    {{ getTranslation('technical_support') }}
                   </button>
                 </h2>
                 <div id="dept4" class="accordion-collapse collapse" data-bs-parent="#departmentsAccordion">
                   <div class="accordion-body">
-                    <p><strong>Email:</strong> tecnico&#64;ecommerce.pt</p>
-                    <p><strong>Telefone:</strong> +351 21 123 4567 (Extensão 4)</p>
-                    <p><strong>Especialidades:</strong></p>
+                    <p><strong>{{ getTranslation('email') }}:</strong> {{ getTranslation('technical_email') }}</p>
+                    <p><strong>{{ getTranslation('phone') }}:</strong> {{ getTranslation('technical_phone') }}</p>
+                    <p><strong>{{ getTranslation('specialties') }}:</strong></p>
                     <ul>
-                      <li>Problemas no site</li>
-                      <li>Dificuldades de login</li>
-                      <li>Problemas na aplicação móvel</li>
-                      <li>Questões de conta</li>
+                      <li>{{ getTranslation('website_issues') }}</li>
+                      <li>{{ getTranslation('login_difficulties') }}</li>
+                      <li>{{ getTranslation('mobile_app_issues') }}</li>
+                      <li>{{ getTranslation('account_questions') }}</li>
                     </ul>
                   </div>
                 </div>
               </div>
             </div>
 
-            <h3><i class="icon-line-clock me-2"></i>Horários de Atendimento</h3>
+            <h3><i class="icon-line-clock me-2"></i>{{ getTranslation('service_hours') }}</h3>
             
             <div class="table-responsive">
               <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th>Serviço</th>
-                    <th>Segunda - Sexta</th>
-                    <th>Sábado</th>
-                    <th>Domingo</th>
+                    <th>{{ getTranslation('service') }}</th>
+                    <th>{{ getTranslation('monday_friday') }}</th>
+                    <th>{{ getTranslation('saturday') }}</th>
+                    <th>{{ getTranslation('sunday') }}</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><strong>Telefone</strong></td>
-                    <td>9h - 18h</td>
-                    <td>10h - 16h</td>
-                    <td>Fechado</td>
+                    <td><strong>{{ getTranslation('phone') }}</strong></td>
+                    <td>{{ getTranslation('weekday_schedule') }}</td>
+                    <td>{{ getTranslation('saturday_schedule') }}</td>
+                    <td>{{ getTranslation('closed') }}</td>
                   </tr>
                   <tr>
-                    <td><strong>Chat Online</strong></td>
-                    <td>9h - 18h</td>
-                    <td>10h - 16h</td>
-                    <td>Fechado</td>
+                    <td><strong>{{ getTranslation('online_chat') }}</strong></td>
+                    <td>{{ getTranslation('weekday_schedule') }}</td>
+                    <td>{{ getTranslation('saturday_schedule') }}</td>
+                    <td>{{ getTranslation('closed') }}</td>
                   </tr>
                   <tr>
-                    <td><strong>Email</strong></td>
-                    <td colspan="3">24/7 - Resposta em 2-4 horas nos dias úteis</td>
+                    <td><strong>{{ getTranslation('email') }}</strong></td>
+                    <td colspan="3">{{ getTranslation('email_availability') }}</td>
                   </tr>
                   <tr>
-                    <td><strong>WhatsApp</strong></td>
-                    <td>9h - 20h</td>
-                    <td>10h - 18h</td>
-                    <td>12h - 18h</td>
+                    <td><strong>{{ getTranslation('whatsapp') }}</strong></td>
+                    <td>{{ getTranslation('whatsapp_weekday') }}</td>
+                    <td>{{ getTranslation('whatsapp_saturday') }}</td>
+                    <td>{{ getTranslation('whatsapp_sunday') }}</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <h3><i class="icon-line-forms me-2"></i>Formulário de Contacto</h3>
+            <h3><i class="icon-line-forms me-2"></i>{{ getTranslation('contact_form') }}</h3>
             
             <form class="row">
               <div class="col-md-6 mb-3">
-                <label for="contactName" class="form-label">Nome Completo *</label>
+                <label for="contactName" class="form-label">{{ getTranslation('full_name') }} *</label>
                 <input type="text" class="form-control" id="contactName" name="name" required>
               </div>
               <div class="col-md-6 mb-3">
-                <label for="contactEmail" class="form-label">E-mail *</label>
+                <label for="contactEmail" class="form-label">{{ getTranslation('email') }} *</label>
                 <input type="email" class="form-control" id="contactEmail" name="email" required>
               </div>
               <div class="col-md-6 mb-3">
-                <label for="contactPhone" class="form-label">Telefone</label>
+                <label for="contactPhone" class="form-label">{{ getTranslation('phone') }}</label>
                 <input type="tel" class="form-control" id="contactPhone" name="phone">
               </div>
               <div class="col-md-6 mb-3">
-                <label for="contactSubject" class="form-label">Assunto *</label>
+                <label for="contactSubject" class="form-label">{{ getTranslation('subject') }} *</label>
                 <select class="form-select" id="contactSubject" name="subject" required>
-                  <option value="">Selecione o assunto</option>
-                  <option value="encomenda">Questão sobre encomenda</option>
-                  <option value="produto">Informação sobre produto</option>
-                  <option value="entrega">Problema de entrega</option>
-                  <option value="devolucao">Devolução/Troca</option>
-                  <option value="tecnico">Suporte técnico</option>
-                  <option value="outro">Outro</option>
+                  <option value="">{{ getTranslation('select_subject') }}</option>
+                  <option value="encomenda">{{ getTranslation('order_question') }}</option>
+                  <option value="produto">{{ getTranslation('product_information') }}</option>
+                  <option value="entrega">{{ getTranslation('delivery_problem') }}</option>
+                  <option value="devolucao">{{ getTranslation('return_exchange') }}</option>
+                  <option value="tecnico">{{ getTranslation('technical_support') }}</option>
+                  <option value="outro">{{ getTranslation('other') }}</option>
                 </select>
               </div>
               <div class="col-12 mb-3">
-                <label for="contactOrder" class="form-label">Número da Encomenda (se aplicável)</label>
-                <input type="text" class="form-control" id="contactOrder" name="orderNumber" placeholder="Ex: EC2025001234">
+                <label for="contactOrder" class="form-label">{{ getTranslation('order_number_optional') }}</label>
+                <input type="text" class="form-control" id="contactOrder" name="orderNumber" placeholder="{{ getTranslation('order_number_example') }}">
               </div>
               <div class="col-12 mb-3">
-                <label for="contactMessage" class="form-label">Mensagem *</label>
+                <label for="contactMessage" class="form-label">{{ getTranslation('message') }} *</label>
                 <textarea class="form-control" id="contactMessage" name="message" rows="5" 
-                          placeholder="Descreva a sua questão ou problema..." required></textarea>
+                          placeholder="{{ getTranslation('message_placeholder') }}" required></textarea>
               </div>
               <div class="col-12">
                 <button type="submit" class="btn btn-primary">
                   <i class="icon-line-paper-plane me-1"></i>
-                  Enviar Mensagem
+                  {{ getTranslation('send_message') }}
                 </button>
               </div>
             </form>
 
-            <h3><i class="icon-line-help me-2"></i>Antes de Contactar</h3>
+            <h3><i class="icon-line-help me-2"></i>{{ getTranslation('before_contacting') }}</h3>
             
             <div class="alert alert-info">
-              <h6><i class="icon-line-lightbulb me-2"></i>Dica: Consulte primeiro as nossas FAQ</h6>
+              <h6><i class="icon-line-lightbulb me-2"></i>{{ getTranslation('tip_check_faq') }}</h6>
               <p class="mb-2">
-                Muitas questões comuns já têm resposta na nossa secção de 
-                <a href="/faq" class="alert-link">Perguntas Frequentes</a>.
+                {{ getTranslation('faq_suggestion_text') }}
+                <a href="/faq" class="alert-link">{{ getTranslation('faq') }}</a>.
               </p>
               <p class="mb-0">
-                Tenha à mão o número da sua encomenda para um atendimento mais rápido.
+                {{ getTranslation('order_number_ready') }}
               </p>
             </div>
 
-            <h3><i class="icon-line-location me-2"></i>Informações da Empresa</h3>
+            <h3><i class="icon-line-location me-2"></i>{{ getTranslation('company_information') }}</h3>
             
             <div class="row">
               <div class="col-md-6">
-                <h5>Sede</h5>
+                <h5>{{ getTranslation('headquarters') }}</h5>
                 <address>
-                  <strong>E-Commerce Portugal, Lda.</strong><br>
-                  Rua do Comércio, 123<br>
-                  1000-100 Lisboa<br>
-                  Portugal
+                  <strong>{{ getTranslation('company_name') }}</strong><br>
+                  {{ getTranslation('company_address_full') }}
                 </address>
               </div>
               <div class="col-md-6">
-                <h5>Informações Fiscais</h5>
+                <h5>{{ getTranslation('tax_information') }}</h5>
                 <p>
-                  <strong>NIF:</strong> 123 456 789<br>
-                  <strong>Conservatória:</strong> Lisboa<br>
-                  <strong>Capital Social:</strong> €50.000
+                  <strong>{{ getTranslation('tax_number') }}:</strong> {{ getTranslation('company_tax_number') }}<br>
+                  <strong>{{ getTranslation('registry') }}:</strong> {{ getTranslation('company_registry') }}<br>
+                  <strong>{{ getTranslation('share_capital') }}:</strong> {{ getTranslation('company_capital') }}
                 </p>
               </div>
             </div>

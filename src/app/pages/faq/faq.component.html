@@ -5,40 +5,40 @@
         <div class="card-header">
           <h1 class="h2 mb-0">
             <i class="icon-line-question me-2"></i>
-            Perguntas Frequentes
+            {{ getTranslation('faq_title') }}
           </h1>
         </div>
         <div class="card-body">
           <div class="content">
             <p class="lead">
-              Encontre respostas para as questões mais comuns sobre os nossos produtos e serviços.
+              {{ getTranslation('faq_intro_message') }}
             </p>
 
             <div class="mb-4">
-              <input type="text" class="form-control" id="faqSearch" placeholder="Pesquisar pergunta..." 
+              <input type="text" class="form-control" id="faqSearch" placeholder="{{ getTranslation('search_question') }}" 
                      onkeyup="filterFAQ(this.value)">
             </div>
 
-            <h3><i class="icon-line-shopping-cart me-2"></i>Encomendas</h3>
+            <h3><i class="icon-line-shopping-cart me-2"></i>{{ getTranslation('orders') }}</h3>
             
             <div class="accordion mb-4" id="ordersAccordion">
               <div class="accordion-item faq-item" data-keywords="encomenda pedido comprar como fazer">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#order1">
-                    Como faço uma encomenda?
+                    {{ getTranslation('how_to_order') }}
                   </button>
                 </h2>
                 <div id="order1" class="accordion-collapse collapse" data-bs-parent="#ordersAccordion">
                   <div class="accordion-body">
-                    <p>Para fazer uma encomenda:</p>
+                    <p>{{ getTranslation('how_to_order_intro') }}</p>
                     <ol>
-                      <li>Navegue pelos nossos produtos</li>
-                      <li>Adicione os produtos desejados ao carrinho</li>
-                      <li>Vá ao carrinho e clique em "Finalizar Compra"</li>
-                      <li>Preencha os dados de envio e pagamento</li>
-                      <li>Confirme a encomenda</li>
+                      <li>{{ getTranslation('browse_products') }}</li>
+                      <li>{{ getTranslation('add_to_cart') }}</li>
+                      <li>{{ getTranslation('go_to_checkout') }}</li>
+                      <li>{{ getTranslation('fill_shipping_payment') }}</li>
+                      <li>{{ getTranslation('confirm_order') }}</li>
                     </ol>
-                    <p>Receberá um email de confirmação com todos os detalhes.</p>
+                    <p>{{ getTranslation('confirmation_email_desc') }}</p>
                   </div>
                 </div>
               </div>
@@ -46,17 +46,17 @@
               <div class="accordion-item faq-item" data-keywords="cancelar encomenda anular pedido">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#order2">
-                    Posso cancelar a minha encomenda?
+                    {{ getTranslation('can_cancel_order') }}
                   </button>
                 </h2>
                 <div id="order2" class="accordion-collapse collapse" data-bs-parent="#ordersAccordion">
                   <div class="accordion-body">
-                    <p>Sim, pode cancelar a sua encomenda até 2 horas após a confirmação, desde que ainda não tenha sido processada.</p>
-                    <p>Para cancelar:</p>
+                    <p>{{ getTranslation('cancel_order_timeframe') }}</p>
+                    <p>{{ getTranslation('to_cancel') }}</p>
                     <ul>
-                      <li>Contacte-nos através do email: encomendas&#64;ecommerce.pt</li>
-                      <li>Telefone: +351 21 123 4567</li>
-                      <li>Inclua o número da encomenda na comunicação</li>
+                      <li>{{ getTranslation('contact_email_orders') }}</li>
+                      <li>{{ getTranslation('phone_contact') }}</li>
+                      <li>{{ getTranslation('include_order_number') }}</li>
                     </ul>
                   </div>
                 </div>
@@ -65,29 +65,29 @@
               <div class="accordion-item faq-item" data-keywords="alterar modificar encomenda endereço morada">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#order3">
-                    Posso alterar o endereço de entrega após fazer a encomenda?
+                    {{ getTranslation('can_change_address') }}
                   </button>
                 </h2>
                 <div id="order3" class="accordion-collapse collapse" data-bs-parent="#ordersAccordion">
                   <div class="accordion-body">
-                    <p>Alterações de endereço são possíveis até 24 horas antes do envio, dependendo do estado da encomenda.</p>
-                    <p>Contacte-nos o mais rápido possível através de:</p>
+                    <p>{{ getTranslation('address_change_timeframe') }}</p>
+                    <p>{{ getTranslation('contact_us_quickly') }}</p>
                     <ul>
-                      <li>Email: envios&#64;ecommerce.pt</li>
-                      <li>Telefone: +351 21 123 4567 (Extensão 2)</li>
+                      <li>{{ getTranslation('shipping_email_contact') }}</li>
+                      <li>{{ getTranslation('shipping_phone_contact') }}</li>
                     </ul>
                   </div>
                 </div>
               </div>
             </div>
 
-            <h3><i class="icon-line-truck me-2"></i>Envios e Entregas</h3>
+            <h3><i class="icon-line-truck me-2"></i>{{ getTranslation('shipping_delivery') }}</h3>
             
             <div class="accordion mb-4" id="shippingAccordion">
               <div class="accordion-item faq-item" data-keywords="prazo entrega tempo envio demora">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ship1">
-                    Qual é o prazo de entrega?
+                    {{ getTranslation('delivery_timeframe_question') }}
                   </button>
                 </h2>
                 <div id="ship1" class="accordion-collapse collapse" data-bs-parent="#shippingAccordion">
@@ -96,31 +96,31 @@
                       <table class="table table-sm">
                         <thead>
                           <tr>
-                            <th>Destino</th>
-                            <th>Envio Standard</th>
-                            <th>Envio Expresso</th>
+                            <th>{{ getTranslation('destination') }}</th>
+                            <th>{{ getTranslation('standard_shipping') }}</th>
+                            <th>{{ getTranslation('express_shipping') }}</th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr>
-                            <td>Portugal Continental</td>
-                            <td>3-5 dias úteis</td>
-                            <td>1-2 dias úteis</td>
+                            <td>{{ getTranslation('portugal_mainland') }}</td>
+                            <td>{{ getTranslation('standard_delivery_time') }}</td>
+                            <td>{{ getTranslation('express_delivery_time') }}</td>
                           </tr>
                           <tr>
-                            <td>Ilhas (Açores/Madeira)</td>
-                            <td>5-7 dias úteis</td>
-                            <td>3-4 dias úteis</td>
+                            <td>{{ getTranslation('portuguese_islands') }}</td>
+                            <td>{{ getTranslation('islands_standard_time') }}</td>
+                            <td>{{ getTranslation('islands_express_time') }}</td>
                           </tr>
                           <tr>
-                            <td>Espanha</td>
-                            <td>5-7 dias úteis</td>
-                            <td>3-5 dias úteis</td>
+                            <td>{{ getTranslation('spain') }}</td>
+                            <td>{{ getTranslation('spain_standard_time') }}</td>
+                            <td>{{ getTranslation('spain_express_time') }}</td>
                           </tr>
                           <tr>
-                            <td>União Europeia</td>
-                            <td>7-10 dias úteis</td>
-                            <td>5-7 dias úteis</td>
+                            <td>{{ getTranslation('european_union') }}</td>
+                            <td>{{ getTranslation('eu_standard_time') }}</td>
+                            <td>{{ getTranslation('eu_express_time') }}</td>
                           </tr>
                         </tbody>
                       </table>
@@ -132,18 +132,18 @@
               <div class="accordion-item faq-item" data-keywords="rastrear encomenda tracking seguimento">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ship2">
-                    Como posso rastrear a minha encomenda?
+                    {{ getTranslation('how_track_order') }}
                   </button>
                 </h2>
                 <div id="ship2" class="accordion-collapse collapse" data-bs-parent="#shippingAccordion">
                   <div class="accordion-body">
-                    <p>Após o envio, receberá um email com:</p>
+                    <p>{{ getTranslation('after_shipping_email') }}</p>
                     <ul>
-                      <li>Código de rastreamento</li>
-                      <li>Link direto para acompanhar o estado</li>
-                      <li>Informações da transportadora</li>
+                      <li>{{ getTranslation('tracking_code') }}</li>
+                      <li>{{ getTranslation('direct_tracking_link') }}</li>
+                      <li>{{ getTranslation('carrier_information') }}</li>
                     </ul>
-                    <p>Também pode verificar o estado na sua conta, na secção "Minhas Encomendas".</p>
+                    <p>{{ getTranslation('check_account_orders') }}</p>
                   </div>
                 </div>
               </div>
@@ -151,39 +151,39 @@
               <div class="accordion-item faq-item" data-keywords="custo envio grátis portes taxa">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ship3">
-                    Quanto custa o envio?
+                    {{ getTranslation('shipping_cost_question') }}
                   </button>
                 </h2>
                 <div id="ship3" class="accordion-collapse collapse" data-bs-parent="#shippingAccordion">
                   <div class="accordion-body">
                     <div class="alert alert-success">
-                      <strong>Envio GRÁTIS</strong> para encomendas superiores a €50!
+                      <strong>{{ getTranslation('free_shipping') }}</strong> {{ getTranslation('free_shipping_threshold') }}
                     </div>
-                    <p><strong>Envio Standard:</strong> €4.99</p>
-                    <p><strong>Envio Expresso:</strong> €9.99</p>
-                    <p>Os custos podem variar para destinos internacionais.</p>
+                    <p><strong>{{ getTranslation('standard_shipping') }}:</strong> {{ getTranslation('standard_cost') }}</p>
+                    <p><strong>{{ getTranslation('express_shipping') }}:</strong> {{ getTranslation('express_cost') }}</p>
+                    <p>{{ getTranslation('international_cost_note') }}</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <h3><i class="icon-line-refresh me-2"></i>Devoluções e Trocas</h3>
+            <h3><i class="icon-line-refresh me-2"></i>{{ getTranslation('returns_exchanges') }}</h3>
             
             <div class="accordion mb-4" id="returnsAccordion">
               <div class="accordion-item faq-item" data-keywords="devolver produto devolução prazo">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#return1">
-                    Qual é o prazo para devoluções?
+                    {{ getTranslation('return_timeframe_question') }}
                   </button>
                 </h2>
                 <div id="return1" class="accordion-collapse collapse" data-bs-parent="#returnsAccordion">
                   <div class="accordion-body">
-                    <p>Tem <strong>14 dias</strong> a partir da data de entrega para devolver produtos.</p>
-                    <p><strong>Condições:</strong></p>
+                    <p>{{ getTranslation('return_period_answer') }}</p>
+                    <p><strong>{{ getTranslation('conditions') }}:</strong></p>
                     <ul>
-                      <li>Produto em condições originais</li>
-                      <li>Embalagem original intacta</li>
-                      <li>Etiquetas não removidas</li>
+                      <li>{{ getTranslation('original_condition') }}</li>
+                      <li>{{ getTranslation('original_packaging') }}</li>
+                      <li>{{ getTranslation('tags_attached') }}</li>
                     </ul>
                   </div>
                 </div>
@@ -192,19 +192,19 @@
               <div class="accordion-item faq-item" data-keywords="trocar produto tamanho cor diferente">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#return2">
-                    Posso trocar por um tamanho ou cor diferente?
+                    {{ getTranslation('can_exchange_size_color') }}
                   </button>
                 </h2>
                 <div id="return2" class="accordion-collapse collapse" data-bs-parent="#returnsAccordion">
                   <div class="accordion-body">
-                    <p>Sim! Oferecemos trocas por tamanho ou cor diferente.</p>
-                    <p><strong>Processo:</strong></p>
+                    <p>{{ getTranslation('exchange_answer') }}</p>
+                    <p><strong>{{ getTranslation('process') }}:</strong></p>
                     <ol>
-                      <li>Contacte-nos em devolver&#64;ecommerce.pt</li>
-                      <li>Envie o produto original de volta</li>
-                      <li>Enviaremos o novo produto</li>
+                      <li>{{ getTranslation('contact_returns_email') }}</li>
+                      <li>{{ getTranslation('send_original_back') }}</li>
+                      <li>{{ getTranslation('send_new_product') }}</li>
                     </ol>
-                    <p>Se o novo produto tiver valor superior, cobramos a diferença.</p>
+                    <p>{{ getTranslation('price_difference_note') }}</p>
                   </div>
                 </div>
               </div>
@@ -212,38 +212,38 @@
               <div class="accordion-item faq-item" data-keywords="reembolso dinheiro volta quanto tempo">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#return3">
-                    Quanto tempo demora o reembolso?
+                    {{ getTranslation('refund_time_question') }}
                   </button>
                 </h2>
                 <div id="return3" class="accordion-collapse collapse" data-bs-parent="#returnsAccordion">
                   <div class="accordion-body">
-                    <p>Reembolsos são processados em <strong>5-10 dias úteis</strong> após recebermos o produto devolvido.</p>
-                    <p>O valor é reembolsado para o método de pagamento original.</p>
-                    <p>Receberá confirmação por email quando o reembolso for processado.</p>
+                    <p>{{ getTranslation('refund_processing_answer') }}</p>
+                    <p>{{ getTranslation('original_payment_method') }}</p>
+                    <p>{{ getTranslation('refund_email_confirmation') }}</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <h3><i class="icon-line-credit-card me-2"></i>Pagamentos</h3>
+            <h3><i class="icon-line-credit-card me-2"></i>{{ getTranslation('payments') }}</h3>
             
             <div class="accordion mb-4" id="paymentAccordion">
               <div class="accordion-item faq-item" data-keywords="métodos pagamento cartão visa mastercard multibanco">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pay1">
-                    Que métodos de pagamento aceitam?
+                    {{ getTranslation('payment_methods_question') }}
                   </button>
                 </h2>
                 <div id="pay1" class="accordion-collapse collapse" data-bs-parent="#paymentAccordion">
                   <div class="accordion-body">
-                    <p>Aceitamos os seguintes métodos de pagamento:</p>
+                    <p>{{ getTranslation('accepted_payment_methods') }}</p>
                     <ul>
-                      <li><strong>Cartões de Crédito/Débito:</strong> Visa, Mastercard, American Express</li>
-                      <li><strong>Multibanco:</strong> Transferência bancária</li>
-                      <li><strong>MB Way</strong></li>
-                      <li><strong>PayPal</strong></li>
+                      <li><strong>{{ getTranslation('credit_debit_cards') }}:</strong> {{ getTranslation('card_brands') }}</li>
+                      <li><strong>{{ getTranslation('multibanco') }}:</strong> {{ getTranslation('bank_transfer') }}</li>
+                      <li><strong>{{ getTranslation('mb_way') }}</strong></li>
+                      <li><strong>{{ getTranslation('paypal') }}</strong></li>
                     </ul>
-                    <p>Todas as transações são processadas de forma segura com encriptação SSL.</p>
+                    <p>{{ getTranslation('secure_transactions') }}</p>
                   </div>
                 </div>
               </div>
@@ -251,17 +251,17 @@
               <div class="accordion-item faq-item" data-keywords="segurança dados cartão protecção ssl">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pay2">
-                    Os meus dados de pagamento estão seguros?
+                    {{ getTranslation('payment_security_question') }}
                   </button>
                 </h2>
                 <div id="pay2" class="accordion-collapse collapse" data-bs-parent="#paymentAccordion">
                   <div class="accordion-body">
-                    <p>Sim! A segurança dos seus dados é a nossa prioridade:</p>
+                    <p>{{ getTranslation('security_priority') }}</p>
                     <ul>
-                      <li>Encriptação SSL de 256 bits</li>
-                      <li>Não armazenamos dados do cartão</li>
-                      <li>Processamento através de gateways seguros</li>
-                      <li>Certificação PCI DSS</li>
+                      <li>{{ getTranslation('ssl_encryption') }}</li>
+                      <li>{{ getTranslation('no_card_storage') }}</li>
+                      <li>{{ getTranslation('secure_gateways') }}</li>
+                      <li>{{ getTranslation('pci_certification') }}</li>
                     </ul>
                   </div>
                 </div>
@@ -270,43 +270,43 @@
               <div class="accordion-item faq-item" data-keywords="fatura recibo documento fiscal">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pay3">
-                    Recebo fatura da compra?
+                    {{ getTranslation('invoice_question') }}
                   </button>
                 </h2>
                 <div id="pay3" class="accordion-collapse collapse" data-bs-parent="#paymentAccordion">
                   <div class="accordion-body">
-                    <p>Sim! Receberá automaticamente:</p>
+                    <p>{{ getTranslation('invoice_answer') }}</p>
                     <ul>
-                      <li>Fatura digital por email</li>
-                      <li>Documento fiscal válido para efeitos contabilísticos</li>
-                      <li>Pode solicitar fatura em papel (gratuito)</li>
+                      <li>{{ getTranslation('digital_invoice') }}</li>
+                      <li>{{ getTranslation('valid_tax_document') }}</li>
+                      <li>{{ getTranslation('paper_invoice_option') }}</li>
                     </ul>
-                    <p>Para empresas, podemos emitir fatura com dados fiscais específicos.</p>
+                    <p>{{ getTranslation('business_invoice_note') }}</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <h3><i class="icon-line-user me-2"></i>Conta e Perfil</h3>
+            <h3><i class="icon-line-user me-2"></i>{{ getTranslation('account_profile') }}</h3>
             
             <div class="accordion mb-4" id="accountAccordion">
               <div class="accordion-item faq-item" data-keywords="criar conta registo benefícios vantagens">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc1">
-                    Preciso de criar uma conta para comprar?
+                    {{ getTranslation('need_account_question') }}
                   </button>
                 </h2>
                 <div id="acc1" class="accordion-collapse collapse" data-bs-parent="#accountAccordion">
                   <div class="accordion-body">
-                    <p>Não é obrigatório, mas criar uma conta tem vantagens:</p>
+                    <p>{{ getTranslation('account_optional') }}</p>
                     <ul>
-                      <li>Histórico de encomendas</li>
-                      <li>Rastreamento de envios</li>
-                      <li>Checkout mais rápido</li>
-                      <li>Ofertas exclusivas</li>
-                      <li>Lista de desejos</li>
+                      <li>{{ getTranslation('order_history') }}</li>
+                      <li>{{ getTranslation('shipping_tracking') }}</li>
+                      <li>{{ getTranslation('faster_checkout') }}</li>
+                      <li>{{ getTranslation('exclusive_offers') }}</li>
+                      <li>{{ getTranslation('wishlist') }}</li>
                     </ul>
-                    <p>O registo é gratuito e leva apenas 2 minutos!</p>
+                    <p>{{ getTranslation('free_registration') }}</p>
                   </div>
                 </div>
               </div>
@@ -314,19 +314,19 @@
               <div class="accordion-item faq-item" data-keywords="password senha esqueci recuperar login">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc2">
-                    Esqueci-me da minha password. O que faço?
+                    {{ getTranslation('forgot_password_question') }}
                   </button>
                 </h2>
                 <div id="acc2" class="accordion-collapse collapse" data-bs-parent="#accountAccordion">
                   <div class="accordion-body">
-                    <p>Para recuperar a sua password:</p>
+                    <p>{{ getTranslation('password_recovery_steps') }}</p>
                     <ol>
-                      <li>Vá à página de login</li>
-                      <li>Clique em "Esqueci a password"</li>
-                      <li>Introduza o seu email</li>
-                      <li>Receberá um link para criar nova password</li>
+                      <li>{{ getTranslation('go_to_login') }}</li>
+                      <li>{{ getTranslation('click_forgot_password') }}</li>
+                      <li>{{ getTranslation('enter_email') }}</li>
+                      <li>{{ getTranslation('receive_reset_link') }}</li>
                     </ol>
-                    <p>Se não receber o email, verifique a pasta de spam.</p>
+                    <p>{{ getTranslation('check_spam_folder') }}</p>
                   </div>
                 </div>
               </div>
@@ -334,41 +334,41 @@
               <div class="accordion-item faq-item" data-keywords="alterar dados pessoais email telefone morada">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc3">
-                    Como altero os meus dados pessoais?
+                    {{ getTranslation('change_personal_data_question') }}
                   </button>
                 </h2>
                 <div id="acc3" class="accordion-collapse collapse" data-bs-parent="#accountAccordion">
                   <div class="accordion-body">
-                    <p>Para alterar os seus dados:</p>
+                    <p>{{ getTranslation('change_data_steps') }}</p>
                     <ol>
-                      <li>Faça login na sua conta</li>
-                      <li>Vá ao "Meu Perfil"</li>
-                      <li>Clique em "Editar dados pessoais"</li>
-                      <li>Altere as informações necessárias</li>
-                      <li>Guarde as alterações</li>
+                      <li>{{ getTranslation('login_account') }}</li>
+                      <li>{{ getTranslation('go_to_profile') }}</li>
+                      <li>{{ getTranslation('click_edit_data') }}</li>
+                      <li>{{ getTranslation('change_information') }}</li>
+                      <li>{{ getTranslation('save_changes') }}</li>
                     </ol>
                   </div>
                 </div>
               </div>
             </div>
 
-            <h3><i class="icon-line-support me-2"></i>Produtos e Stock</h3>
+            <h3><i class="icon-line-support me-2"></i>{{ getTranslation('products_stock') }}</h3>
             
             <div class="accordion mb-4" id="productAccordion">
               <div class="accordion-item faq-item" data-keywords="stock disponibilidade produto esgotado">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#prod1">
-                    O que acontece se um produto ficar sem stock após a encomenda?
+                    {{ getTranslation('out_of_stock_after_order') }}
                   </button>
                 </h2>
                 <div id="prod1" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
                   <div class="accordion-body">
-                    <p>Se um produto ficar sem stock após a sua encomenda:</p>
+                    <p>{{ getTranslation('out_of_stock_answer') }}</p>
                     <ul>
-                      <li>Contactamos imediatamente por email/telefone</li>
-                      <li>Oferecemos produto similar ou upgrade gratuito</li>
-                      <li>Pode escolher esperar pela reposição</li>
-                      <li>Ou cancelar e receber reembolso total</li>
+                      <li>{{ getTranslation('immediate_contact') }}</li>
+                      <li>{{ getTranslation('similar_upgrade_offer') }}</li>
+                      <li>{{ getTranslation('wait_restock_option') }}</li>
+                      <li>{{ getTranslation('cancel_full_refund') }}</li>
                     </ul>
                   </div>
                 </div>
@@ -377,29 +377,29 @@
               <div class="accordion-item faq-item" data-keywords="garantia produto defeito assistência">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#prod2">
-                    Que garantias têm os produtos?
+                    {{ getTranslation('product_warranties_question') }}
                   </button>
                 </h2>
                 <div id="prod2" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
                   <div class="accordion-body">
-                    <p>Todos os produtos têm:</p>
+                    <p>{{ getTranslation('all_products_have') }}</p>
                     <ul>
-                      <li><strong>Garantia legal:</strong> 2 anos (produtos com defeito)</li>
-                      <li><strong>Garantia do fabricante:</strong> Varia por produto</li>
-                      <li><strong>Garantia de satisfação:</strong> 14 dias para devolução</li>
+                      <li><strong>{{ getTranslation('legal_warranty') }}:</strong> {{ getTranslation('two_years_defects') }}</li>
+                      <li><strong>{{ getTranslation('manufacturer_warranty') }}:</strong> {{ getTranslation('varies_by_product') }}</li>
+                      <li><strong>{{ getTranslation('satisfaction_guarantee') }}:</strong> {{ getTranslation('fourteen_days_return') }}</li>
                     </ul>
-                    <p>Para acionar garantia, contacte tecnico&#64;ecommerce.pt</p>
+                    <p>{{ getTranslation('warranty_contact_info') }}</p>
                   </div>
                 </div>
               </div>
             </div>
 
             <div class="alert alert-info">
-              <h5><i class="icon-line-question-circle me-2"></i>Não encontrou a resposta?</h5>
+              <h5><i class="icon-line-question-circle me-2"></i>{{ getTranslation('didnt_find_answer') }}</h5>
               <p class="mb-0">
-                Entre em contacto connosco através da nossa página de 
-                <a href="/customer-support" class="alert-link">Suporte ao Cliente</a> 
-                ou envie email para <strong>suporte&#64;ecommerce.pt</strong>
+                {{ getTranslation('contact_support_text') }}
+                <a href="/customer-support" class="alert-link">{{ getTranslation('customer_support') }}</a> 
+                {{ getTranslation('or_email') }} <strong>{{ getTranslation('support_email_address') }}</strong>
               </p>
             </div>
           </div>

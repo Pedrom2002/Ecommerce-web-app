@@ -29,7 +29,7 @@
                       class="form-control" 
                       [(ngModel)]="searchTerm"
                       (keyup.enter)="onSearch()"
-                      placeholder="Pesquisar produtos..."
+                      [placeholder]="getTranslation('search_products')"
                     />
                     <button class="btn btn-outline-secondary" type="button" (click)="onSearch()">
                       <i class="icon-line-search"></i>
@@ -60,7 +60,7 @@
               <div class="row mt-2" *ngIf="searchTerm || selectedCategory !== 'all'">
                 <div class="col-12">
                   <button class="btn btn-outline-danger btn-sm" (click)="clearSearch()">
-                    <i class="icon-line-cross"></i> Limpar Filtros
+                    <i class="icon-line-cross"></i> {{ getTranslation('clear_filters') }}
                   </button>
                 </div>
               </div>
@@ -73,7 +73,7 @@
           <div class="card bg-light">
             <div class="card-body text-center">
               <h5 class="mb-2">{{ filteredProducts.length }}</h5>
-              <small class="text-muted">Produto{{ filteredProducts.length !== 1 ? 's' : '' }} encontrado{{ filteredProducts.length !== 1 ? 's' : '' }}</small>
+              <small class="text-muted">{{ getTranslation('products_found') }}</small>
             </div>
           </div>
         </div>
@@ -105,8 +105,8 @@
               </a>
               
               <!-- Badges -->
-              <div *ngIf="!product.inStock" class="sale-flash badge bg-secondary p-2">Fora de Stock</div>
-              <div *ngIf="product.onSale && product.inStock" class="sale-flash badge bg-success p-2 text-uppercase">Promoção!</div>
+              <div *ngIf="!product.inStock" class="sale-flash badge bg-secondary p-2">{{ getTranslation('out_of_stock_label') }}</div>
+              <div *ngIf="product.onSale && product.inStock" class="sale-flash badge bg-success p-2 text-uppercase">{{ getTranslation('promotion_label') }}</div>
               
               <!-- Overlay com Botões -->
               <div class="bg-overlay">
@@ -165,7 +165,7 @@
               <div *ngIf="isInCart(product.id)" class="mt-2">
                 <small class="badge bg-success">
                   <i class="icon-line-check me-1"></i>
-                  {{ getProductQuantity(product.id) }} no carrinho
+                  {{ getProductQuantity(product.id) }} {{ getTranslation('in_cart_label') }}
                 </small>
               </div>
             </div>
@@ -179,12 +179,12 @@
         <div class="card bg-light">
           <div class="card-body">
             <i class="icon-line-bag" style="font-size: 4rem; color: #ddd; margin-bottom: 20px;"></i>
-            <h4 class="text-muted">Nenhum produto encontrado</h4>
+            <h4 class="text-muted">{{ getTranslation('no_products_found') }}</h4>
             <p class="text-muted mb-3">
-              Não foram encontrados produtos que correspondam aos seus critérios de pesquisa.
+              {{ getTranslation('no_products_criteria') }}
             </p>
             <button class="btn btn-primary" (click)="clearSearch()">
-              <i class="icon-line-refresh me-2"></i>Ver Todos os Produtos
+              <i class="icon-line-refresh me-2"></i>{{ getTranslation('view_all_products') }}
             </button>
           </div>
         </div>
