@@ -1,22 +1,26 @@
 # E-Commerce Application - Angular + Flask
 
-Sistema e-commerce completo desenvolvido com Angular 18 (frontend) e Flask (backend), incluindo autenticação JWT, gestão de produtos, carrinho de compras e sistema de encomendas.
+Sistema e-commerce completo desenvolvido com Angular 18 (frontend) e Flask (backend), incluindo autenticação JWT, painel de administração, gestão de produtos, carrinho de compras e sistema de encomendas.
 
 ## 📋 Funcionalidades
 
 ### Frontend (Angular 18)
-- ✅ **Autenticação**: Login e registo de utilizadores
+- ✅ **Autenticação**: Login e registo com controlo de acesso baseado em roles
 - ✅ **Catálogo**: Listagem e detalhes de produtos
 - ✅ **Carrinho**: Sistema de carrinho de compras
 - ✅ **Checkout**: Processo completo de compra
 - ✅ **Perfil**: Gestão de dados pessoais e histórico de encomendas
+- ✅ **Painel Admin**: Interface de administração para gestão de produtos e utilizadores
 - ✅ **Responsivo**: Interface adaptativa para todos os dispositivos
 - ✅ **SSR**: Server-Side Rendering para melhor performance
 - ✅ **Páginas Institucionais**: Política de privacidade, termos, FAQ, etc.
+- ✅ **Internacionalização**: Suporte para múltiplos idiomas (PT/EN)
 
 ### Backend (Flask)
 - ✅ **API RESTful**: Endpoints para todas as funcionalidades
-- ✅ **Autenticação JWT**: Sistema seguro de tokens
+- ✅ **Autenticação JWT**: Sistema seguro de tokens com roles
+- ✅ **Sistema de Roles**: Controlo de acesso (user/admin)
+- ✅ **Endpoints Admin**: API completa para gestão de produtos e utilizadores
 - ✅ **Base de Dados**: SQLite com SQLAlchemy ORM
 - ✅ **CORS**: Configurado para comunicação frontend-backend
 - ✅ **Segurança**: Hash de passwords e validação de dados
@@ -35,7 +39,7 @@ Sistema e-commerce completo desenvolvido com Angular 18 (frontend) e Flask (back
 
 ### 1. Clonar o Repositório
 ```bash
-git clone <url-do-repositorio>
+git clone <https://github.com/Pedrom2002/Ecommerce-web-app>
 cd pw-2-pl
 ```
 
@@ -53,17 +57,6 @@ npm start
 # ou
 ng serve
 
-# Build de produção
-npm run build
-
-# Executar testes
-npm test
-
-# Servidor SSR de produção
-npm run serve:ssr:pw-2-pl
-
-# Build em modo watch (desenvolvimento)
-npm run watch
 ```
 
 ### 3. Configurar o Backend (Flask)
@@ -85,8 +78,8 @@ py -3.11 app.py
 
 ### Estrutura da Base de Dados
 O sistema cria automaticamente as seguintes tabelas:
-- **users**: Utilizadores do sistema
-- **articles**: Produtos/artigos
+- **users**: Utilizadores do sistema (com field 'role' para controlo de acesso)
+- **articles**: Produtos/artigos (com preços sincronizados)
 - **orders**: Encomendas
 - **order_items**: Itens das encomendas
 
@@ -118,6 +111,7 @@ npm start
 ### Autenticação
 - `POST /api/register` - Registo de utilizador
 - `POST /api/login` - Login de utilizador
+- `GET /api/profile` - Dados do perfil (inclui role)
 
 ### Produtos
 - `GET /api/articles` - Listar todos os produtos
@@ -131,6 +125,18 @@ npm start
 - `PUT /api/users/profile` - Atualizar perfil
 - `PUT /api/users/password` - Alterar password
 
+### Administração (Role Admin necessário)
+- `GET /api/admin/users` - Listar todos os utilizadores
+- `PUT /api/admin/users/<id>` - Atualizar utilizador
+- `DELETE /api/admin/users/<id>` - Eliminar utilizador
+- `GET /api/admin/articles` - Listar produtos com estatísticas
+- `POST /api/admin/articles` - Criar novo produto
+- `PUT /api/admin/articles/<id>` - Atualizar produto
+- `DELETE /api/admin/articles/<id>` - Eliminar produto
+- `GET /api/admin/orders` - Listar todas as encomendas
+- `PUT /api/admin/orders/<id>` - Atualizar estado da encomenda
+- `GET /api/admin/stats` - Estatísticas do sistema
+
 ## 🛡️ Autenticação
 
 ### JWT Tokens
@@ -139,9 +145,10 @@ npm start
 - Enviados automaticamente em requests autenticados via HTTP interceptor
 
 ### Proteção de Rotas
-- Rotas protegidas: `/profile`, `/checkout`
+- Rotas protegidas: `/profile`, `/checkout`, `/admin`
+- Controlo de acesso baseado em roles (admin/user)
 - Redirecionamento automático para login se não autenticado
-- Guards implementados no Angular Router
+- Guards implementados no Angular Router (AuthGuard, AdminGuard)
 
 ## 🎨 Estrutura do Projeto
 
@@ -152,16 +159,20 @@ pw-2-pl/
 │   ├── core/                   # Layout (header/footer)
 │   ├── ecommerce/             # Produtos e checkout
 │   ├── profile/               # Gestão de perfil
+│   ├── admin/                 # Painel de administração
 │   ├── pages/                 # Páginas institucionais
-│   ├── services/              # Serviços HTTP
+│   ├── services/              # Serviços HTTP (inclui AdminService)
 │   ├── interceptors/          # JWT interceptor
-│   ├── guards/                # Guards de autenticação
+│   ├── guards/                # Guards de autenticação (AuthGuard, AdminGuard)
 │   └── models/                # Interfaces TypeScript
-├── app.py                     # API Flask
+├── src/locale/                # Ficheiros de internacionalização
+├── app.py                     # API Flask com endpoints admin
 ├── instance/app.db           # Base de dados SQLite
 ├── requirements.txt          # Dependências Python
 ├── package.json             # Dependências Node.js
-└── artigos.json            # Dados de exemplo
+├── artigos.json            # Produtos importados para a BD
+├── update_with_shopping_prices.py  # Script de sincronização de preços
+└── server.ts                  # Servidor SSR
 ```
 
 
@@ -175,6 +186,15 @@ pw-2-pl/
 4. **Checkout**: Finalizar compras
 5. **Perfil**: Gerir dados pessoais
 6. **Histórico**: Ver encomendas anteriores
+7. **Multi-idioma**: Alternar entre Português e Inglês
+
+### Para Administradores
+1. **Painel Admin**: Acesso completo à gestão do sistema
+2. **Gestão de Produtos**: Criar, editar e eliminar produtos
+3. **Gestão de Utilizadores**: Ver e gerir contas de utilizadores
+4. **Gestão de Encomendas**: Acompanhar e atualizar estados
+5. **Estatísticas**: Dashboards com métricas do sistema
+6. **Sincronização de Dados**: Scripts para manter dados atualizados
 
 ### Funcionalidades Técnicas
 - **Responsivo**: Funciona em desktop, tablet e mobile
@@ -198,21 +218,18 @@ O projeto suporta múltiplos idiomas usando o sistema de internacionalização d
 - **Automática**: Deteção automática do idioma do browser
 
 
-## 🧪 Testes
+## 🛠️ Scripts de Manutenção
 
-### Frontend (Angular)
+### Sincronização de Preços
 ```bash
-# Executar testes unitários
-npm test
-
-# Testes com coverage
-ng test --code-coverage
+# Sincronizar preços dos produtos com o sistema de compras
+python update_with_shopping_prices.py
 ```
 
-### Backend (Flask)
+### Importação de Dados
 ```bash
-# Executar testes Python (se implementados)
-python -m pytest tests/
+# Importar produtos do artigos.json para a base de dados
+# (executado automaticamente na inicialização do Flask)
 ```
 
 ## 🐛 Resolução de Problemas
@@ -252,24 +269,23 @@ pip install -r requirements.txt
 
 ### Tecnologias Utilizadas
 - **Frontend**: Angular 18, TypeScript, RxJS, Bootstrap
-- **Backend**: Flask, SQLAlchemy, JWT-Extended
-- **Base de Dados**: SQLite
-- **Autenticação**: JWT (JSON Web Tokens)
+- **Internacionalização**: Angular i18n com suporte PT/EN
+- **SSR**: Angular Universal para Server-Side Rendering
+- **Backend**: Flask, SQLAlchemy, JWT-Extended, Flask-CORS
+- **Base de Dados**: SQLite com models relacionais
+- **Autenticação**: JWT (JSON Web Tokens) com sistema de roles
 - **Build**: Angular CLI, Webpack
+- **Segurança**: Bcrypt para hash de passwords, CORS configurado
 
 ### Arquitetura
 - **Padrão**: Single Page Application (SPA) com API REST
 - **Comunicação**: HTTP/HTTPS com JSON
 - **Estado**: Services com RxJS Observables
-- **Roteamento**: Angular Router com guards
+- **Roteamento**: Angular Router com guards (Auth + Admin)
+- **Controlo de Acesso**: Role-based access control (RBAC)
+- **Interceptors**: JWT automático e tratamento de erros
+- **Responsividade**: Mobile-first design com Bootstrap
 
 
-## 📄 Licença
 
-Este projeto foi desenvolvido para fins académicos no âmbito da disciplina de Programação Web II.
 
----
-
-**Versão**: 1.0.0  
-**Última Atualização**: Junho 2025  
-**Compatibilidade**: Node.js 18+, Python 3.8+
