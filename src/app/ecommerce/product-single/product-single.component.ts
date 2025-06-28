@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
+import { LanguageService } from '../../services/language.service';
 import { Product } from '../../models/product.interface';
 
 interface Review {
@@ -65,7 +66,8 @@ export class ProductSingleComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private productService: ProductService,
-    private cartService: CartService
+    private cartService: CartService,
+    private languageService: LanguageService
   ) {}
 
   ngOnInit(): void {
@@ -95,14 +97,14 @@ export class ProductSingleComponent implements OnInit, OnDestroy {
           this.product = product;
           this.loadRelatedProducts();
         } else {
-          this.showAlert('danger', 'Produto não encontrado');
+          this.showAlert('danger', this.getTranslation('product_not_found'));
           this.router.navigate(['/']);
         }
         this.isLoading = false;
       },
       error: (error) => {
         console.error('Erro ao carregar produto:', error);
-        this.showAlert('danger', 'Erro ao carregar produto');
+        this.showAlert('danger', this.getTranslation('product_load_error'));
         this.isLoading = false;
       }
     });
@@ -145,12 +147,12 @@ export class ProductSingleComponent implements OnInit, OnDestroy {
     if (!this.product) return;
     
     if (!this.product.inStock) {
-      this.showAlert('warning', 'Produto fora de stock');
+      this.showAlert('warning', this.getTranslation('product_out_of_stock'));
       return;
     }
 
     this.cartService.addToCart(this.product, this.quantity);
-    this.showAlert('success', `${this.quantity} x ${this.product.name} adicionado ao carrinho!`);
+    this.showAlert('success', `${this.quantity} x ${this.product.name} ${this.getTranslation('product_added_to_cart')}!`);
   }
 
   // Verificar se produto está no carrinho
@@ -174,12 +176,12 @@ export class ProductSingleComponent implements OnInit, OnDestroy {
     event.stopPropagation();
     
     if (!product.inStock) {
-      this.showAlert('warning', `${product.name} está fora de stock`);
+      this.showAlert('warning', `${product.name} ${this.getTranslation('product_is_out_of_stock')}`);
       return;
     }
 
     this.cartService.addToCart(product, 1);
-    this.showAlert('success', `${product.name} adicionado ao carrinho!`);
+    this.showAlert('success', `${product.name} ${this.getTranslation('product_added_to_cart')}!`);
   }
 
   // Gerar array de estrelas para rating
@@ -195,7 +197,7 @@ export class ProductSingleComponent implements OnInit, OnDestroy {
   // Submeter review
   submitReview(): void {
     if (!this.reviewForm.name || !this.reviewForm.email || !this.reviewForm.rating || !this.reviewForm.comment) {
-      this.showAlert('warning', 'Por favor, preencha todos os campos obrigatórios');
+      this.showAlert('warning', this.getTranslation('product_fill_required_fields'));
       return;
     }
 
@@ -211,7 +213,7 @@ export class ProductSingleComponent implements OnInit, OnDestroy {
 
     this.reviews.unshift(newReview);
     this.reviewForm = { name: '', email: '', rating: '', comment: '' };
-    this.showAlert('success', 'Review submetida com sucesso!');
+    this.showAlert('success', this.getTranslation('product_review_submitted'));
   }
 
   // Mostrar alerta
@@ -229,7 +231,7 @@ export class ProductSingleComponent implements OnInit, OnDestroy {
     if (!this.product) return;
     
     const url = window.location.href;
-    const text = `Confira este produto: ${this.product.name}`;
+    const text = `${this.getTranslation('product_check_this_product')}: ${this.product.name}`;
     
     let shareUrl = '';
     
@@ -260,9 +262,9 @@ export class ProductSingleComponent implements OnInit, OnDestroy {
   // Copiar link
   copyLink(): void {
     navigator.clipboard.writeText(window.location.href).then(() => {
-      this.showAlert('success', 'Link copiado para a área de transferência!');
+      this.showAlert('success', this.getTranslation('product_link_copied'));
     }).catch(() => {
-      this.showAlert('warning', 'Não foi possível copiar o link');
+      this.showAlert('warning', this.getTranslation('product_link_copy_failed'));
     });
   }
 
@@ -286,16 +288,16 @@ export class ProductSingleComponent implements OnInit, OnDestroy {
 
   // Obter texto do botão do carrinho
   getCartButtonText(): string {
-    if (!this.product) return 'Adicionar ao Carrinho';
+    if (!this.product) return this.getTranslation('product_add_to_cart');
     
     if (!this.product.inStock) {
-      return 'Fora de Stock';
+      return this.getTranslation('product_out_of_stock');
     }
     
     const cartQuantity = this.getCartQuantity();
     return cartQuantity > 0 ? 
-      `Adicionar Mais (${cartQuantity} no carrinho)` : 
-      'Adicionar ao Carrinho';
+      `${this.getTranslation('product_add_more')} (${cartQuantity} ${this.getTranslation('product_in_cart')})` : 
+      this.getTranslation('product_add_to_cart');
   }
 
   // Obter classe CSS do botão do carrinho
@@ -319,5 +321,10 @@ export class ProductSingleComponent implements OnInit, OnDestroy {
   // Voltar para lista de produtos
   goBack(): void {
     this.router.navigate(['/']);
+  }
+
+  // Obter tradução
+  getTranslation(key: string): string {
+    return this.languageService.getTranslation(key);
   }
 }

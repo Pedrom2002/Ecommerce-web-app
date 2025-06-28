@@ -18,9 +18,9 @@
             <!-- Loading -->
             <div *ngIf="isLoading" class="text-center py-5">
                 <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">A carregar produto...</span>
+                    <span class="visually-hidden">{{ getTranslation('product_loading') }}...</span>
                 </div>
-                <p class="mt-2 text-muted">A carregar produto...</p>
+                <p class="mt-2 text-muted">{{ getTranslation('product_loading') }}...</p>
             </div>
 
             <!-- Produto -->
@@ -33,7 +33,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
                                     <a (click)="goBack()" style="cursor: pointer;">
-                                        <i class="icon-angle-left me-1"></i>Voltar aos Produtos
+                                        <i class="icon-angle-left me-1"></i>{{ getTranslation('product_back_to_products') }}
                                     </a>
                                 </li>
                                 <li class="breadcrumb-item active">{{ product.name }}</li>
@@ -59,9 +59,9 @@
                                 </a>
                                 
                                 <!-- Badges -->
-                                <div *ngIf="!product.inStock" class="sale-flash badge bg-secondary p-2">Fora de Stock</div>
+                                <div *ngIf="!product.inStock" class="sale-flash badge bg-secondary p-2">{{ getTranslation('product_out_of_stock') }}</div>
                                 <div *ngIf="product.onSale && product.inStock" class="sale-flash badge bg-danger p-2">
-                                    Promoção {{ getDiscountPercentage() }}%!
+                                    {{ getTranslation('product_sale') }} {{ getDiscountPercentage() }}%!
                                 </div>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                                     <i *ngFor="let star of getStarArray(product.rating)" 
                                        [class]="'icon-star' + (star === 'full' ? '3' : star === 'half' ? '-half-full' : '-empty')">
                                     </i>
-                                    <span class="ms-2 small text-muted">({{ reviews.length }} avaliações)</span>
+                                    <span class="ms-2 small text-muted">({{ reviews.length }} {{ getTranslation('product_reviews') }})</span>
                                 </div>
                             </div>
 
@@ -99,7 +99,7 @@
                                            name="quantity" 
                                            [value]="quantity" 
                                            (input)="setQuantity(+$any($event.target).value)"
-                                           title="Quantidade" 
+                                           [title]="getTranslation('product_quantity')" 
                                            class="qty"
                                            [disabled]="!product.inStock" />
                                     <input type="button" value="+" class="plus" (click)="updateQuantity(1)" [disabled]="!product.inStock">
@@ -116,7 +116,7 @@
                             <div *ngIf="isInCart()" class="mb-3">
                                 <div class="alert alert-success d-flex align-items-center">
                                     <i class="icon-check-circle me-2"></i>
-                                    <span>{{ getCartQuantity() }} unidade(s) no carrinho</span>
+                                    <span>{{ getCartQuantity() }} {{ getTranslation('product_units_in_cart') }}</span>
                                 </div>
                             </div>
 
@@ -124,13 +124,13 @@
 
                             <!-- Descrição Curta -->
                             <div class="product-short-desc mb-4">
-                                <p>{{ product.description || 'Produto de alta qualidade com excelente acabamento e design moderno. Perfeito para o seu estilo de vida.' }}</p>
+                                <p>{{ product.description || getTranslation('product_default_description') }}</p>
                                 <ul class="iconlist">
-                                    <li><i class="icon-caret-right"></i> Opções de Cores Dinâmicas</li>
-                                    <li><i class="icon-caret-right"></i> Vários Tamanhos Disponíveis</li>
-                                    <li><i class="icon-caret-right"></i> Política de Devolução de 30 Dias</li>
-                                    <li *ngIf="product.inStock"><i class="icon-caret-right"></i> Em Stock - Entrega Rápida</li>
-                                    <li *ngIf="!product.inStock"><i class="icon-caret-right"></i> Fora de Stock - Brevemente Disponível</li>
+                                    <li><i class="icon-caret-right"></i> {{ getTranslation('product_dynamic_color_options') }}</li>
+                                    <li><i class="icon-caret-right"></i> {{ getTranslation('product_multiple_sizes_available') }}</li>
+                                    <li><i class="icon-caret-right"></i> {{ getTranslation('product_30_day_return_policy') }}</li>
+                                    <li *ngIf="product.inStock"><i class="icon-caret-right"></i> {{ getTranslation('product_in_stock_fast_delivery') }}</li>
+                                    <li *ngIf="!product.inStock"><i class="icon-caret-right"></i> {{ getTranslation('product_out_of_stock_coming_soon') }}</li>
                                 </ul>
                             </div>
 
@@ -138,12 +138,12 @@
                             <div class="card product-meta mb-4">
                                 <div class="card-body">
                                     <span class="sku_wrapper d-block">SKU: <span class="sku">{{ product.id }}{{ (product.id * 1000) + 415 }}</span></span>
-                                    <span class="posted_in d-block">Categoria: 
+                                    <span class="posted_in d-block">{{ getTranslation('product_category') }}: 
                                         <a href="#" class="text-capitalize">{{ product.category }}</a>
                                     </span>
-                                    <span class="stock_status d-block">Stock: 
+                                    <span class="stock_status d-block">{{ getTranslation('product_stock') }}: 
                                         <span [class]="product.inStock ? 'text-success' : 'text-danger'">
-                                            {{ product.inStock ? 'Disponível' : 'Fora de Stock' }}
+                                            {{ product.inStock ? getTranslation('product_available') : getTranslation('product_out_of_stock') }}
                                         </span>
                                     </span>
                                 </div>
@@ -151,7 +151,7 @@
 
                             <!-- Partilhar -->
                             <div class="si-share border-0 d-flex justify-content-between align-items-center">
-                                <span>Partilhar:</span>
+                                <span>{{ getTranslation('product_share') }}:</span>
                                 <div>
                                     <a (click)="shareProduct('facebook')" class="social-icon si-borderless si-facebook" style="cursor: pointer;">
                                         <i class="icon-facebook"></i>
@@ -165,7 +165,7 @@
                                     <a (click)="shareProduct('email')" class="social-icon si-borderless si-email3" style="cursor: pointer;">
                                         <i class="icon-email3"></i>
                                     </a>
-                                    <a (click)="copyLink()" class="social-icon si-borderless si-rss" style="cursor: pointer;" title="Copiar Link">
+                                    <a (click)="copyLink()" class="social-icon si-borderless si-rss" style="cursor: pointer;" [title]="getTranslation('product_copy_link')"
                                         <i class="icon-link"></i>
                                     </a>
                                 </div>
@@ -186,8 +186,8 @@
                                     <i class="icon-thumbs-up2"></i>
                                 </div>
                                 <div class="fbox-content fbox-content-sm">
-                                    <h3>100% Original</h3>
-                                    <p class="mt-0">Garantimos a venda de marcas originais.</p>
+                                    <h3>{{ getTranslation('product_100_original') }}</h3>
+                                    <p class="mt-0">{{ getTranslation('product_original_brands_guarantee') }}</p>
                                 </div>
                             </div>
 
@@ -196,8 +196,8 @@
                                     <i class="icon-credit-cards"></i>
                                 </div>
                                 <div class="fbox-content fbox-content-sm">
-                                    <h3>Opções de Pagamento</h3>
-                                    <p class="mt-0">Aceitamos Visa, MasterCard e American Express.</p>
+                                    <h3>{{ getTranslation('product_payment_options') }}</h3>
+                                    <p class="mt-0">{{ getTranslation('product_payment_methods') }}</p>
                                 </div>
                             </div>
 
@@ -206,8 +206,8 @@
                                     <i class="icon-truck2"></i>
                                 </div>
                                 <div class="fbox-content fbox-content-sm">
-                                    <h3>Envio Grátis</h3>
-                                    <p class="mt-0">Entrega gratuita para encomendas acima de $40.</p>
+                                    <h3>{{ getTranslation('product_free_shipping') }}</h3>
+                                    <p class="mt-0">{{ getTranslation('product_free_shipping_description') }}</p>
                                 </div>
                             </div>
 
@@ -216,8 +216,8 @@
                                     <i class="icon-undo"></i>
                                 </div>
                                 <div class="fbox-content fbox-content-sm">
-                                    <h3>Devoluções 30 Dias</h3>
-                                    <p class="mt-0">Devolva ou troque artigos comprados em 30 dias.</p>
+                                    <h3>{{ getTranslation('product_30_day_returns') }}</h3>
+                                    <p class="mt-0">{{ getTranslation('product_returns_description') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -231,19 +231,19 @@
                                     <li [class.current]="activeTab === 'description'">
                                         <a (click)="setActiveTab('description')" style="cursor: pointer;">
                                             <i class="icon-align-justify2"></i>
-                                            <span class="d-none d-md-inline-block"> Descrição</span>
+                                            <span class="d-none d-md-inline-block"> {{ getTranslation('product_description') }}</span>
                                         </a>
                                     </li>
                                     <li [class.current]="activeTab === 'info'">
                                         <a (click)="setActiveTab('info')" style="cursor: pointer;">
                                             <i class="icon-info-sign"></i>
-                                            <span class="d-none d-md-inline-block"> Informações</span>
+                                            <span class="d-none d-md-inline-block"> {{ getTranslation('product_information') }}</span>
                                         </a>
                                     </li>
                                     <li [class.current]="activeTab === 'reviews'">
                                         <a (click)="setActiveTab('reviews')" style="cursor: pointer;">
                                             <i class="icon-star3"></i>
-                                            <span class="d-none d-md-inline-block"> Avaliações ({{ reviews.length }})</span>
+                                            <span class="d-none d-md-inline-block"> {{ getTranslation('product_reviews') }} ({{ reviews.length }})</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -252,17 +252,17 @@
 
                                     <!-- Descrição -->
                                     <div *ngIf="activeTab === 'description'" class="tab-content clearfix">
-                                        <h4>Sobre {{ product.name }}</h4>
-                                        <p>{{ product.description || 'Este produto combina qualidade superior com design elegante. Fabricado com materiais de primeira linha e atenção aos detalhes, oferece durabilidade e estilo para o seu dia a dia.' }}</p>
-                                        <p>Caracteriza-se pela sua versatilidade e conforto, sendo uma excelente adição à sua coleção. O design cuidadoso e a funcionalidade prática fazem deste produto uma escolha inteligente.</p>
+                                        <h4>{{ getTranslation('product_about') }} {{ product.name }}</h4>
+                                        <p>{{ product.description || getTranslation('product_detailed_description') }}</p>
+                                        <p>{{ getTranslation('product_versatility_description') }}</p>
                                         
-                                        <h5>Características Principais:</h5>
+                                        <h5>{{ getTranslation('product_main_features') }}:</h5>
                                         <ul>
-                                            <li>Design moderno e elegante</li>
-                                            <li>Materiais de alta qualidade</li>
-                                            <li>Conforto e durabilidade</li>
-                                            <li>Fácil manutenção</li>
-                                            <li>Disponível em várias opções</li>
+                                            <li>{{ getTranslation('product_modern_elegant_design') }}</li>
+                                            <li>{{ getTranslation('product_high_quality_materials') }}</li>
+                                            <li>{{ getTranslation('product_comfort_durability') }}</li>
+                                            <li>{{ getTranslation('product_easy_maintenance') }}</li>
+                                            <li>{{ getTranslation('product_multiple_options') }}</li>
                                         </ul>
                                     </div>
 
@@ -271,7 +271,7 @@
                                         <table class="table table-striped table-bordered">
                                             <tbody>
                                                 <tr>
-                                                    <td><strong>Categoria</strong></td>
+                                                    <td><strong>{{ getTranslation('product_category') }}</strong></td>
                                                     <td class="text-capitalize">{{ product.category }}</td>
                                                 </tr>
                                                 <tr>
@@ -279,26 +279,26 @@
                                                     <td>{{ product.id }}{{ (product.id * 1000) + 415 }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td><strong>Avaliação</strong></td>
-                                                    <td>{{ product.rating }}/5 estrelas</td>
+                                                    <td><strong>{{ getTranslation('product_rating') }}</strong></td>
+                                                    <td>{{ product.rating }}/5 {{ getTranslation('product_stars') }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td><strong>Disponibilidade</strong></td>
+                                                    <td><strong>{{ getTranslation('product_availability') }}</strong></td>
                                                     <td [class]="product.inStock ? 'text-success' : 'text-danger'">
-                                                        {{ product.inStock ? 'Em Stock' : 'Fora de Stock' }}
+                                                        {{ product.inStock ? getTranslation('product_in_stock') : getTranslation('product_out_of_stock') }}
                                                     </td>
                                                 </tr>
                                                 <tr *ngIf="hasDiscount()">
-                                                    <td><strong>Desconto</strong></td>
+                                                    <td><strong>{{ getTranslation('product_discount') }}</strong></td>
                                                     <td class="text-success">{{ getDiscountPercentage() }}% OFF</td>
                                                 </tr>
                                                 <tr>
-                                                    <td><strong>Garantia</strong></td>
-                                                    <td>12 Meses</td>
+                                                    <td><strong>{{ getTranslation('product_warranty') }}</strong></td>
+                                                    <td>{{ getTranslation('product_12_months') }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td><strong>Devolução</strong></td>
-                                                    <td>30 Dias</td>
+                                                    <td><strong>{{ getTranslation('product_return') }}</strong></td>
+                                                    <td>{{ getTranslation('product_30_days') }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -311,7 +311,7 @@
                                             <!-- Resumo de Avaliações -->
                                             <div class="row mb-4">
                                                 <div class="col-md-6">
-                                                    <h5>Avaliações dos Clientes</h5>
+                                                    <h5>{{ getTranslation('product_customer_reviews') }}</h5>
                                                     <div class="d-flex align-items-center mb-2">
                                                         <div class="product-rating me-3">
                                                             <i *ngFor="let star of getStarArray(getAverageRating())" 
@@ -319,12 +319,12 @@
                                                             </i>
                                                         </div>
                                                         <span class="h6 mb-0">{{ getAverageRating().toFixed(1) }}/5</span>
-                                                        <span class="text-muted ms-2">({{ reviews.length }} avaliações)</span>
+                                                        <span class="text-muted ms-2">({{ reviews.length }} {{ getTranslation('product_reviews') }})</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 text-end">
                                                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewFormModal">
-                                                        <i class="icon-plus me-2"></i>Adicionar Avaliação
+                                                        <i class="icon-plus me-2"></i>{{ getTranslation('product_add_review') }}
                                                     </button>
                                                 </div>
                                             </div>
@@ -360,8 +360,8 @@
                                             <!-- Mensagem se não há avaliações -->
                                             <div *ngIf="reviews.length === 0" class="text-center py-4">
                                                 <i class="icon-star-empty fa-3x text-muted mb-3"></i>
-                                                <h5 class="text-muted">Ainda não há avaliações</h5>
-                                                <p class="text-muted">Seja o primeiro a avaliar este produto!</p>
+                                                <h5 class="text-muted">{{ getTranslation('product_no_reviews_yet') }}</h5>
+                                                <p class="text-muted">{{ getTranslation('product_be_first_to_review') }}</p>
                                             </div>
 
                                             <!-- Modal de Review -->
@@ -369,13 +369,13 @@
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title">Submeter uma Avaliação</h4>
+                                                            <h4 class="modal-title">{{ getTranslation('product_submit_review') }}</h4>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                         </div>
                                                         <div class="modal-body">
                                                             <form class="row mb-0" (ngSubmit)="submitReview()" #reviewFormRef="ngForm">
                                                                 <div class="col-6 mb-3">
-                                                                    <label for="reviewName">Nome <small>*</small></label>
+                                                                    <label for="reviewName">{{ getTranslation('product_name') }} <small>*</small></label>
                                                                     <div class="input-group">
                                                                         <div class="input-group-text"><i class="icon-user"></i></div>
                                                                         <input type="text" 
@@ -388,7 +388,7 @@
                                                                 </div>
 
                                                                 <div class="col-6 mb-3">
-                                                                    <label for="reviewEmail">Email <small>*</small></label>
+                                                                    <label for="reviewEmail">{{ getTranslation('product_email') }} <small>*</small></label>
                                                                     <div class="input-group">
                                                                         <div class="input-group-text">&#64;</div>
                                                                         <input type="email" 
@@ -401,23 +401,23 @@
                                                                 </div>
 
                                                                 <div class="col-12 mb-3">
-                                                                    <label for="reviewRating">Avaliação <small>*</small></label>
+                                                                    <label for="reviewRating">{{ getTranslation('product_rating') }} <small>*</small></label>
                                                                     <select id="reviewRating" 
                                                                             [(ngModel)]="reviewForm.rating"
                                                                             name="reviewRating"
                                                                             class="form-select" 
                                                                             required>
-                                                                        <option value="">-- Selecione --</option>
-                                                                        <option value="1">1 Estrela</option>
-                                                                        <option value="2">2 Estrelas</option>
-                                                                        <option value="3">3 Estrelas</option>
-                                                                        <option value="4">4 Estrelas</option>
-                                                                        <option value="5">5 Estrelas</option>
+                                                                        <option value="">-- {{ getTranslation('product_select') }} --</option>
+                                                                        <option value="1">1 {{ getTranslation('product_star') }}</option>
+                                                                        <option value="2">2 {{ getTranslation('product_stars') }}</option>
+                                                                        <option value="3">3 {{ getTranslation('product_stars') }}</option>
+                                                                        <option value="4">4 {{ getTranslation('product_stars') }}</option>
+                                                                        <option value="5">5 {{ getTranslation('product_stars') }}</option>
                                                                     </select>
                                                                 </div>
 
                                                                 <div class="col-12 mb-3">
-                                                                    <label for="reviewComment">Comentário <small>*</small></label>
+                                                                    <label for="reviewComment">{{ getTranslation('product_comment') }} <small>*</small></label>
                                                                     <textarea class="form-control" 
                                                                               id="reviewComment"
                                                                               [(ngModel)]="reviewForm.comment"
@@ -428,14 +428,14 @@
 
                                                                 <div class="col-12">
                                                                     <button class="btn btn-primary" type="submit">
-                                                                        <i class="icon-paper-plane me-2"></i>Submeter Avaliação
+                                                                        <i class="icon-paper-plane me-2"></i>{{ getTranslation('product_submit_review') }}
                                                                     </button>
                                                                 </div>
                                                             </form>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                                Fechar
+                                                                {{ getTranslation('product_close') }}
                                                             </button>
                                                         </div>
                                                     </div>
@@ -455,7 +455,7 @@
             <div *ngIf="relatedProducts.length > 0" class="related-products mt-5">
                 <div class="line"></div>
                 <div class="w-100">
-                    <h4 class="mb-4">Produtos Relacionados</h4>
+                    <h4 class="mb-4">{{ getTranslation('product_related_products') }}</h4>
 
                     <div class="row">
                         <div *ngFor="let relatedProduct of relatedProducts" class="col-lg-3 col-md-6 mb-4">
@@ -467,7 +467,7 @@
                                     <a *ngIf="relatedProduct.hoverImage" (click)="viewRelatedProduct(relatedProduct.id)" style="cursor: pointer;">
                                         <img [src]="relatedProduct.hoverImage" [alt]="relatedProduct.name">
                                     </a>
-                                    <div *ngIf="relatedProduct.onSale" class="badge bg-success p-2">Promoção!</div>
+                                    <div *ngIf="relatedProduct.onSale" class="badge bg-success p-2">{{ getTranslation('product_sale') }}!</div>
                                     <div class="bg-overlay">
                                         <div class="bg-overlay-content align-items-end justify-content-between">
                                             <button (click)="addRelatedToCart(relatedProduct, $event)" 
